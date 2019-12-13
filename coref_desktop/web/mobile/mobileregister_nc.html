@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Coref</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="resources/css/font-awesome.css" rel="stylesheet">-->
+    <!-- Custom CSS -->
+    <link href="resources/css/full-slider.css" rel="stylesheet">
+
+    <script>
+        var uagent = navigator.userAgent.toLowerCase();
+
+        var isAndroid = uagent.indexOf("android") > -1; //&& ua.indexOf("mobile");
+        var isWindowsPhone = uagent.indexOf("windows phone") > -1; //&& ua.indexOf("mobile");
+        var isiPhone = uagent.indexOf("iphone") > -1;
+        var isiPad = uagent.indexOf("ipad") > -1;
+
+        var device_type = "windows";
+
+        if(isAndroid) {
+            device_type = 'android';
+        } else if(isiPhone || isiPad) {
+            device_type = 'ios';
+        } else if(isWindowsPhone) {
+            device_type = 'windows';
+        }
+
+        //on body load of mobileregister page
+        function getDeviceIMEI() {
+            if(device_type == "android") {
+                console.log(new Date()+"\t getting the android device IMEI from the android app");
+                try {
+                    webapp.readDeviceIMEI();        //TODO, why are we not doing this while loading android activity itself?
+                } catch (err) {
+                    console.log("Error while getting the android device id: "+err);
+                }
+            }
+        }
+    </script>
+</head>
+
+
+<body onload="getDeviceIMEI();"  style="overflow: hidden;" >
+
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="height: 55px">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+
+            <div class="rd-navbar-brand">
+                <h1 style="margin-top: 1px;font-size: 70px">
+                    <div class="rd-navbar-brand">
+                        <h1 style="margin-top: 0px;font-size: 45px">
+                            <small style="color: white;margin-top: 2px;margin-left:10px;" >Coref</small>
+                        </h1>
+                    </div>
+                </h1>
+            </div>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+    </div>
+</nav>
+
+<!-- Full Page Image Background Carousel Header -->
+
+<header id="myCarousel" class="carousel slide" style="overflow: hidden;">
+
+    <div id="landing_page_status_info" align="center" style="display: none">
+    </div>
+
+
+    <div class="carousel-inner">
+        <div class="item active" style="background-color:#f0f0fc ">
+            <!-- Set the first background image using inline CSS below. -->
+            <div class="carousel-caption"  style="margin-top:0px;margin-bottom: 0px;height: 95%">
+                <h1 style="font-size:22px;color: #000000;text-shadow: none;margin-top: 10px; min-height: 10px;">Harness the power of your network</h1>
+                <div class="ui-group-buttons" style="margin-top: 15px">
+                    <button onClick="window.location='login.html';" type="button" class="btn btn-success btn-lg" style="width: 100px;background-color: #715c5d;color: #ffffff;border-radius: 7px 7px 7px 7px;font-size: 15px"> <i class="fa fa-mobile fa-1x" aria-hidden="true" style="margin-left: -5px;color:#ffffff;font-size: 17px" ></i>&nbsp;Login</button>
+                </div>   <br>  <br>
+                <img align='center' src="images/iphone_1.png" class="text-center" alt="" style="background-repeat: no-repeat; overflow: hidden;position:relative;opacity: 1;height: 67%" >
+            </div>
+        </div>
+
+    </div>
+</header>
+
+</body>
+
+<script src="resources/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="resources/js/bootstrap.js" type="text/javascript"></script>
+
+</html>
+

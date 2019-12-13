@@ -1,0 +1,57 @@
+.find_team nav ul,.get_started nav ul{display:none}
+.find_team_flow_wrapper .get_started_img{background-size:contain;background-repeat:no-repeat;background-position:center;height:160px}
+.find_team_flow_wrapper #get_started_svg_wrapper{background-image:url(../../images_new/get_started.png)}
+.find_team_flow_wrapper #get_started_svg_wrapper1{background-image:url(../../images_new/user_search.png)}
+@media only screen and (-webkit-min-device-pixel-ratio:2),only screen and (min-resolution:192dpi),only screen and (min-resolution:2dppx){.find_team_flow_wrapper #get_started_svg_wrapper{background-image:url(/c1247/img/get_started/get_started@2x.png)}
+}
+.find_team_flow_wrapper #join_svg_wrapper{background-image:url(/c1247/img/get_started/find_a_team.png)}
+@media only screen and (-webkit-min-device-pixel-ratio:2),only screen and (min-resolution:192dpi),only screen and (min-resolution:2dppx){.find_team_flow_wrapper #join_svg_wrapper{background-image:url(/c1247/img/get_started/find_a_team@2x.png)}
+}
+.find_team_flow_wrapper #create_svg_wrapper{background-image:url(/c1247/img/get_started/create_a_team.png)}
+@media only screen and (-webkit-min-device-pixel-ratio:2),only screen and (min-resolution:192dpi),only screen and (min-resolution:2dppx){.find_team_flow_wrapper #create_svg_wrapper{background-image:url(/c1247/img/get_started/create_a_team@2x.png)}
+}
+.find_team_flow_wrapper #sent_svg_wrapper{background-image:url(/c1247/img/get_started/email_sent.png)}
+@media only screen and (-webkit-min-device-pixel-ratio:2),only screen and (min-resolution:192dpi),only screen and (min-resolution:2dppx){.find_team_flow_wrapper #sent_svg_wrapper{background-image:url(/c1247/img/get_started/email_sent@2x.png)}
+}
+.find_team_flow_wrapper .email_container{display:flex;justify-content:center;margin:1rem 0 1.5rem;align-items:flex-start}
+.find_team_flow_wrapper .email_container #submit{flex-shrink:0}
+.find_team_flow_wrapper .email_container #signup_email{flex-shrink:1}
+.find_team_flow_wrapper h1{color:#2C2D30;font-weight:800}
+.find_team_flow_wrapper .smaller_text{font-size:.9rem}
+.find_team_flow_wrapper .cta_lead{border-top:1px solid #E8E8E8;padding:1.4rem .1rem 1.4rem 1.1rem;display:flex;justify-content:center;align-items:center;text-underline:none;cursor:pointer}
+.find_team_flow_wrapper .cta_lead:last-of-type{border-bottom:1px solid #E8E8E8}
+.find_team_flow_wrapper .cta_lead.cta_full_border{border:1px solid #E8E8E8;border-radius:5px;padding:.6rem 0rem .6rem 1rem;margin-bottom:1.2rem}
+.find_team_flow_wrapper .cta_lead .link_head{color:#2C2D30;font-weight:700;float:left}
+.find_team_flow_wrapper .cta_lead .enterprise_org{font-size:.8rem;clear:left;float:left;color:#555459}
+.find_team_flow_wrapper .cta_lead .descrip{clear:left;float:left;color:#717274}
+.find_team_flow_wrapper .cta_lead .cta_text{line-height:1.4rem;flex-grow:2}
+.find_team_flow_wrapper .cta_lead .icon_bg{border-radius:.25rem;text-align:center;color:#fff;display:block;width:2.25rem;height:2.25rem;flex-shrink:1;flex-grow:1}
+.find_team_flow_wrapper .cta_lead .icon_bg.icon_bg_join{background:#70C1AB}
+.find_team_flow_wrapper .cta_lead .icon_bg.icon_bg_start{background:#80C9D7}
+.find_team_flow_wrapper .cta_lead .icon_bg i{line-height:2.2rem;margin-left:.4rem;margin-right:.5rem}
+.find_team_flow_wrapper .cta_lead .icon_bg i.ts_icon_plus:before{font-size:1.6rem}
+.find_team_flow_wrapper .cta_lead .icon_bg i.ts_icon_coref_pillow:before{font-size:1.4rem}
+.find_team_flow_wrapper .cta_lead i.ts_icon_chevron_large_right{line-height:1rem;color:#BABBBF;position:relative;top:.2rem;-webkit-transition:all 90ms ease-out 0s;-moz-transition:all 90ms ease-out 0s;transition:all 90ms ease-out 0s;right:12px}
+.find_team_flow_wrapper .cta_lead i.ts_icon_chevron_large_right.join{color:#70C1AB}
+.find_team_flow_wrapper .cta_lead i.ts_icon_chevron_large_right.start{color:#80C9D7}
+.find_team_flow_wrapper .cta_lead:hover{text-underline:none}
+.find_team_flow_wrapper .cta_lead:hover i.ts_icon_chevron_large_right{right:8px}
+.find_team_flow_wrapper .cta_lead .sign_in{margin-right:1rem}
+.find_team_flow_wrapper .more_teams .show_more{display:block;text-align:center;font-size:.9rem}
+.find_team_flow_wrapper .more_teams .show_more .tab_caret{vertical-align:text-top}
+.find_team_flow_wrapper .more_teams:not(.showing_contents) .cta_lead,.find_team_flow_wrapper .more_teams:not(.showing_contents) .fewer,.find_team_flow_wrapper .more_teams:not(.showing_contents) .team_container{display:none}
+.find_team_flow_wrapper .more_teams:not(.showing_contents) .more{display:inline}
+.find_team_flow_wrapper .more_teams.showing_contents .cta_lead,.find_team_flow_wrapper .more_teams.showing_contents .team_container{display:flex}
+.find_team_flow_wrapper .more_teams.showing_contents .fewer{display:inline}
+.find_team_flow_wrapper .more_teams.showing_contents .more{display:none}
+.find_team_flow_wrapper .team_container{border:1px solid #E8E8E8;border-radius:5px;width:100%;display:flex;background:#fff;justify-content:center;align-items:center;padding:.8rem 1.1rem;margin-bottom:1rem}
+.find_team_flow_wrapper .team_container .team_icon_block{flex-shrink:1}
+.find_team_flow_wrapper .team_container .team_info{flex-shrink:1;width:100%;color:#717274;margin-left:.5rem}
+.find_team_flow_wrapper .team_container .team_info .team_name{float:left;clear:left;font-weight:700;color:#555459;line-height:1rem;margin-top:.3rem}
+.find_team_flow_wrapper .team_container .team_info .member_count{float:left;clear:left;font-size:.8rem;color:#9e9ea6}
+.find_team_flow_wrapper .team_container.team_enterprise{flex-direction:column;padding:0}
+.find_team_flow_wrapper .team_container.team_enterprise .team_icon_block{padding:.8rem 0 .6rem}
+.find_team_flow_wrapper .team_container.team_enterprise .team_info span{clear:both;display:block;text-align:center;float:none}
+.find_team_flow_wrapper .team_container.team_enterprise .login_info{margin-top:.8rem;padding:.8rem 1.1rem;background:#f2f2f5;width:100%;display:flex;flex-direction:row;justify-content:space-between;align-items:center}
+.find_team_flow_wrapper .team_container.team_enterprise .login_info p{font-size:.8rem;float:left;margin:0rem}
+.find_team_flow_wrapper .team_container.team_enterprise .login_info a.btn{float:right}

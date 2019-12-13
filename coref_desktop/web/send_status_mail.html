@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>coref</title>
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/css/metisMenu.min.css" rel="stylesheet">
+    <link href="resources/css/sb-admin-2.css" rel="stylesheet">
+    <link href="resources/css/bootstrap-social.css" rel="stylesheet">
+    <link href="resources/css/morris.css" rel="stylesheet">
+    <link href="resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/css/coref.css" rel="stylesheet" type="text/css">
+    <link href="resources/css/site.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/css/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="resources/css/dataTables.responsive.css" rel="stylesheet">
+    <script src="resources/js/jquery.min.js"></script>
+    <script src="resources/js/bootstrap.js"></script>
+    <script src="resources/js/coref.js"></script>
+    <script src="resources/js/ajaxindicator.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Aldrich" rel="stylesheet">
+    <style>
+        div h3 span{
+            color : #FFF;
+            font-size:14px;
+        }
+
+        .login_box{
+            background: #f32d27; /* Old browsers */
+            /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+            background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMTAwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjUlIiBzdG9wLWNvbG9yPSIjZjMyZDI3IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iOTklIiBzdG9wLWNvbG9yPSIjZmY2YjQ1IiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
+            background: -moz-linear-gradient(45deg,  #00897B 5%, #26A69A 99%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left bottom, right top, color-stop(5%,#00897B), color-stop(99%,#26A69A)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(45deg,  #00897B 5%,#26A69A 99%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(45deg,  #00897B 5%,#26A69A 99%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(45deg,  #00897B 5%,#26A69A 99%); /* IE10+ */
+            background: linear-gradient(45deg,  #00897B 5%,#26A69A 99%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00897B', endColorstr='#26A69A',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
+
+            position:absolute;
+            top:15%;
+            left:32.5%;
+
+            -webkit-box-shadow: 0px 0px 8px 0px rgba(50, 50, 50, 0.54);
+            -moz-box-shadow:    0px 0px 8px 0px rgba(50, 50, 50, 0.54);
+            box-shadow:         0px 0px 8px 0px rgba(50, 50, 50, 0.54);
+        }
+
+        @media (max-width: 767px) {
+            .login_box{
+                background: #f32d27; /* Old browsers */
+                /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+                background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMTAwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjUlIiBzdG9wLWNvbG9yPSIjZjMyZDI3IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iOTklIiBzdG9wLWNvbG9yPSIjZmY2YjQ1IiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
+                background: -moz-linear-gradient(45deg,  #00897B 5%, #26A69A 99%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left bottom, right top, color-stop(5%,#00897B), color-stop(99%,#26A69A)); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(45deg,  #00897B 5%,#26A69A 99%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(45deg,  #00897B 5%,#26A69A 99%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(45deg,  #00897B 5%,#26A69A 99%); /* IE10+ */
+                background: linear-gradient(45deg,  #00897B 5%,#26A69A 99%); /* W3C */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00897B', endColorstr='#26A69A',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
+
+                width:90%;
+                height:80%;
+                position:absolute;
+                top:10%;
+                left:5%;
+
+                -webkit-box-shadow: 0px 0px 8px 0px rgba(50, 50, 50, 0.54);
+                -moz-box-shadow:    0px 0px 8px 0px rgba(50, 50, 50, 0.54);
+                box-shadow:         0px 0px 8px 0px rgba(50, 50, 50, 0.54);
+            }
+        }
+
+        .image-circle{
+            border-radius: 50%;
+            width: 135px;
+            height: 135px;
+            border: 4px solid #FFF;
+            margin: 10px;
+        }
+
+        .follow{
+            background-color:#FC563B;
+            height: 80px;
+            cursor:pointer;
+        }
+
+        .follow:hover {
+            background-color:#F22F26;
+            height: 80px;
+            cursor:pointer;
+        }
+
+        .login_control{
+            background-color:#FFF;
+            padding:10px;
+
+        }
+
+        .control {
+            color:#000;
+            margin:10px;
+        }
+
+        .label {
+            color: #00B8D4;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .btn-orange{
+            background-color: #26A69A;
+            border-radius: 0px;
+            margin: 5px;
+            padding: 5px;
+            width: 150px;
+            font-size: 20px;
+            font-weight: inherit;
+        }
+
+        .btn-orange:hover {
+            background-color: #00897B;
+            border-radius: 0px;
+            margin: 5px;
+            padding: 5px;
+            width: 150px;
+            font-size: 20px;
+            font-weight: inherit;
+            color:#FFF !important;
+        }
+
+        .line {
+            border-bottom : 2px solid #004D40;
+        }
+
+        .outter {
+            padding: 0px;
+            border: 1px solid rgba(255, 255, 255, 0.29);
+            border-radius: 50%;
+            width: 160px;
+            height: 160px;
+        }
+
+    </style>
+    <script>
+        function myOnloadFunction(){
+
+        }
+    </script>
+
+    <!--Load the Linkedin SDK-->
+    <script src="//platform.linkedin.com/in.js">
+        api_key:   86enw01rzt6kfs
+        authorize: true
+    </script>
+
+    <script type="text/javascript">
+        IN.init({
+            onLoad: myOnloadFunction
+            // any other parameters you'd normally put beneath the script element would be here
+        });
+    </script>
+</head>
+<body>
+
+<div id="wrapper">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0;background-color: #00B8D4">
+    <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        <a class="navbar-brand" href="index.html" style=""><img style="width: 160px; margin-top: -12px; margin-left: 30px;" src="images/logo.png"></a>
+    </div>
+        <ul class="nav navbar-top-links navbar-right" style="margin-right: 130px">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <p style="color: #ffffff;display: inline;">My Account</p> <i style="color: #ffffff;" class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li><a onclick="openProfilePage();"><i class="fa fa-user fa-fw" ></i> My profile</a>
+                    <li class="divider"></li>
+                    <li><a id="signoutAll" ><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div style="display: none">
+            <div a data-toggle='modal' href='#myprofile_page' id="click_to_my_profile_form">My profile</div>
+        </div>
+    </nav>
+    <div class="container" style="background-color: #ffffff;margin-top: 40px;height: 450px">
+        <div class="row text-center">
+
+        </div>
+        <div class=" container-fluid" style="max-height: 200px">
+            <div class="row">
+                <button class="btn btn-info btn-md text-center " style="display: inline;margin-left: 35%; margin-top: 80px; background-color: #00B8D4;" id="send_status_mail" onclick="sendemail();">send referal status</button>
+
+            </div>
+            <div id="domain_name_status" style="display: none;margin-top: 40px" class="col-md-8 col-md-offset-2 alert alert-danger text-center" role="alert">
+                Please enter domain name
+            </div>
+
+        </div>
+    </div>
+    <!-- jQuery -->
+    <div class="modal fade" id="myprofile_page" tabindex="-1" role="dialog" style="margin-top: -30px" style="display: none;" aria-hidden="true">
+        <div class="row login_box" id="profile_details"  style="width: 35%;margin-top: -30px">
+            <div class='line'><h2 class='text-center' style='color: #ffffff;'>My profile</h2></div>
+            <div class='col-md-12 col-xs-12' align='center'>
+                <div class='outter'><img id='profile_image' src='images/profile.jpg'  class='image-circle'/></div>
+                <h4 style='width: 250Px; color: white;' id='profile_name'></h4>
+            </div>
+            <div class='col-md-12 col-xs-12 login_control'>
+                <div class='control'>
+                    <div class='row'>
+                        <div class='col-md-4 col-xs-4 login_control '>
+                            <div class='label pull-right'>Linkedin</div>
+                        </div>
+                        <div class='col-md-6 col-xs-9 login_control'>
+                            <input id='profile_linkedin' type='text' class='form-control' placeholder="linkedin" readonly/>
+                        </div>
+                    </div>
+                </div>
+                <div class='control'>
+                    <div class='row'>
+                        <div class='col-md-4 col-xs-4 login_control '>
+                            <div class='label pull-right'>Skills</div>
+                        </div>
+                        <div class='col-md-6 col-xs-9 login_control'>
+                            <input id='profile_expertise' type='text' class='form-control' placeholder="skills"/>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-md-4 col-xs-4 login_control '>
+                            <div class='label pull-right'>Company</div>
+                        </div>
+                        <div class='col-md-6 col-xs-9 login_control'>
+                            <input id='my_domain_name' type='text' class='form-control' placeholder='eg:coref.com' readonly/>
+                        </div>
+                    </div>
+                    <div class='row text-center' style='margin-bottom:7px;'>
+                        <div style="padding-top: 5px; padding-left: 15px; padding-right: 15px;" id="hr_consent_label">
+                            <!--<input id="hr_consent" type='checkbox' style='max-width: 300px' name='hr_consent'> I am responsible for hiring-->
+                        </div>
+                    </div>
+                    <div align='center' style="margin-top: -5px">
+                        <button id='contactprofile_save' type='submit'  data-toggle='button' class='btn btn-orange' style='color: #ffffff;' onclick='saveProfileDetails();'>Save</button>
+                        <button data-dismiss='modal' class='btn btn-orange' style='color: #ffffff;'>Close</button>
+                    </div>
+                    <div class='row' style="margin-top: -0px;margin-bottom: 0px">
+                        <div id='profile_details_status_success' align='center' style='display: none;margin-top: 1px;margin-bottom: 0px'></div>
+                        <div id='profile_details_status_failed' align='center' class="alert alert-danger" style='display: none;margin-top: 1px;margin-bottom: 0px'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

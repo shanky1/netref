@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Netref</title>
+    <script src="resources/js/jquery-1.10.2.js" type="text/javascript"></script>
+    <script src="resources/js/bootstrap.js" type="text/javascript"></script>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/css/style.css" rel="stylesheet">
+    <link href="resources/css/font-awesome.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Courgette|Shadows+Into+Light+Two|Bad+Script' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
+    <link href="resources/css/full-slider.css" rel="stylesheet">
+
+    <style>
+        h1 .subtitle {
+            display: block;
+            font-family: 'Grand Hotel',cursive;
+            line-height: 40px;
+            margin: 15px 0 30px;
+        }
+
+        .carousel-indicators li {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 1px;
+            text-indent: -999px;
+            cursor: pointer;
+            border: 1px solid #ff5656;
+            border-radius: 10px;
+        }
+
+        .carousel-indicators .active {
+            width: 12px;
+            height: 12px;
+            margin: 0;
+            background-color: #ff5656;
+        }
+
+        .alert-danger {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            width: 100%;
+            position: absolute;
+            z-index: 9999;
+            padding: 15px 0px 15px 10px;
+            right: 0px;
+        }
+
+        .custom_close {
+            float: right;
+            font-size: 2.5rem;
+            line-height: 1;
+            color: #808080;
+            text-shadow: 0 1px 0 #fff;
+            padding: 0px 10px 0px 10px
+        }
+        .carousel-inner{
+            height: 100%;
+        }
+    </style>
+    <script type="text/javascript">
+        function readCookieFBLogin_default() {
+            var cookie_name = "netref_cookie_login";
+            var cookie_value = "";
+
+            var nameEQ = cookie_name + "=";
+            var ca = document.cookie.split(';');
+
+            var cookie_found = false;
+
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+
+                while (c.charAt(0) == ' ')
+                    c = c.substring(1,c.length);
+
+                if (c.indexOf(nameEQ) >= 0) {
+                    var cookie_on_success = c;
+                    cookie_found = true;
+                    break;
+                }
+            }
+            if(cookie_found == true) {
+//                alert(nameEQ.length+" : "+cookie_on_success.length+" : "+cookie_on_success);
+
+                cookie_value = cookie_on_success.substring(nameEQ.length, cookie_on_success.length);
+
+//                alert(cookie_value);
+
+                setSessionAndRedirect(cookie_value);
+            }
+        }
+
+        function readCookieFBLogin_onClick() {
+            var cookie_name = "netref_cookie_login";
+            var cookie_value = "";
+
+            var nameEQ = cookie_name + "=";
+            var ca = document.cookie.split(';');
+
+            var cookie_found = false;
+
+            for(var i = 0;i < ca.length;i++) {
+                var c = ca[i];
+
+                while (c.charAt(0)==' ')
+                    c = c.substring(1, c.length);
+
+                if (c.indexOf(nameEQ) >= 0) {
+                    var cookie_on_success = c;
+                    cookie_found = true;
+                    break;
+                }
+            }
+            if(cookie_found == true) {
+//                alert(nameEQ.length+" : "+cookie_on_success.length+" : "+cookie_on_success);
+
+                cookie_value = cookie_on_success.substring(nameEQ.length, cookie_on_success.length);
+
+//                alert(cookie_value);
+
+                setSessionAndRedirect(cookie_value);
+            } else {
+                window.location= "FBLogin.jsp";
+            }
+        }
+
+        var xmlHttp;
+
+        function setSessionAndRedirect(cookie_value) {
+
+//            ajaxindicatorstart("Please wait...");
+
+            if (typeof XMLHttpRequest != "undefined") {
+                xmlHttp = new XMLHttpRequest();
+            }
+            else if (window.ActiveXObject) {
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            if (xmlHttp == null) {
+                alert("Browser does not support XMLHTTP Request");
+                return;
+            }
+
+            var redirect_url = "set_session_from_cookie.jsp";
+            redirect_url += "?netref_cookie_login_value="+encodeURIComponent(cookie_value);
+
+            xmlHttp.onreadystatechange = stateChange_redirect;
+            xmlHttp.open("GET", redirect_url, true);
+            xmlHttp.send(null);
+        }
+
+        function stateChange_redirect() {
+            if (xmlHttp.readyState == 4 || xmlHttp.readyState == "complete") {
+                var res = xmlHttp.responseText.trim();
+                if(res.indexOf("success") == 0) {
+                    window.location= "enter.html";
+                } else {
+//                    ajaxindicatorstop();
+                }
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        var uagent = navigator.userAgent.toLowerCase();
+
+        var isAndroid = uagent.indexOf("android") > -1; //&& ua.indexOf("mobile");
+        var isWindowsPhone = uagent.indexOf("windows phone") > -1; //&& ua.indexOf("mobile");
+        var isiPhone = uagent.indexOf("iphone") > -1;
+        var isiPad = uagent.indexOf("ipad") > -1;
+
+        var device_type = "windows";
+
+        if(isAndroid) {
+            device_type = 'android';
+        } else if(isiPhone || isiPad) {
+            device_type = 'ios';
+        } else if(isWindowsPhone) {
+            device_type = 'windows';
+        }
+
+        if(device_type.indexOf("android") >= 0 || device_type.indexOf("ios") >= 0) {
+            window.location = "mobile/mobileregister.html";
+        } else {
+            readCookieFBLogin_default();
+        }
+    </script>
+</head>
+<body style="margin: 0px;padding: 0px;background-color:#f0f0fc;overflow: hidden;" >
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="height: 55px">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+
+            <div class="rd-navbar-brand">
+                <h1 style="margin-top: 1px;font-size: 70px">
+                    <small style="color: white;margin-top: 2px;margin-left:10px" class="subtitle">netref</small>
+                </h1>
+            </div>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+    </div>
+</nav>
+<h2 style="color: #000000;text-shadow: none;margin-top: 65px;font-family:  Roboto Slab, serif;margin-bottom: 15px;font-size: 25px" class="text-center">Use your network to find professionals</h2>
+<div class="text-center">
+    <span style="display:inline"><a href="https://play.google.com/store/apps/details?id=ds.netref&amp;hl=en" target="_blank"><img src="images/playstore.png"></a></span>&nbsp;&nbsp;&nbsp;
+    <span style="display:inline"><a href="https://itunes.apple.com/us/app/netref/id1074609652?mt=8" target="_blank"><img src="images/IOS2.png"></a></span>
+</div>
+<header id="myCarousel" class="carousel slide" style="overflow: hidden;height: 80% " >
+
+    <div id="landing_page_status_info" align="center" style="display: none">
+    </div>
+
+        <ol class="carousel-indicators" style="bottom: 5px">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+
+        </ol>
+
+
+    <div class="carousel-inner">
+        <div class="item active" style="background-color:#f0f0fc ">
+            <div class="carousel-caption"  style="margin-top:0px;margin-bottom: 0px;height: 95%">
+                <h1 style="font-size:22px;color: #000000;text-shadow: none;margin-top: -5px;">Harness the power of your network</h1>
+                <img align='center' src="images/iphone_1.png" class="text-center"   alt="" style="background-repeat: no-repeat; overflow: hidden;position:relative;opacity: 1;height: 80%" >
+            </div>
+        </div>
+        <div class="item" style="background-color:#f0f0fc ">
+            <div class="carousel-caption"  style="margin-top:0px;margin-bottom: 0px;height: 95%">
+                <h1 style="font-size:22px;color: #000000;text-shadow: none;margin-top: -5px;">Grow your business through your clients and friends</h1>
+                <img align='center' class="text-center" src="images/iphone_2.png" alt="" style="background-repeat: no-repeat; overflow: hidden;position:relative;opacity: 1;height: 80%" >
+            </div>
+        </div>
+        <div class="item" style="background-color:#f0f0fc ">
+            <div class="carousel-caption" style="margin-top:0px;margin-bottom: 0px;height: 95%">
+                <h1 style="font-size:22px;color: #000000;text-shadow: none;margin-top: -5px;">Ask your network for professionals</h1>
+                <img align='center' class="text-center" src="images/iphone_3.png" style="background-repeat: no-repeat; overflow: hidden;position:relative;opacity: 1;height: 80%" >
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <!-- Controls -->
+    <!--<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>-->
+
+</header>
+
+
+<script src="resources/js/jquery.mobile.custom.min.js"></script>
+<script src="resources/js/bootstrap.min.js"></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+        $("#myCarousel").carousel({
+
+            interval : 5000,
+
+            pause: false
+
+        });
+
+    });
+
+</script>
+
+
+</body>
+</html>

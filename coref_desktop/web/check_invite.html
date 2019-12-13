@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-locale="en-US" xmlns="http://www.w3.org/1999/html">
+
+<head>
+<title>coref</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css" >
+     <link href="resources/css/style_new2.css" rel="stylesheet" type="text/css" >
+    <link href="resources/css/style_new.css" rel="stylesheet" type="text/css" >
+    <script src="resources/js/jquery.min.js"></script>
+
+	    <script>
+	        $(document).ready(function() {
+	            window.check_invite = function(){
+	            var check_email = $('#check_email').val().trim();
+	            $.ajax({
+	                type:         "post",
+	                url:         "action/check_invite.jsp",
+	                data:         "check_email="+encodeURIComponent(check_email),
+
+	                success:    function(msg) {
+	                    msg = escape(msg).replace(/%0A/g, "");
+	                    msg = msg.replace(/%0D/g, "");
+	                    msg = unescape(msg);
+	                    if(msg != null && msg.indexOf("Success") >= 0) {
+	                        $("#skip_next_btn").text("Next");
+	                        $("#email_address_add_success").html(msg);
+	                        $("#email_address_add_success").show();
+	                    }
+	                }
+	            });
+	        };
+	        });
+
+    </script>
+
+    <style>
+
+
+        .btn-info:hover {
+            color: #fff;
+            background-color: #31b0d5;
+            border-color: #269abc;
+        }
+
+        .btn.focus, .btn:focus, .btn:hover {
+            color: #333;
+            text-decoration: none;
+        }
+
+        a:focus, a:hover {
+            color: #23527c;
+            text-decoration: underline;
+        }
+
+        a:active, a:hover {
+            outline: 0;
+        }
+
+        .pull-right {
+            float: right!important;
+        }
+
+        .btn {
+            border: 0px;
+        }
+        font-awesome.min.css:4
+        .pull-right {
+            float: right;
+        }
+
+        .pull-right {
+            float: right!important;
+        }
+
+        .btn-info {
+            color: #fff;
+            background-color: #5bc0de;
+            border-color: #46b8da;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 9px 12px;
+            margin-bottom: 0;
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        a {
+            color: #337ab7;
+            text-decoration: none;
+        }
+
+        a {
+            background-color: transparent;
+        }
+
+
+    </style>
+</head>
+<nav class="top persistent">
+    <img style="width: 120px; margin-top: 10px; margin-left: 30px;" src="images_new/logo1.png">
+</nav>
+<div id="page" >
+<div id="page_contents" data-qa="page_contents" class="">
+<div id="find_team_flow" class="col span_3_of_6 margin_auto float_none find_team_flow_wrapper">
+    <center><div id="signup_wrapper" class="fs_split_pane fs_split_pane_full_width very_large_bottom_margin " style="width:430px">
+        <div id="get_started_svg_wrapper1" style="margin-top: 95px;margin-bottom: 5px" class="get_started_img large_bottom_margin"></div>
+        <p class="desc large_bottom_margin">Enter your Email address to send an invite if exist(s)</p>
+
+        <div class="email_container">
+            <input style="width:70%" name="email" spellcheck="false" placeholder="email" id="check_email" class="small_right_margin" data-qa="email_field" data-email-healing="true" type="email">
+            <div class="button_container align_center ">
+                    <a button="" style="background-color: #00B8D4;" class="btn btn-info btn-md pull-right" onclick="check_invite();" data-target="modal" type="submit">Submit</a>
+
+            </div>
+        </div>
+
+        <div id="email_address_alert"  style="display: none;margin-top: 40px" class="col-md-8 col-md-offset-2 alert alert-danger text-center" role="alert">
+
+        </div>
+        <div id="email_address_add_success"  style="display: none;margin-top: 40px" class="col-md-8 col-md-offset-2 alert alert-success text-center" role="alert">
+
+        </div>
+
+    </div>
+    </center>
+
+</div>
+
+
+
+
+</body>
+</html>

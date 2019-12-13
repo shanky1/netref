@@ -1,0 +1,1912 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+
+<meta charset="utf-8">
+<title>Netref</title>
+
+<link href="resources/css/bootstrap.css" rel="stylesheet">
+<link href="resources/css/get-shit-done.css" rel="stylesheet">
+<link href="resources/css/demo.css" rel="stylesheet">
+<link href="resources/css/docs.css" rel="stylesheet">
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+<link href='https://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.0/css/bootstrap-responsive.min.css' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="resources/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="resources/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">-->
+<!--<script src="resources/js/jquery-1.10.2.js" type="text/javascript"></script>-->
+<!--<script src="resources/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>-->
+
+<script src="resources/js/bootstrap.js" type="text/javascript"></script>
+<script src="resources/js/gsdk-checkbox.js" type="text/javascript"></script>
+<script src="resources/js/gsdk-radio.js" type="text/javascript"></script>
+<script src="resources/js/gsdk-bootstrapswitch.js" type="text/javascript"></script>
+<script src="resources/js/get-shit-done.js" type="text/javascript"></script>
+<script src="resources/js/custom.js" type="text/javascript"></script>
+
+<script src="resources/js/ajaxindicator.js"></script>
+
+<style>
+    .row-highlight {
+        background-color: rgba(191, 210, 48, .5)
+    }
+
+    label {
+        align-content: center;
+        display: inline-block;
+        font-weight: 700;
+        margin-bottom: 5px;
+        margin-left: 80px;
+        width:160px;
+        line-height: 4;
+    }
+
+    .btn-info-re.btn-fill {
+        color: #5ecf4e;
+        opacity: 1;
+    }
+
+    .fcllex_cafe{
+        position: relative;
+        clear: both;
+    }
+
+    .fcc_content{
+        padding: 0;
+        margin: 10px 1px 51px 3px;
+        list-style: none;
+    }
+
+    .fcc_content li{
+        background: #fffcf3;
+        width: 100%;
+        display: inline-block;
+        list-style: none;
+        padding-left: 7px;
+        padding-right: 7px;
+        /*margin: 3px 2px;*/
+    }
+    .fcc_content li .fcc_item{
+        background: #fff;
+        color: #4c4c4c;
+        position: relative;
+        width: 100%;
+        display: inline-block;
+        text-align: left;
+        border-radius: 4px;
+        border: 2px solid #F0D89C;
+        /*padding: 2px 80px 25px 135px;*/
+        padding: 2px 20px 12px 105px;
+        /*height: 100px;*/
+    }
+
+    .fcc_content li .fcc_item .fcc_img{
+        display: block;
+        height: 80px;
+        width: 90px;
+        position: absolute;
+        left: 10px;
+        top: 1px;
+        margin-bottom: 15px;
+    }
+
+    .fcc_content li .fcc_item .circle_star img,
+    .fcc_content li .fcc_item .fcc_img img{
+        display: block;
+        width: 80%;
+    }
+
+    .fcc_content li .fcc_item .circle_star{
+        position: absolute;
+        right: 40px;
+        top: 50%;
+        margin-top: -22px;
+        height: 25px;
+        width: 20px;
+        display: block;
+    }
+
+    .fcc_content li .fcc_item .fcc_item_desc{
+        display: inline-block;
+        width: 100%;
+    }
+    .fcc_content li .fcc_item .fcc_item_desc h2{
+        font-size: 24px;
+        line-height: 1;
+        margin-bottom: 8px;
+        color: #25ae5f;
+        font-weight: 600;
+    }
+
+
+    .fcc_content li .fcc_item .fcc_item_desc h2 span,
+    .clr_black{
+        color: #4c4c4c;
+    }
+
+    .fcc_content li .fcc_item .product_name{
+        font-size: 28px;
+        line-height: 1;
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-weight: bold;
+        display: block;
+    }
+
+    .fcc_content li .fcc_item .product_meta{
+        color: #b9b9b9;
+        display: inline-block;
+        width: 100%;
+    }
+    .fcc_content li .fcc_item .product_meta span{
+        display: inline-block;
+        margin-right: 15px;
+        vertical-align: top;
+        margin-bottom: 10px;
+        font-size: 24px;
+        line-height: 1;
+        font-weight: normal;
+    }
+    .fcc_content li .fcc_item .product_meta span i{
+        margin-right: 6px;
+    }
+
+        /* Let's get this party started */ ::-webkit-scrollbar { width: 12px; } /* Track */ ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); -webkit-border-radius: 10px; border-radius: 10px; } /* Handle */ ::-webkit-scrollbar-thumb { -webkit-border-radius: 10px; border-radius: 10px; background: rgba(218,224,230); -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); } ::-webkit-scrollbar-thumb:window-inactive { background: rgba(255,0,0,0.4); }
+
+
+</style>
+
+<script>
+
+var developer_id;
+
+$(document).ready(function() {
+
+    $("body").tooltip({ selector: '[rel=tooltip]' });
+
+    ajaxindicatorstart("Please wait...");
+
+    $.ajax({
+        type:         "post",
+        url:         "action/get_userid_from_session.jsp",
+
+        success:    function(client_user_id) {
+            client_user_id = escape(client_user_id).replace(/%0A/g, "");
+            client_user_id = client_user_id.replace(/%0D/g, "");
+            client_user_id = unescape(client_user_id);
+
+            if(client_user_id == "-1") {
+                window.location = "register.html";
+            }
+        }
+    });
+
+    window.loadActivities = function() {
+        $.ajax({
+            type:         "post",
+            url:         "action/load_activities.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null) {
+                    $("#display_activity_results").html(msg);
+                }
+                ajaxindicatorstop();
+            }
+        });
+    };
+
+    window.loadAskList = function() {
+        $.ajax({
+            type:         "post",
+            url:         "action/load_ask_list.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null) {
+                    $("#ask_in_network_records").html(msg);
+                }
+            }
+        });
+    };
+
+    window.loadFBFriends = function() {
+        $.ajax({
+            type:         "post",
+            url:         "action/load_fb_friends.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null) {
+                    $("#display_friend_results").html(msg);
+                }
+            }
+        });
+    };
+
+    window.getUserDetails = function() {
+        $.ajax({
+            type:         "post",
+            url:         "action/get_user_details.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg != "") {
+                    $("#show_user_details").html(msg);
+                }
+            }
+        });
+    };
+
+    getAllActiveDevelopers();
+
+    function getAllActiveDevelopers() {
+
+        developer_id = "";
+
+        $.ajax({
+            type:         "post",
+            url:         "action/get_all_active_developers.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("fa fa-share") > 0) {
+                    $("#developer_table_ref tbody tr").remove();
+                    $("#developer_table_ref").last().append(msg);
+                } else {
+                    //DO NOTHING
+                }
+            }
+        });
+    }
+
+    $("#developer_table_ref").delegate("tr", "click", function(e) {
+
+        var tr = $('#developer_table_ref').find('tr');
+
+        var values = '';
+
+        var tds = $(this).find('td');
+
+        //        iterating all the td values under selected table row - NOT USED FOR NOW
+        $.each(tds, function(index, item) {
+            values = values + 'td' + (index + 1) + ':' + item.innerHTML + '<br/>';
+        });
+//        End
+
+        if(values.indexOf("fa fa-share") > 0) {
+            if(this.id == developer_id) {     //checking if the same <tr> is selected/clicked again
+                tr.removeClass('row-highlight');
+                $(this).addClass('row-highlight');
+                // DO NOTHING
+                return;
+            }
+
+            developer_id = this.id;
+
+            tr.removeClass('row-highlight');
+
+            $(this).addClass('row-highlight');
+
+            $("#task_table_ref tr:gt(1)").remove();
+            $("#task_table_ref tbody tr").remove();
+            {
+                getAllActiveTasksForDeveloper();
+            }
+        }
+    });
+
+    function getAllActiveTasksForDeveloper() {
+
+        //Enabling the +Add Tasks button which was disabled by default
+
+        $('#show_hide_tasks').removeAttr('style');
+
+        $('#btn_addtask').attr('href','#adddevelopertask');
+        $('#btn_addtask').attr('class','btn btn-info btn-fill');
+        $('#btn_addtask').attr('style','width:75%; cursor: pointer;');
+
+        $.ajax({
+            type:         "post",
+            url:         "action/get_all_active_tasks.jsp",
+            data:         "developer_id="+developer_id,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null) {
+                    $("#task_table_ref").last().append(msg);
+                    $("#developer_id").val(developer_id);
+                } else {
+                    //DO NOTHING
+                }
+            }
+        });
+    }
+
+    $("#task_table_ref").delegate("tr", "click", function(e) {
+
+        var tr = $('#task_table_ref').find('tr');
+
+        var values = '';
+
+        var tds = $(this).find('td');
+
+//        iterating all the td values under selected table row - NOT USED FOR NOW
+        $.each(tds, function(index, item) {
+            values = values + 'td' + (index + 1) + ':' + item.innerHTML + '<br/>';
+        });
+//        End
+        if(values != "" && values.indexOf("Add Tasks") < 0) {
+            tr.removeClass('row-highlight');
+            $(this).addClass('row-highlight');
+        }
+    });
+
+    function getAllActiveClientProjects() {
+        $.ajax({
+            type:         "post",
+            url:         "action/get_all_client_projects.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("fa fa-edit") > 0) {
+                    $("#client_projects").html(msg)
+                } else {
+                    //DO NOTHING
+                }
+            }
+        });
+    }
+
+    $("#signout").click(function(e) {
+        $.ajax({
+            type:         "post",
+            url:         "action/remove_session.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("success") >= 0) {
+                    document.cookie = "netref_cookie_login=;expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/";
+                    window.location = "register.html";
+                }
+            }
+        });
+    });
+
+    $("#get_search_results").click(function(e) {
+
+//        var search_by = "experience";
+//        var search_by = "email";
+        var search_by = $('#search_by').val();
+        var search_value = $('#search_results').val();
+
+        $.ajax({
+            type:         "post",
+            url:         "action/get_search_results.jsp",
+            data:        "search_by="+search_by+
+                    "&search_value=" + search_value,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null) {
+                    $("#display_search_results").html(msg);
+                }
+            }
+        });
+    });
+
+    window.enquireFLInNetwork = function(search_fl_path, fl_userid) {
+
+        $.ajax({
+            type:         "post",
+            url:          "action/enquire_fl.jsp",
+            data:         "fl_userid="+fl_userid,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg == "true") {
+                    $("#"+search_fl_path+"_"+fl_userid).removeAttr('onclick');
+                    $("#"+search_fl_path+"_"+fl_userid).attr('style','padding: 1px 5px; cursor: auto;');
+                    $("#"+search_fl_path+"_"+fl_userid).attr('class','btn btn-success btn-simple btn-lg');
+                    $("#"+search_fl_path+"_"+fl_userid).attr('data-original-title','Success');
+                    $("#"+search_fl_path+"_"+fl_userid+" i").removeClass("fa fa-question-circle fa-lg").addClass("fa fa-check-circle fa-lg");
+                } else {
+                    //DO NOTHING
+                }
+
+            }
+        });
+    };
+
+    window.enquireskInNetwork = function(fl_userid) {
+        $.ajax({
+            type:         "post",
+            url:          "action/enquire_sk.jsp",
+            data:         "fl_userid="+fl_userid,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg == "true") {
+
+                } else {
+                    //DO NOTHING
+                }
+
+            }
+        });
+    };
+
+    window.broadcastAskInNetwork = function(broadcast_ask_path, activity_id, owner_id) {
+
+        $.ajax({
+            type:         "post",
+            url:          "action/broadcast_ask_in_network.jsp",
+            data:         "activity_id="+activity_id+
+                          "&owner_id=" + owner_id,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg == "true") {
+                    $("#"+broadcast_ask_path+"_"+activity_id+"_"+owner_id).removeAttr('onclick');
+                    $("#"+broadcast_ask_path+"_"+activity_id+"_"+owner_id).attr('style','padding: 1px 5px; cursor: auto;');
+                    $("#"+broadcast_ask_path+"_"+activity_id+"_"+owner_id).attr('class','btn btn-success btn-simple btn-lg');
+                    $("#"+broadcast_ask_path+"_"+activity_id+"_"+owner_id).attr('data-original-title','Success');
+//                    $("#"+broadcast_ask_path+"_"+activity_id+" i").removeClass("fa fa-wifi fa-lg").addClass("fa fa-check-circle fa-lg");
+                    $("#"+broadcast_ask_path+"_"+activity_id+"_"+owner_id+" img").removeAttr("src").attr("src","images/broadcast_success.png");
+                } else {
+                    //DO NOTHING
+                }
+
+            }
+        });
+    };
+
+    window.askInYourNetwork = function() {
+
+        var comments = $("#ask_in_network").val();
+
+        $.ajax({
+            type:         "post",
+            url:          "action/ask_in_network.jsp",
+            data:         "comments="+comments,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg == "true") {
+//                    $("#ask_in_network_status").html("<font color=blue>Successfully posted</font>");
+                    $('#ask_in_network').val('');
+                    loadAskList();
+                } else {
+                    $("#ask_in_network_status").html("<font color=red>Failed to post</font>");
+                }
+            }
+        });
+    };
+
+    window.postResponseToAsk = function(activity_id, owner_id) {
+
+        var comments = $("#ask_response_"+activity_id+"_"+owner_id).val();
+
+        $.ajax({
+            type:         "post",
+            url:          "action/post_response_to_ask.jsp",
+            data:         "comments="+comments+
+                          "&activity_id="+activity_id,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg == "true") {
+                    $("#ask_response_"+activity_id+"_"+owner_id).val('');
+                } else {
+                    $("#post_response_to_ask_status").html("<font color=red>Failed to post</font>");
+                }
+            }
+        });
+    };
+
+    window.shareFLWithFBFriends = function(fl_photo_path, fl_email, skills, experience, linkedin_url) {
+
+        var comments = "Has anyone in your network used this freelancer? Dou you recommend him/her?" +
+                "   Email: "+(fl_email != null ? fl_email : "N/A");
+
+//        post the url and custom msg
+        var urlFeed="https://www.facebook.com/dialog/feed?"+
+                "app_id=178898775511847"+
+                "&display=popup&description="+encodeURIComponent(comments)+
+                "&caption=netref"+
+                "&link=http://netref.co/netref/register.html"+
+                "&redirect_uri=http://netref.co/netref/client.html";
+
+        window.location = urlFeed;
+    };
+
+    window.shareFLWithFBFriends2 = function(fl_email) {
+
+        var comments = "Has anyone in your network used this freelancer? Dou you recommend him/her?" +
+                "   Email: "+(fl_email != null ? fl_email : "N/A");
+
+//        post the url and custom msg
+        var urlFeed="https://www.facebook.com/dialog/feed?"+
+                "app_id=178898775511847"+
+                "&display=popup&description="+encodeURIComponent(comments)+
+                "&caption=netref"+
+                "&link=http://netref.co/netref.co/register.html"+
+                "&redirect_uri=http://netref.co/netref/client.html";
+
+        window.location = urlFeed;
+    };
+
+    window.recommendFL = function(activity_id, fl_userid, recommend) {
+
+        $.ajax({
+            type:         "post",
+            url:          "action/recommend_fl.jsp",
+            data:         "activity_id="+activity_id +
+                    "&fl_userid=" + fl_userid+
+                    "&recommend=" + recommend,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("success") > 0) {
+                    alert("Success");
+                } else {
+                    //DO NOTHING
+                }
+            }
+        });
+    };
+
+    window.DeletePost = function(activity_id) {
+
+        $.ajax({
+            type:         "post",
+            url:          "action/deletepost.jsp",
+            data:         "activity_id="+activity_id,
+
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg == "true") {
+                    $("#ask_in_network_records").html;
+                    loadAskList();
+
+                } else {
+                    //DO NOTHING
+                }
+
+            }
+        });
+    };
+
+    function getAllActiveDevelopersshare() {
+
+        developer_id = "";
+
+        $.ajax({
+            type:         "post",
+            url:         "action/get_all_developers_share.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("fa fa-share") > 0) {
+                    $("#developer_table_ref_share tbody tr").remove();
+                    $("#developer_table_ref_share").last().append(msg);
+                } else {
+                    //DO NOTHING
+                }
+            }
+        });
+    }
+
+    function getDeveloperslistforfriend() {
+
+        developer_id = "";
+
+        $.ajax({
+            type:         "post",
+            url:         "action/get_all_activedevelopers_list.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("fa fa-share") > 0) {
+                    $("#developer_table_freelance tbody tr").remove();
+                    $("#developer_table_freelance1 tbody tr").remove();
+                    $("#developer_table_freelance2 tbody tr").remove();
+                    $("#developer_table_freelance").last().append(msg);
+                    $("#developer_table_freelance1").last().append(msg);
+                    $("#developer_table_freelance2").last().append(msg);
+                } else {
+                    //DO NOTHING
+                }
+            }
+        });
+    }
+
+    function getAllActiveDeveloperslist() {
+
+        $.ajax({
+            type:         "post",
+            url:         "action/get_all_developers_list.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("fa fa-question-circle fa-lg") > 0) {
+                    $("#developer_table_lists tbody tr").remove();
+                    $("#developer_table_lists").last().append(msg);
+                } else {
+                    //DO NOTHING
+                }
+            }
+        });
+    }
+
+    function getAllActiveprojectlist() {
+        developer_id = "";
+
+        $.ajax({
+            type:         "post",
+            url:         "action/get_all_active_projects.jsp",
+            data:         "developer_id="+developer_id,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null) {
+                    $("#project_table_ref").last().append(msg);
+                    $("#developer_id").val(developer_id);
+                } else {
+                    //DO NOTHING
+                }
+            }
+        });
+    }
+//            $("#project_table_ref").delegate("tr", "click", function(e) {
+//
+//                var tr = $('#project_table_ref').find('tr');
+//
+//                var values = '';
+//
+//                var tds = $(this).find('td');
+//
+////        iterating all the td values under selected table row - NOT USED FOR NOW
+//                $.each(tds, function(index, item) {
+//                    values = values + 'td' + (index + 1) + ':' + item.innerHTML + '<br/>';
+//                });
+////        End
+//                if(values != "") {
+//                    tr.removeClass('row-highlight');
+//                    $(this).addClass('row-highlight');
+//                }
+//            });
+
+
+    window.showdeveloper = function () {
+//                $(ref).removeClass('active');
+        $(ser).removeClass('active');
+        $(task_list).removeClass('active');
+        $(developer).addClass('active');
+        $(ask).removeClass('active');
+        $(list).removeClass('active');
+        $(network).removeClass('active');
+        $(friend).removeClass('active');
+        getAllActiveprojectlist();
+        $('#tasks').hide();
+//                $('#refer').hide();
+        $('#search').hide();
+        $('#show_hide_tasks').hide();
+        $('#friends').hide();
+        $('#ask_friend').hide();
+        $('#lists').hide();
+        $('#mynetwork').hide();
+        $('#dev').show();
+    };
+
+//            window.showmanager = function () {
+//                $(ref).removeClass('active');
+//                $(ser).removeClass('active');
+//                $(task_list).removeClass('active');
+//                $(developer).removeClass('active');
+//                $(manager).addClass('active');
+//                $(ask).removeClass('active');
+//                $(list).removeClass('active');
+//                $(network).removeClass('active');
+//                $(friend).removeClass('active');
+//                $('#tasks').hide();
+//                $('#refer').hide();
+//                $('#search').hide();
+//                $('#show_hide_tasks').hide();
+//                $('#friends').hide();
+//                $('#managers').show();
+//                $('#ask_friend').hide();
+//                $('#lists').hide();
+//                $('#mynetwork').hide();
+//                $('#dev').hide();
+//
+//              }
+
+    window.showask = function () {
+//                $(ref).removeClass('active');
+        $(ser).removeClass('active');
+        $(task_list).removeClass('active');
+        $(developer).removeClass('active');
+        $(list).removeClass('active');
+        $(ask).addClass('active');
+        $(network).removeClass('active');
+        $(friend).removeClass('active');
+        $('#tasks').hide();
+//                $('#refer').hide();
+        $('#search').hide();
+        $('#show_hide_tasks').hide();
+        $('#friends').hide();
+        $('#dev').hide();
+        $('#lists').hide();
+        $('#mynetwork').hide();
+        $('#ask_friend').show();
+    };
+
+    window.showfriends = function () {
+//                $(ref).removeClass('active');
+        $(ser).removeClass('active');
+        $(task_list).removeClass('active');
+        $(developer).removeClass('active');
+        $(ask).removeClass('active');
+        $(list).removeClass('active');
+        $(network).removeClass('active');
+        $(friend).addClass('active');
+        getDeveloperslistforfriend();
+        $('#tasks').hide();
+//                $('#refer').hide();
+        $('#search').hide();
+        $('#dev').hide();
+        $('#show_hide_tasks').hide();
+        $('#ask_friend').hide();
+        $('#lists').hide();
+        $('#mynetwork').hide();
+        $('#friends').show();
+    };
+
+    window.showtasklist = function () {
+        $(developer).removeClass('active');
+//                $(ref).removeClass('active');
+        $(ser).removeClass('active');
+        $(task_list).addClass('active');
+        $(ask).removeClass('active');
+        $(friend).removeClass('active');
+        $(network).removeClass('active');
+        $(list).removeClass('active');
+        getAllActiveClientProjects();
+        $('#dev').hide();
+//               $('#refer').hide();
+        $('#search').hide();
+        $('#show_hide_tasks').hide();
+        $('#friends').hide();
+        $('#ask_friend').hide();
+        $('#lists').hide();
+        $('#mynetwork').hide();
+        $('#tasks').show();
+    };
+
+//            window.showreftable = function () {
+//                $(developer).removeClass('active');
+//                $(task_list).removeClass('active');
+//                $(ser).removeClass('active');
+//                $(ref).addClass('active');
+//                $(ask).removeClass('active');
+//                $(friend).removeClass('active');
+//                $(list).removeClass('active');
+//                $(network).removeClass('active');
+//                getAllActiveDevelopersshare();
+//                $('#dev').hide();
+//                $('#tasks').hide();
+//                $('#search').hide();
+//                $('#show_hide_tasks').hide();
+//                $('#friends').hide();
+//                $('#ask_friend').hide();
+//                $('#lists').hide();
+//                $('#mynetwork').hide();
+//                $('#refer').show();
+//
+//            }
+
+    window.showsearchtable = function () {
+        $(developer).removeClass('active');
+        $(task_list).removeClass('active');
+//                $(ref).removeClass('active');
+        $(ser).addClass('active');
+        $(ask).removeClass('active');
+        $(list).removeClass('active');
+        $(network).removeClass('active');
+        $(friend).removeClass('active');
+        $('#dev').hide();
+        $('#tasks').hide();
+//                $('#refer').hide();
+        $('#show_hide_tasks').hide();
+        $('#friends').hide();
+        $('#ask_friend').hide();
+        $('#lists').hide();
+        $('#mynetwork').hide();
+        $('#search').show();
+    };
+
+    window.networks = function () {
+        $(developer).removeClass('active');
+        $(task_list).removeClass('active');
+//                $(ref).removeClass('active');
+        $(ser).removeClass('active');
+        $(ask).removeClass('active');
+        $(friend).removeClass('active');
+        $(list).removeClass('active');
+        $(network).addClass('active');
+        $('#dev').hide();
+        $('#tasks').hide();
+//                $('#refer').hide();
+        $('#show_hide_tasks').hide();
+        $('#friends').hide();
+        $('#ask_friend').hide();
+        $('#lists').hide();
+        $('#search').hide();
+
+        getUserDetails();   // to display the user details in the header
+        loadActivities();
+        loadAskList();
+        loadFBFriends();
+
+        $('#mynetwork').show();
+    };
+
+    window.sklist = function () {
+        $(developer).removeClass('active');
+        $(task_list).removeClass('active');
+//                $(ref).removeClass('active');
+        $(ser).removeClass('active');
+        $(ask).removeClass('active');
+        $(friend).removeClass('active');
+        $(network).removeClass('active');
+        $(list).addClass('active');
+        getAllActiveDeveloperslist();
+        $('#dev').hide();
+        $('#tasks').hide();
+//                $('#refer').hide();
+        $('#show_hide_tasks').hide();
+        $('#friends').hide();
+        $('#ask_friend').hide();
+        $('#search').hide();
+        $('#mynetwork').hide();
+        $('#lists').show();
+    };
+
+    window.openChangeRoleForm = function() {
+
+        $("#change_role_status").html("");
+
+        var post_url = "action/get_changerole_form.jsp";
+
+        $.ajax({
+            type:         "post",
+            url:          post_url,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null) {
+                    $("#changerole_form").html(msg);
+                } else {
+                    alert(msg);
+                }
+            }
+        });
+        $("#click_to_display_changerole_form").click();
+    };
+
+    $("#submitChangeRole").click(function(e) {
+
+        var user_role = $('input[type="radio"]:checked').val();
+
+        $("#change_role_status").html("Please wait...");
+
+        $.ajax({
+            type:         "post",
+            url:         "action/change_userrole.jsp",
+            data:        "user_role="+user_role,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("success") >= 0) {
+                    $("#change_role_status").html("<font color='blue'>Successfully submitted. Please relogin to reflect changes</font>");
+                } else {
+                    $("#change_role_status").html("<font color='red'>Could not update the role. Please try again</font>");
+                }
+            }
+        });
+    });
+});
+
+$(document).ready(function() {
+    getAllActiveManagers();
+
+    function getAllActiveManagers() {
+
+        manager_id = "";
+
+        $.ajax({
+            type:         "post",
+            url:         "action/get_all_active_managers.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("fa fa-edit") > 0) {
+                    $("#manager_table_ref tbody tr").remove();
+                    $("#manager_table_ref").last().append(msg);
+                } else {
+                    //DO NOTHING
+                }
+            }
+        });
+    }
+
+    $("#manager_table_ref").delegate("tr", "click", function(e) {
+
+        var tr = $('#manager_table_ref').find('tr');
+
+        var values = '';
+
+        var tds = $(this).find('td');
+
+        //        iterating all the td values under selected table row - NOT USED FOR NOW
+        $.each(tds, function(index, item) {
+            values = values + 'td' + (index + 1) + ':' + item.innerHTML + '<br/>';
+        });
+
+//        End
+
+        if(values.indexOf("fa fa-edit") > 0) {
+            if(this.id == manager_id) {     //checking if the same <tr> is selected/clicked again
+                tr.removeClass('row-highlight');
+                $(this).addClass('row-highlight');
+                // DO NOTHING
+                return;
+            }
+
+            manager_id = this.id;
+
+            tr.removeClass('row-highlight');
+
+            $(this).addClass('row-highlight');
+
+            $("#task_table_ref tr:gt(1)").remove();
+            $("#task_table_ref tbody tr").remove();
+            {
+                getAllActiveTasksForManagers();
+            }
+        }
+    });
+});
+
+function showdetails()  {
+    $('#showdetails').hide();
+    $('#hidedetails').show();
+
+}
+function hidedetails()  {
+    $('#showdetails').show();
+    $('#hidedetails').hide();
+
+}
+function showdetails1()  {
+    $('#showdetails1').hide();
+    $('#hidedetails1').show();
+
+}
+function hidedetails1()  {
+    $('#showdetails1').show();
+    $('#hidedetails1').hide();
+
+}
+function showdetails2()  {
+    $('#showdetails2').hide();
+    $('#hidedetails2').show();
+
+}
+function hidedetails2()  {
+    $('#showdetails2').show();
+    $('#hidedetails2').hide();
+}
+
+function showprojects(fl_userid)  {
+    getAllActiveprojectlist1(fl_userid);
+    $('#showprojectdetails'+fl_userid).hide();
+    $('#hideprojectdetails'+fl_userid).show();
+    $('#projects_'+fl_userid).show();
+}
+
+function hideprojects(fl_userid)  {
+    $('#showprojectdetails'+fl_userid).show();
+    $('#hideprojectdetails'+fl_userid).hide();
+    $('#projects_'+fl_userid).hide();
+}
+
+function showFLRecommendations(fl_userid)  {
+    $.ajax({
+        type:         "post",
+        url:         "action/show_fl_recommendations.jsp",
+        data:         "fl_userid="+fl_userid,
+
+        success:    function(msg) {
+            msg = escape(msg).replace(/%0A/g, "");
+            msg = msg.replace(/%0D/g, "");
+            msg = unescape(msg);
+
+            if(msg != null) {
+                $("#showfl_"+fl_userid).html(msg);
+            } else {
+                //DO NOTHING
+            }
+        }
+    });
+
+    $('#showrecommendations_'+fl_userid).hide();
+    $('#hiderecommendations_'+fl_userid).show();
+    $('#showfl_'+fl_userid).show();
+}
+
+function hideFLRecommendations(fl_userid)  {
+    $('#showrecommendations_'+fl_userid).show();
+    $('#hiderecommendations_'+fl_userid).hide();
+    $('#showfl_'+fl_userid).hide();
+}
+
+function showFLRecommendationsOfFriend(fl_userid)  {
+    $.ajax({
+        type:         "post",
+        url:         "action/show_fl_recommendations.jsp",
+        data:         "fl_userid="+fl_userid,
+
+        success:    function(msg) {
+            msg = escape(msg).replace(/%0A/g, "");
+            msg = msg.replace(/%0D/g, "");
+            msg = unescape(msg);
+
+            if(msg != null) {
+                $("#showfl_of_friend_"+fl_userid).html(msg);
+            } else {
+                //DO NOTHING
+            }
+        }
+    });
+
+    $('#showrecommendations_of_friend_'+fl_userid).hide();
+    $('#hiderecommendations_of_friend_'+fl_userid).show();
+    $('#showfl_of_friend_'+fl_userid).show();
+}
+
+function hideFLRecommendationsOfFriend(fl_userid)  {
+    $('#showrecommendations_of_friend_'+fl_userid).show();
+    $('#hiderecommendations_of_friend_'+fl_userid).hide();
+    $('#showfl_of_friend_'+fl_userid).hide();
+}
+
+function showFLRecommendationsOfsk(fl_userid)  {
+    $.ajax({
+        type:         "post",
+        url:         "action/show_sk_recommendations.jsp",
+        data:         "fl_userid="+fl_userid,
+
+        success:    function(msg) {
+            msg = escape(msg).replace(/%0A/g, "");
+            msg = msg.replace(/%0D/g, "");
+            msg = unescape(msg);
+
+            if(msg != null) {
+                $("#showrecommendation_of_sk_"+fl_userid).html(msg);
+            } else {
+                //DO NOTHING
+            }
+        }
+    });
+
+    $('#showrecommendation_of_sks_'+fl_userid).hide();
+    $('#hiderecommendation_of_sks_'+fl_userid).show();
+    $('#showrecommendation_of_sk_'+fl_userid).show();
+}
+
+function hiderecommendationsofsk(fl_userid)  {
+    $('#showrecommendation_of_sks_'+fl_userid).show();
+    $('#hiderecommendation_of_sks_'+fl_userid).hide();
+    $('#showrecommendation_of_sk_'+fl_userid).hide();
+}
+
+function showtable()  {
+    $('#search_result').show();
+}
+
+
+function showFLRecommendationsHome(activity_id, fl_userid)  {
+    $.ajax({
+        type:         "post",
+        url:         "action/show_fl_recommendations.jsp",
+        data:         "fl_userid="+fl_userid,
+
+        success:    function(msg) {
+            msg = escape(msg).replace(/%0A/g, "");
+            msg = msg.replace(/%0D/g, "");
+            msg = unescape(msg);
+
+            if(msg != null) {
+                $("#showfl_home_"+activity_id+"_"+fl_userid).html(msg);
+            } else {
+                //DO NOTHING
+            }
+        }
+    });
+
+    $('#showrecommendations_home_'+activity_id+"_"+fl_userid).hide();
+    $('#hiderecommendations_home_'+activity_id+"_"+fl_userid).show();
+    $('#showfl_home_'+activity_id+"_"+fl_userid).show();
+}
+
+function hideFLRecommendationsHome(activity_id, fl_userid)  {
+    $('#showrecommendations_home_'+activity_id+"_"+fl_userid).show();
+    $('#hiderecommendations_home_'+activity_id+"_"+fl_userid).hide();
+    $('#showfl_home_'+activity_id+"_"+fl_userid).hide();
+}
+
+function showAskResponses(activity_id, posted_by)  {
+    $.ajax({
+        type:         "post",
+        url:         "action/show_ask_responses.jsp",
+        data:         "activity_id="+activity_id,
+
+        success:    function(msg) {
+            msg = escape(msg).replace(/%0A/g, "");
+            msg = msg.replace(/%0D/g, "");
+            msg = unescape(msg);
+
+            if(msg != null) {
+                $("#show_ask_responses_"+activity_id+"_"+posted_by).html(msg);
+            } else {
+                //DO NOTHING
+            }
+        }
+    });
+
+    $('#showaskresponses_'+activity_id+"_"+posted_by).hide();
+    $('#hideaskresponses_'+activity_id+"_"+posted_by).show();
+    $('#show_ask_responses_'+activity_id+"_"+posted_by).show();
+}
+
+function hideAskResponses(activity_id, posted_by)  {
+    $('#showaskresponses_'+activity_id+"_"+posted_by).show();
+    $('#hideaskresponses_'+activity_id+"_"+posted_by).hide();
+    $('#show_ask_responses_'+activity_id+"_"+posted_by).hide();
+}
+
+function showfllist(friend_userid) {
+    $.ajax({
+        type:         "post",
+        url:         "action/get_fl_list.jsp",
+        data:         "friend_userid="+friend_userid,
+
+        success:    function(msg) {
+            msg = escape(msg).replace(/%0A/g, "");
+            msg = msg.replace(/%0D/g, "");
+            msg = unescape(msg);
+
+            if(msg != null)  {
+                $("#fl_"+friend_userid).html(msg);
+
+
+            } else {
+                //DO NOTHING
+            }
+        }
+    });
+
+    $('#fllist_'+friend_userid).show();
+    $('#hidefriends_fl_'+friend_userid).show();
+    $('#showfriends_fl_'+friend_userid).hide();
+
+}
+
+function hideFriendFLs(friend_userid)  {
+    $('#fllist_'+friend_userid).hide();
+    $('#hidefriends_fl_'+friend_userid).hide();
+    $('#showfriends_fl_'+friend_userid).show();
+}
+
+
+
+function getAllActiveprojectlist1(fl_userid) {
+    $.ajax({
+        type:         "post",
+        url:         "action/get_all_active_projects.jsp",
+        data:         "fl_userid="+fl_userid,
+
+        success:    function(msg) {
+            msg = escape(msg).replace(/%0A/g, "");
+            msg = msg.replace(/%0D/g, "");
+            msg = unescape(msg);
+
+            if(msg != null) {
+                $("#project_table_ref_"+fl_userid).html(msg);
+                $("#fl_userid").val(fl_userid);
+            } else {
+                //DO NOTHING
+            }
+        }
+    });
+}
+
+</script>
+
+</head>
+
+<body onload=" window.networks();" >
+<div class="wrapper" class="table-responsive">
+    <nav class="navbar navbar-ct-orange navbar-fixed-top" style="margin-bottom: 0px">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-default2">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" style="padding:1px 15px"><h1 style="margin-top: 1px;font-size: 70px"> <small style="color: white;margin-top: 1px" class="subtitle">netref</small> </h1></a>
+            </div>
+
+            <div style="display: none">
+                <div a data-toggle='modal' href='#changerole' id="click_to_display_changerole_form">Change Role</div>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navigation-default2">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <div  style="display: inline">Tools</div>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="page-scroll"><a href="tools/timesheeet.html">Time sheet</a></li>
+                            <!--<li class="divider"></li>-->
+                            <li class="page-scroll"><a href="tools/invoice.html">Invoice</a></li>
+                            <!--<li class="divider"></li>-->
+                            <li class="page-scroll"><a href="tools/payment.html">Payment</a></li>
+                            <!--<li class="divider"></li>-->
+                            <li class="page-scroll"><a href="tools/calendar.html">Calendar</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <div id="show_user_details" style="display: inline">Account</div>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!--<li><a id="changepwd" style="cursor: pointer">Change password</a></li>-->
+                            <!--<li class="divider"></li>-->
+                            <!--<li><a href="#addskills" data-toggle="modal" style="cursor: pointer"><i class="pe-7s-close-circle"></i>&nbsp;&nbsp;My account</a></li>-->
+                            <!--<li><a id="chagerole"  style="cursor: pointer;"><i class="pe-7s-close-circle"></i>&nbsp;&nbsp;Change Role</a></li>-->
+                            <li><a href="javascript:void(0);" data-toggle="modal" style="cursor: pointer" onclick="openChangeRoleForm(); return false;"><i class="pe-7s-close-circle"></i>&nbsp;&nbsp;Change Role</a></li>
+                            <li class="divider"></li>
+                            <li><a id="signout"  style="cursor: pointer"><i class="pe-7s-close-circle"></i>&nbsp;&nbsp;Logout</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+</div><br><br>
+
+<div class="container mainBody responsive" style="width: 85%;">
+<div>
+    <center> <ul class="nav nav-tabs">
+        <li id="network" onclick=networks(); class="active" style="color:orange"><a href="#">Network Feed</a></li>
+        <li id="ser" onclick=showsearchtable();><a href="#">Search</a></li>
+        <li id="ask" onclick=showask();><a href="#">Ask</a></li>
+        <li id="developer" onclick=showdeveloper(); class="active" style="color:orange"><a href="#">My Freelancers</a></li>
+        <!--<li id="manager" onclick=showmanager(); ><a href="#">Clients</a></li>-->
+        <li id="task_list" onclick=showtasklist();><a href="#">My Projects</a></li>
+        <!--<li id="ref" onclick=showreftable();><a href="#">Share</a></li>-->
+        <li id="friend" onclick=showfriends();><a href="#">Friends</a></li>
+        <li id="list" onclick=sklist();><a href="#">SK’s List</a></li>
+    </ul> </center>
+</div><br>
+<div align="center">
+    <div class="table-responsive" id="dev" style="width: 99%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;" align="center">
+        <table class="table" style="margin-bottom:0px;">
+            <thead><tr>
+                <td width="80%"><h3 style="margin: 2px 0 1px;align:left" >Freelancer</h3>
+
+                <td width="20%" align="right"><button class="btn btn-fill btn-info" data-toggle="modal" href="#addfreelancer" style="width: 130px">Add Freelancer </button></td>
+            </tr></thead>
+        </table>
+        <table class="table" style="margin-bottom:0px;" id="developer_table_ref" >
+            <thead>
+            <tr >
+                <th width="5%"></th>
+                <th width="15%">Name</th>
+                <th width="19%">E-mail</th>
+                <th width="14%" class="text-center">Actions</th>
+                <th width="14%" class="text-center">Approve</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="table-responsive">
+            <table class="table table-hover" style="margin-bottom:0px;">
+
+                <tr bgcolor="#f5f5f5" >
+
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive" id="tasks" style="width: 99%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;display: none" align="center">
+
+    <table class="table" style="margin-bottom:0px;">
+        <thead><tr>
+            <td width="80%"><h3 style="margin: 2px 0 1px;align:left" >Project</h3>
+
+            <td width="20%" align="right"><button class="btn btn-fill btn-info"  data-toggle="modal" href="#addmanagertask" style="width: 120px;">Add Project </button></td>
+        </tr></thead>
+    </table>
+    <table class="table"  style="margin-bottom:0px;">
+        <thead>
+        <tr >
+            <th width="20%">Project Title</th>
+            <th width="40%" class="text-left">Project Description</th>
+            <th width="20%" class="text-center">Actions</th>
+            <th width="20%" class="text-center" >Approve</th>
+        </tr>
+        </thead>
+        <tbody id="client_projects">
+
+        </tbody>
+    </table>
+    <div class="table-responsive">
+        <table class="table table-hover" style="margin-bottom:0px;">
+
+            <tr bgcolor="#f5f5f5" >
+
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+<div class="table-responsive" id="search" style="width: 99%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;display: none" align="center">
+    <br>
+    <div style="height:auto;width:90%">
+
+        <h4 style="margin-top: 1%">Search Freelancer</h4>
+        <div class="row" style="margin-left:20px">
+            <div class="col-md-3"><h5>Search Freelancer by </h5></div>
+            <div class="col-md-3" style="margin-left:-5%;margin-top:-0.4%">
+
+                <select name="search_by" id="search_by" class="form-control">
+                    <option value="skills">Skills</option>
+                    <option value="email">Email</option>
+                    <option value="experience">Experience</option>
+                    <option value="linkedin">LinkedIn url</option>
+                </select>
+
+                <!--
+                                <div class="btn-group select" style="width: 90%;">
+                                    <button data-toggle="dropdown" class="btn dropdown-toggle clearfix form-control">
+                                        <span class="filter-option">select</span>&nbsp;<span class="caret"></span></button>
+                                    <span class="dropdown-arrow"></span>
+                                    <ul role="menu" class="dropdown-menu" style="overflow-y: auto; max-height: 150px;">
+                                        <li rel="0"><a class="" href="#" tabindex="-1"><span class="">Email</span></a></li>
+                                        <li rel="1"><a class="" href="#" tabindex="-1"><span class="">Skills</span></a></li>
+                                        <li rel="2"><a class="" href="#" tabindex="-1"><span class="">Experience</span></a></li>
+                                    </ul>
+                                </div>
+                -->
+            </div>
+            <div class="col-md-5" style="margin-left:0%" align="left">
+                <input type="text" class="form-control" style="width: 300px" name="search_results" id="search_results">
+            </div></div><br>
+
+        <button class="btn btn-fill btn-info"  style="width: 100px;margin-left:50px" id="get_search_results" onclick="showtable();">Search</button><br><br>
+
+        <table class="table" id="search_result" style="margin-bottom:0px;display: none">
+            <thead>
+            <tr >
+                <th width="5%"></th>
+                <th width="20%">Email</th>
+                <th width="15%">Skills</th>
+                <th width="10%">Experience</th>
+                <th width="35%">LinkedIn url</th>
+                <th width="20%">Recommendations</th>
+                <th width="15%">Enquire</th>
+            </tr>
+            </thead>
+            <tbody id="display_search_results">
+
+            <!--Data will be loading from the Ajax response-->
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div align="center">
+    <div class="table-responsive" style="width: 99%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;display:none" align="center"id="managers">
+        <table class="table" style="margin-bottom:0px;">
+            <thead><tr>
+                <td width="80%"><h3 style="margin: 2px 0 1px;align:left" >Client</h3>
+
+                <td width="20%" align="right"><button class="btn btn-fill btn-info" data-toggle="modal" data-target="#addmanager" style="width: 120px">Add Client  </button></td>
+            </tr></thead>
+        </table>
+
+        <table class="table" style="margin-bottom:0px;" id="manager_table_ref" >
+            <thead>
+            <tr >
+                <th width="15%">Name</th>
+                <th width="19%"> Email</th>
+                <th width="14%" class="text-center">Actions</th>
+                <th width="14%" class="text-center">Approve</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <div class="table-responsive">
+            <table class="table table-hover" style="margin-bottom:0px;">
+
+                <tr bgcolor="#f5f5f5" >
+
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div align="center">
+    <div class="table-responsive" id="lists" style="width: 99%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;display: none" align="center">
+        <table class="table" style="margin-bottom:0px;">
+            <thead><tr>
+                <td width="80%"><h3 style="margin: 2px 0 1px;align:left" >Freelancer</h3>
+
+                    <!--<td width="20%" align="right"><button class="btn btn-fill btn-info" data-toggle="modal" href="#adddeveloper" style="width: 130px">Add Developer </button></td>-->
+            </tr></thead>
+        </table>
+
+        <table class="table" style="margin-bottom:0px;" id="developer_table_lists" >
+            <thead>
+            <tr >
+                <th width="5%"></th>
+                <th width="20%">Name</th>
+                <th width="20%">Email</th>
+                <th width="15%">Skills</th>
+                <th width="10%">Experience</th>
+                <th width="35%">LinkedIn url</th>
+                <th width="10%">Recommendations</th>
+                <th width="10%">Enquire</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <div class="table-responsive">
+            <table class="table table-hover" style="margin-bottom:0px;">
+
+                <tr bgcolor="#f5f5f5" >
+
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div align="center">
+    <div class="table-responsive" id="refer" style="width: 99%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;display: none" align="center">
+        <table class="table" style="margin-bottom:0px;">
+            <thead><tr>
+                <td width="80%"><h3 style="margin: 2px 0 1px;align:left" >Freelancer</h3>
+
+                    <!--<td width="20%" align="right"><button class="btn btn-fill btn-info" data-toggle="modal" href="#adddeveloper" style="width: 130px">Add Developer </button></td>-->
+            </tr></thead>
+        </table>
+
+        <table class="table" style="margin-bottom:0px;" id="developer_table_ref_share" >
+            <thead>
+            <tr >
+                <th width="15%">Name</th>
+                <th width="19%">E-mail</th>
+                <th width="14%" class="text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <div class="table-responsive">
+            <table class="table table-hover" style="margin-bottom:0px;">
+
+                <tr bgcolor="#f5f5f5" >
+
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div align="center">
+    <div class="table-responsive" id="mynetwork" style="width: 99%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;display: none" align="center">
+        <table class="table" style="margin-bottom:0px;height: auto">
+            <thead>
+            <section class="content" style="height:400px; margin-bottom: 25px; overflow-y: auto;overflow-x: hidden;">
+                <div class="container" style="width:98%;height: 70%">
+                    <div class="fcllex_cafe" style="margin-bottom:-7%">
+                        <ul class="fcc_content" id="display_activity_results">
+
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div class="table-responsive" id="ask_friend" style="width: 99%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;display: none" align="center">
+    <div style="height:auto;width:90%">
+        <div class="row">
+            <div class="text-left" style="margin-top: 5%;margin-left:40px">
+                <textarea type="text" class="form-control"  style="width: 400px" placeholder="Ask in your network" name="ask_in_network" id="ask_in_network"></textarea>
+            </div>
+        </div>
+        <div style="margin-top: 1%; margin-left: 9%; width: 400px;" align="left" >
+            <button class="btn btn-sm btn-fill btn-info"  style="margin-top: -1%" onclick="askInYourNetwork(); return false;">Post</button>
+        </div>
+        <!--<div id="ask_in_network_status"></div><br>-->
+
+        <table class="table" style="margin-bottom:0px;">
+            <thead>
+            <tr >
+                <th width="50%">Summary</th>
+                <th width="30%">Posted on</th>
+                <th width="20%" class="text-center">Actions</th>
+            </tr>
+            </thead>
+        </table>
+
+        <div style="height:200px; overflow: auto">
+            <table class="table" style="margin-bottom:0px;">
+                <tbody id="ask_in_network_records">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div align="center">
+    <div class="table-responsive" id="friends" style="width: 99%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;display: none" align="center">
+        <table class="table" style="margin-bottom:0px;height: auto">
+            <thead>
+            <section class="content" style="height:400px; margin-bottom: 25px; overflow-y: auto">
+                <div class="container" style="width:98%;height: 70%">
+                    <div class="fcllex_cafe" style="margin-bottom:-7%">
+                        <ul class="fcc_content" id="display_friend_results">
+
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            </thead>
+        </table>
+    </div>
+</div>
+<br><br>
+
+</div>
+</div>
+
+<!--
+<div class="container mainBody responsive" style="width: 75%;margin-top:0px;display: none;" id="show_hide_tasks">
+    <div align="center">
+        <div class="table-responsive" style="width: 99%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;" align="center">
+            <table class="table" style="margin-bottom:0px;">
+                <thead><tr>
+                    <td width="80%"><h3 style="margin: 2px 0 1px;align:left" >Project</h3>
+
+                    <td width="20%" align="right"><button class="btn btn-fill" id="btn_addtask" data-toggle="modal" style="width: 120px; cursor: auto">Add project </button></td>
+                </tr></thead>
+            </table>
+
+            <table class="table" id="task_table_ref" style="margin-bottom:0px;">
+                <thead>
+                <tr >
+                    <th width="20%">Project Title</th>
+                    <th width="50%" class="text-left">Project Description</th>
+                    <th width="15%" class="text-center">Actions</th>
+                    <th width="15%" class="text-center">Approve</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+            <div class="table-responsive">
+                <table class="table table-hover" style="margin-bottom:0px;">
+
+                    <tr bgcolor="#f5f5f5" >
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
+<div class="modal modal-small fade" id="changerole" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 550px">
+            <div class="modal-header" style="background-color:#2ca8ff;border-radius: 5px 5px 0px 0px" >
+                <button type="button" class="close" data-dismiss="modal" style="color: white" aria-hidden="true">&times;</button>
+                <h3 class="modal-title text-center" style="margin-bottom: 0px;height:15px;color: white" >Change Role</h3></br>
+            </div>
+            <div class="modal-body">
+                <div id="changerole_form">
+                    <center>Please wait...</center>
+                </div>
+                <br>
+                <div id="change_role_status" align="center"></div>
+            </div>
+
+            <div class='modal-footer'>
+                <center><button id="submitChangeRole" class='btn btn-primary btn-fill btn-info'  type='submit'>Submit</button>&nbsp;&nbsp;
+                    <button class='btn btn-fill btn-default' data-toggle='button' data-dismiss='modal'>Close</button></center>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="addskills" tabindex="-1" role="dialog" aria-hidden="true" action="addskills.jsp" method="get" >
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 550px">
+            <div class="modal-header" style="background-color:#2ca8ff;border-radius: 5px 5px 0px 0px" >
+                <button type="button" class="close" data-dismiss="modal" style="color: white" aria-hidden="true">&times;</button>
+                <h3 class="modal-title text-center" style="margin-bottom: 0px;height:15px;color: white" >Add Skills</h3></br>
+            </div>
+            <div class="modal-body">
+                <form id="form1" action="addmanagertaskprocess.jsp" method="get">
+                    <div class="row">
+                        <div class="col-md-2" style="margin-left:10%">
+                            <h5 for="name">Skills</h5></div>
+                        <div class="col-md-5" style="margin-left:-1%">
+                            <input type="text" class="form-control" id="skills" style="width: 300px"type="text" id="skills" name="task_title" ></div></div><br>
+
+                    <div class="row">
+                        <div class="col-md-2" style="margin-left:10%">
+                            <h5 for="title">Experience</h5></div>
+                        <div class="col-md-5" style="margin-left:-1%">
+                            <input type="text" class="form-control" style="width: 300px" id="experience" name="experience" ></div></div><br><!-- maxlength="8"  -->
+
+
+                    <div class="modal-footer">
+                        <center><button class="btn btn-primary btn-fill btn-info"  type="submit">Add</button>&nbsp;&nbsp;
+                            <button class="btn btn-fill btn-default" data-toggle="button" data-dismiss="modal">Cancel</button></center>
+                    </div>
+                    <input type="hidden" name="user_id" class="form-control" id="user_id" value="0">
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="addmanagertask" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 550px">
+            <div class="modal-header" style="background-color:#2ca8ff;border-radius: 5px 5px 0px 0px" >
+                <button type="button" class="close" data-dismiss="modal" style="color: white" aria-hidden="true">&times;</button>
+                <h3 class="modal-title text-center" style="margin-bottom: 0px;height:15px;color: white" >Add Project</h3></br>
+            </div>
+            <div class="modal-body">
+                <form id="form4" action="addmanagertaskprocess.jsp" method="get">
+                    <div class="row">
+                        <div class="col-md-5" style="margin-left:5%">
+                            <h5 for="name">Project title :</h5></div>
+                        <div class="col-md-5" style="margin-left:-22%">
+                            <input type="text" class="form-control" id="task_title" style="width: 300px"type="text" id="name" name="task_title" ></div></div><br>
+
+                    <div class="row">
+                        <div class="col-md-5" style="margin-left:5%">
+                            <h5  for="description">Project<br> description :</h5></div>
+                        <div class="col-md-5" style="margin-left:-22%">
+                            <textarea name="task_description"  class="form-control" row="8" id="task_description" style="width: 350px" ></textarea></div></div><br><!-- maxlength="8"  -->
+
+
+                    <div class="modal-footer">
+                        <center>  <button class="btn btn-primary btn-fill btn-info"  type="submit">Add project</button>&nbsp;&nbsp;
+                            <button class="btn btn-fill btn-default" data-toggle="button" data-dismiss="modal">Cancel</button></center>
+                    </div>
+                    <input type="hidden" name="manager_id" class="form-control" id="manager_id" value="0">
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="addmanager" tabindex="-1" role="dialog" aria-hidden="true" action="addmanagerprocess.jsp" method="get">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 550px">
+            <div class="modal-header" style="background-color:#2ca8ff;border-radius: 5px 5px 0px 0px" >
+                <button type="button" class="close" data-dismiss="modal" style="color: white" aria-hidden="true">&times;</button>
+                <h3 class="modal-title text-center" style="margin-bottom: 0px;height:15px;color: white" >Add Client</h3></br>
+            </div>
+            <div class="modal-body">
+                <form id="form3" action="addmanagerprocess.jsp" method="get">
+                    <div class="row">
+                        <div class="col-md-2" style="margin-left:10%">
+                            <h5 >Name :</h5></div>
+                        <div class="col-md-5" style="margin-left:-3%">
+                            <input type="text" name="manager_name" class="form-control" id="manager_name" style="width: 350px" ></div></div><br>
+                    <div class="row">
+                        <div class="col-md-2" style="margin-left:10%">
+                            <h5 >E-mail :</h5></div>
+                        <div class="col-md-5" style="margin-left:-3%">
+                            <input type="text" name="manager_email" class="form-control" id="manager_email" style="width: 350px" ></div></div><br><!-- maxlength="8"  -->
+
+
+                    <div class="modal-footer">
+                        <center>  <button class="btn btn-primary btn-fill btn-info" type="submit">Add client</button>&nbsp;&nbsp;
+                            <button class="btn btn-fill btn-default" data-toggle="button" data-dismiss="modal">Cancel</button></center>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="addfreelancer" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 550px">
+            <div class="modal-header" style="background-color:#2ca8ff;border-radius: 5px 5px 0px 0px">
+                <button type="button" class="close" data-dismiss="modal" style="color: white" aria-hidden="true">&times;</button>
+                <h3 class="modal-title text-center" style="margin-bottom: 0px;height:15px;color: white" >Add Freelancer</h3></br>
+            </div>
+            <div class="modal-body">
+                <form id="form1" action="addfreelancerprocess.jsp" method="get">
+                    <div class="row">
+                        <div class="col-md-2" style="margin-left:10%"> <h5 >Name :</h5></div>
+                        <div class="col-md-5" style="margin-left:-3%">
+                            <input type="text" name="freelancer_name" class="form-control" id="freelancer_name" style="width: 300px"></div></div><br>
+                    <div class="row">
+                        <div class="col-md-2" style="margin-left:10%"> <h5 >Email :</h5></div>
+                        <div class="col-md-5" style="margin-left:-3%">
+                            <input type="text" name="freelancer_mail" class="form-control" id="freelancer_mail" style="width: 300px" ></div></div><br>
+                    <div class="modal-footer">
+                        <center>  <button class="btn btn-fill btn-info" type="submit">Add freelancer</button>&nbsp;&nbsp;
+                            <button class="btn btn-fill btn-default" data-toggle="button" data-dismiss="modal">Cancel</button>  <center>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="adddevelopertask" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 550px">
+            <div class="modal-header" style="background-color:#2ca8ff;border-radius: 5px 5px 0px 0px" >
+                <button type="button" class="close" data-dismiss="modal" style="color: white" aria-hidden="true">&times;</button>
+                <h3 class="modal-title text-center" style="margin-bottom: 0px;height:15px;color: white" >Add Project</h3></br>
+            </div>
+            <div class="modal-body">
+                <form id="form2" action="adddevelopertaskprocess.jsp" method="get">
+                    <div class="row">
+                        <div class="col-md-5" style="margin-left:5%">
+                            <h5 >Project title :</h5></div>
+                        <div class="col-md-5" style="margin-left:-22%">
+                            <input type="text" name="devtasktitle" class="form-control" id="devtasktitle" style="width: 300px"></div></div><br>
+                    <div class="row">
+                        <div class="col-md-4" style="margin-left:5%">
+                            <h5 >Project<br> description :</h5></div>
+                        <div class="col-md-5" style="margin-left:-14%">
+                            <textarea type="text" name="devtaskdescription" class="form-control" row="8" id="devtaskdescription" style="width: 350px" ></textarea></div></div><br><!-- maxlength="8"  -->
+
+                    <div class="modal-footer">
+                        <center>  <button class="btn btn-primary btn-fill btn-info" type="submit">Add task</button>&nbsp;&nbsp;
+                            <button class="btn btn-fill btn-default" data-toggle="button" data-dismiss="modal">Cancel</button></center>
+                    </div>
+                    <input type="hidden" name="developer_id" class="form-control" id="developer_id" value="0">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

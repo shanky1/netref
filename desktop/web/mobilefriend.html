@@ -1,0 +1,1312 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+<meta charset="utf-8">
+<title>Netref</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<link rel='shortcut icon' href="images/favicon.ico" />
+<link href="resources/css/font-awesome.css" rel="stylesheet">
+<link href="resources/css/bootstrap.css" rel="stylesheet">
+<link href="resources/css/site.min.css" rel="stylesheet">
+<link href="resources/css/netref.css" rel="stylesheet">
+<link href="resources/css/segment.css" rel="stylesheet">
+<link href="resources/css/style.css" rel="stylesheet">
+
+<script src="resources/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="resources/js/jquery.longclick-min.js"></script>
+<script src="resources/js/segment.js"></script>
+
+<link href="resources/css/jquery-ui.css" rel="stylesheet"> <!--// i have added-->
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script type="text/javascript">
+    jQuery(function ($){
+        $(".segment-select").Segment();
+    });
+</script>
+
+<style>
+@media screen and (orientation: portrait) {
+    #friendfl {
+        margin-bottom:-3px;
+        margin-top:1px;
+    }
+    #ask {
+        margin-bottom:6px;
+        padding:0px;
+    }
+    #enquireresponse {
+        margin-bottom:8px;
+        margin-top:-2%;
+    }
+
+    .btn-custom {
+        font-size: 14px;
+        color: #22A7F0;
+        background-color: #ffffff;
+        border: 1px solid #22A7F0;
+    }
+
+    .btn-custom.active, .btn-custom:active, .open>.btn-custom.dropdown-toggle {
+        font-size: 14px;
+        color: #ffffff;
+        background-color: #22A7F0;
+        border: 1px solid #22A7F0;
+    }
+
+    .btn-custom.pending {
+        font-size: 14px;
+        color: #ffffff;
+        background-color: orange;
+        border: 1px solid #22A7F0;
+    }
+}
+
+    /* For landscape, we want the tool bar stick on the left */
+
+@media screen and (orientation: landscape) {
+    #friendfl {
+        margin-bottom:0%;
+        margin-top:2px;
+    }
+    #ask {
+        margin-bottom:0px;
+        padding:0px;
+    }
+    #enquireresponse {
+        margin-bottom:3px;
+        margin-top:0%;
+    }
+}
+
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    width: 100%;
+    position: absolute;
+    z-index: 9999;
+    padding: 10px 0px 10px 10px;
+    right: 0px;
+}
+
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    width: 100%;
+    position: absolute;
+    z-index: 9999;
+    padding: 10px 0px 10px 10px;
+    right: 0px;
+}
+
+.alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    width: 100%;
+    position: absolute;
+    z-index: 9999;
+    padding: 10px 0px 10px 10px;
+    right: 0px;
+}
+
+.custom_close {
+    float: right;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: #808080;
+    text-shadow: 0 1px 0 #fff;
+    padding: 0px 10px 0px 10px
+}
+
+h1 .subtitle {
+    display: block;
+    font-family: 'Grand Hotel',cursive;
+    line-height: 40px;
+    margin: 15px 0 30px;
+}
+.redfamily {
+    color: red;
+}
+.search-box,.close-icon, .search-wrapper {
+    position: relative;
+    padding: 5px;
+}
+.search-wrapper {
+    width: 500px;
+    margin: auto;
+    margin-top: 50px;
+}
+.search-box {
+    width: 80%;
+    border-bottom: 1px solid #ffffff;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    outline: 0;
+    border-radius: 5px;
+    background-color: transparent;
+}
+.search-box:focus {
+    box-shadow: 0 0 1px 1px #b0e0ee;
+    border: 0px solid #bebede;
+}
+.search-icon-pros {
+    /*color:#a6a6a6;*/
+    color:#ffffff;
+    margin-left: -23px;
+    position: relative;
+    vertical-align: middle;
+    z-index:1;
+    right: 195px;
+    text-align: center;
+    font-weight: normal;
+    font-size: 16px;
+    cursor: pointer;
+}
+.search-icon-contacts {
+    color:#a6a6a6;
+    margin-left: -23px;
+    position: relative;
+    vertical-align: middle;
+    z-index:1;
+    right: 195px;
+    text-align: center;
+    font-weight: normal;
+    font-size: 16px;
+    cursor: pointer;
+}
+.close-icon {
+    border:1px solid transparent;
+    background-color: transparent;
+    display: inline-block;
+    vertical-align: middle;
+    outline: 0;
+    cursor: pointer;
+    margin-left: -15px;
+}
+.close-icon:after {
+    content: "X";
+    display: block;
+    width: 18px;
+    height: 20px;
+    position: absolute;
+    background-color: #FA9595;
+    z-index:1;
+    right: 5px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 0px;
+    border-radius: 50%;
+    text-align: center;
+    color: white;
+    font-weight: normal;
+    /*font-size: 12px;*/
+    box-shadow: 0 0 2px #E50F0F;
+    cursor: pointer;
+}
+.search-box:not(:valid) ~ .close-icon {
+    display: none;
+}
+.blink {
+    animation: blink-animation 1s steps(5, start) infinite;
+    -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+@-webkit-keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+
+.searchbychar a {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.searchbychar a:focus, a:hover {
+    color: #ff5656;
+    text-decoration: none;
+}
+
+#search_by_val::-webkit-input-placeholder {
+    color: #ffffff;
+    opacity: 1
+}
+
+#search_by_val::-moz-placeholder {
+    color: #ffffff;
+    opacity: 1
+}
+
+#search_by_val::-ms-input-placeholder {
+    color: #ffffff;
+    opacity: 1
+}
+
+#search_by_val::placeholder {
+    color: #ffffff;
+    opacity: 1
+}
+
+.contact_search a:focus, a:hover {
+    color: #ff5656;
+    text-decoration: none;
+}
+
+#contact_search::-webkit-input-placeholder {
+    color: #ffffff;
+    opacity: 1;
+}
+
+#contact_search::-moz-placeholder {
+    color: #ffffff;
+    opacity: 1;
+}
+
+#contact_search::-ms-input-placeholder {
+    color: #ffffff;
+    opacity: 1;
+}
+
+#contact_search::placeholder {
+    color: #ffffff;
+    opacity: 1;
+}
+
+#ask_in_network::-webkit-input-placeholder {
+    color: #ffffff;
+    opacity: 1;
+}
+
+#ask_in_network::-moz-placeholder {
+    color: #ffffff;
+    opacity: 1;
+}
+
+#ask_in_network::-ms-input-placeholder {
+    color: #ffffff;
+    opacity: 1;
+}
+
+#ask_in_network::placeholder {
+    color: #ffffff;
+    opacity: 1;
+}
+</style>
+
+</head>
+
+<body onload="window.checkTooltips_Cookie(); window.networkFriends(); window.getAutoSuggestedKeywords(); " style="overflow: hidden;">
+<div class="rd-navbar-wrap" style="height: 55px;">
+    <nav data-md-device-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-static" class="rd-navbar rd-navbar-default rd-navbar-transparent" data-lg-auto-height="true" data-md-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-stick-up="true" style="height: 55px;">
+        <div class="rd-navbar-inner">
+            <!-- RD Navbar Panel-->
+            <div class="rd-navbar-panel" style="height: 55px;">
+                <!-- RD Navbar Toggle-->
+                <button  data-rd-navbar-toggle=".rd-navbar, .rd-navbar-nav-wrap" class="rd-navbar-toggle pull-right" style="top: 10px;"><span></span></button>
+                <!--Navbar Brand-->
+                <!--
+                                <div class="rd-navbar-brand">
+                                    <h1 style="margin-top: 1px;font-size: 50px"> <small style="color: white;margin-top: 2px;margin-left:10px" class="subtitle">netref</small> </h1>
+                                </div>
+                -->
+                <div class="rd-navbar-brand" style="padding: 20px 8px 8px 8px;">
+                    <div id="search_by_val_div">
+                        <input type="text" name="focus" required class="search-box" id="search_by_val" name="search_by_val" style="max-width: 220px;display: inline;align:center; font-size: 12px;border-radius: 8px; padding-left: 25px;padding-right: 20px; color: #ffffff;" placeholder="Search by name or profession" onkeyup="autoSuggestKeywords();"/>
+                        <button class="close-icon" type="reset" onclick="clearproscontent();"></button>
+                        <i class="fa fa-search text-muted search-icon-pros"></i>
+                    </div>
+
+                    <div id="contact_search_div" style="display: none">
+                        <input name="focus" type="text" required class="search-box" style="max-width: 220px;display: inline;align:center; font-size: 12px;border-radius: 8px; padding-left: 25px; padding-right: 20px; color: #ffffff;" name="contact_search" id="contact_search" placeholder="Search contacts by name">
+                        <button class="close-icon" type="reset" onclick="clearcontactsearch();"></button>
+                        <i class="fa fa-search text-muted search-icon-pros"></i>
+                    </div>
+
+                    <div id="networkfeed_post_div" style="display: none">
+                        <input name="focus" type="text" required class="search-box" style="max-width: 200px;display: inline;align:center; font-size: 12px;border-radius: 8px; padding-left: 10px; padding-right: 10px; color: #ffffff;" name="ask_in_network" id="ask_in_network" placeholder="Looking For...">
+                        <button id='post_feed_btn' onclick="askInYourNetwork();" type='button' class='btn btn-info btn-sm' style='display:inline;border-radius:5px; padding: .25rem .5rem; margin-top: 2px; margin-left: 5px; border: 1px solid #ffffff; background-color: white; color: #ff6666; box-shadow: 0.09em 0.09em 0.09em 0.05em #888888;'>Post</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Simulating the button clicks-->
+            <div style="display: none">
+                <div a data-toggle='modal' href='#addprofile' id="click_to_display_profile_form">Open Add profile Modal</div>
+                <div a data-toggle='modal' href='#set_profile_mdl' id="click_to_display_setprofile_modal">Open Set Profile Modal</div>
+                <div a data-toggle='modal' href='#addskills' id="click_to_display_skills_form">Open Add skills Modal</div>
+                <div a data-toggle='modal' href='#deletepost' id="click_to_display_deletepost_form">Open Delete Post Modal</div>
+                <div a data-toggle='modal' href='#addcontact_mdl_fb' id="click_to_display_addcontact_modal_fb">Open Add contact FB Modal</div>
+                <div a data-toggle='modal' href='#addcontact_mdl_mobile' id="click_to_display_addcontact_modal_mobile">Open Add contact Mobile Modal</div>
+                <div a data-toggle='modal' href='#sharecontact_mdl' id="click_to_display_share_form">Open Share Contact Modal</div>
+                <div a data-toggle='modal' href='#show_contact_details_mdl' id="click_to_display_contact_details">Open Show Contact Details Modal</div>
+                <div a data-toggle='modal' href='#editcontact_mdl' id="click_to_display_contact_form">Open Edit Contact Modal</div>
+                <div a data-toggle='modal' href='#deletecontact_mdl' id="click_to_display_delete_form">Open Delete Contact Modal</div>
+            </div>
+
+            <div class="rd-navbar-menu-wrap">
+                <div class="rd-navbar-nav-wrap">
+                    <div class="rd-navbar-mobile-scroll">
+                        <!--Navbar Brand Mobile-->
+                        <div class="rd-navbar-mobile-brand">
+                            <div style="color: #ffffff;opacity: 10">
+                                <div class="img-circle" style="display: inline;color: #ffffff;opacity: 10;">
+                                    <div class="row" style=" margin-left:-2rem;">
+                                        <div class="col-xs-3" >
+                                            <img id="profile_image_display" height='45px;' width='45px;' class='img-circle' src='profile_images/profile.jpg'
+                                                 onError="this.onerror=null;this.src='profile_images/profile.jpg';" style="display: inline-block;"/></div>
+                                        <div class="col-xs-8" style="vertical-align: middle">
+                                            <p id="profile_name_display" style='font-size:15px;display:inline-block; word-wrap: break-word; width:170px; margin-left:-12px; margin-top:5px'></p>
+                                        </div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="rd-navbar-nav">
+                            <!--<li><a  data-toggle="modal" style="cursor: pointer;padding-bottom: 10px;margin: 7px 2px;color: #ffffff;opacity: 10" onclick="openProfileForm('from_header'); return false;">&nbsp;&nbsp;<i class="fa fa-user" style="color:#ff6666;font-size:23px" ></i>&nbsp;&nbsp;My profile</a></li>-->
+                            <li><a  data-toggle="modal" style="cursor: pointer;padding-bottom: 10px;margin: 7px 2px;color: #ffffff;opacity: 10" onclick="openProfilePage();">&nbsp;&nbsp;<i class="fa fa-user" style="color:#ff6666;font-size:23px" ></i>&nbsp;&nbsp;My profile</a></li>
+                            <hr style="margin-bottom:15px;margin-top:1%;">
+
+                            <li><a  data-toggle="modal" style="cursor: pointer;padding-bottom: 10px;margin: 7px 2px;color: #ffffff;opacity: 10" onclick="loadnotifications();">&nbsp;&nbsp;<i class="fa fa-bell" style="color:#ff6666;font-size:23px" ></i>&nbsp;&nbsp;Notifications</a></li>
+                            <hr style="margin-bottom:15px;margin-top:1%;">
+                            <!--
+                                                        <li><a data-toggle="modal"  style="cursor: pointer;padding-bottom: 10px;margin: 7px 2px;color: #ffffff;opacity: 10" onclick="openSkillsForm('from_header'); return false;">&nbsp;&nbsp;<i class="fa fa-cogs" style="color:#ff6666;font-size:23px" ></i>&nbsp;&nbsp;Add skills</a></li>
+                                                        <hr style="margin-bottom:15px;margin-top:1%;">
+                            -->
+                            <li><a id="signout"  style="cursor: pointer;padding-bottom: 10px;margin: 7px 2px;color: #ffffff;opacity: 10" >&nbsp;&nbsp;<i class="fa fa-power-off" style="color:#ff6666;font-size:23px"></i>&nbsp;&nbsp;Logout</a></li>
+                            <hr style="margin-bottom:15px;margin-top:1%;">
+                            <!--
+                                                            <li class="page-scroll"><a onclick="signoutAll();" id="signoutAll"  style="cursor: pointer;margin: 7px 2px;color: #ffffff;opacity: 10">&nbsp;&nbsp;<i class="fa fa-power-off" style="color:orange" ></i>&nbsp;&nbsp;Logout (FB Session)</a></li>
+                                                            <hr style="margin-bottom:15px;margin-top:1%;">
+                            -->
+                            <li class="active">
+                                <a href="#"  style="padding-bottom: 10px;margin: 7px 2px;color: #ffffff;opacity: 10" >
+                                    <div  style="display: inline;margin-bottom: -3%;color: #ffffff;opacity: 10">
+                                        <i class="fa fa-wrench" style="color:#ff6666;font-size:23px"></i>&nbsp;&nbsp;Tools
+                                    </div>
+                                </a>
+                                <ul class="rd-navbar-dropdown">
+                                    <li class="page-scroll"><a href="tools/feedbacksurvey.html">&nbsp;&nbsp;<i class="fa fa-area-chart" style="color:#ff6666" ></i>&nbsp;&nbsp;Feedback survey</a></li>
+                                    <li class="page-scroll"><a href="tools/timesheeet.html">&nbsp;&nbsp;<i class="fa fa-clock-o" style="color:#ff6666" ></i>&nbsp;&nbsp;Time sheet</a></li>
+                                    <li class="page-scroll"><a href="tools/invoice.html">&nbsp;&nbsp;<i class="fa fa-usd" style="color:#ff6666"></i>&nbsp;&nbsp;Invoice</a></li>
+                                    <li class="page-scroll"><a href="tools/payment.html">&nbsp;&nbsp;<i class="fa fa-credit-card" style="color:#ff6666"></i>&nbsp;&nbsp;Payment</a></li>
+                                    <li class="page-scroll" style="margin-bottom: 3%"><a href="tools/calendar.html" >&nbsp;&nbsp;<i class="fa fa-calendar" style="color:#ff6666"></i>&nbsp;&nbsp;Calendar</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div id="professionals_page" style="display: none;">
+    <div style="position: fixed;width: 100%">
+        <div align="center" style="max-width: 100%;background-color: #F5F5F5;overflow: hidden;" id="showfriend header">
+            <table class="table" style="margin-bottom:0px;">
+                <thead>
+                <tr>
+                    <th width="100%" style="background-color:#F5F5F5; border-bottom: 0px;">
+                        <!--<h4 style="margin:1px 0 5px;align:left;color:#444571;font-size: 17px ">Professionals (Pros)</h4>-->
+                        <select name="search_by" style="display: none;" id="search_by" class="form-control" >
+                            <option value="skills" type="hidden">Skills</option>
+                        </select>
+
+                        <div style="font-size: 0.85rem; margin-bottom: 5px;'" align="center">Professionals in your network</div>
+                        <div class="text-muted" style="font-size: 0.82rem; margin-bottom: 5px;'" align="center">Add more friends to see more professionals</div>
+
+                        <!--    commented out Tabs, tentatively - done on 9aug2016
+                                                <div class='events-body text-center' style="margin-top: 2%;text-align: center;" >
+                                                    <div style="padding-left: 0px" class="text-center">
+                                                        <div class="ui-segment">
+                                                            <span id="showFLView_btn" class="option active" value="1" onclick="showFLView();">Professionals</span>
+                                                            <span id="showFriendsView_btn" class="option " value="2" onclick="showFriendsView();">Friends</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                        -->
+                    </th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+
+        <div align="center" style="height: 90%">
+            <div class="timeline" id="load_fls_loading" style="display: none;">
+                <br><br><br><br><i class="fa fa-circle-o-notch fa-2x fa-pulse" style="color: white" ></i>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+
+        <div align="center" style="max-width: 100%;height:100vh;background-color: #F5F5F5;margin-top: -0.8%" id="flview_table">
+            <!--<div class="text-muted" style="font-size: 0.9rem;">Add more friends to see more professionals</div>-->
+            <section id="prof_section_id" class="content" style="height:65vh; margin-bottom: 15px; overflow-y: auto;overflow-x: hidden;">
+                <div class="container" style="height: 66vh" id="professional_list">
+                    <div class="example" >
+                        <div class="row" >
+                            <div class="col-md-13" style="padding: 0px 8px 0px 8px; height: 5px">
+                                <div class="timeline timeline_pros" id="load_fls" >
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container" style="height: 90%;display: none;" id="prosclients">
+                    <div class="example" style="height: 90%">
+                        <div class="row" style="height: 90%">
+                            <div class="col-md-13" style="padding: 0px 8px 0px 8px;height: 5px">
+                                <div style='max-width: 98%;margin-bottom: 1%;max-height: 180px;overflow: auto;margin-top: 1%'>
+                                    <i onclick="hideFLclients();" class='fa fa-arrow-left pull-left' style='color:#808080;font-size: 14px;padding: 0px 15px 0px 12px;'></i>
+                                    <h6 id="fl_clients_prosname" style="display: inline-block; margin-left: -30px; font-size: 0.9rem; font-weight: bold;" class='pull-center'>Professional name</h6>
+                                    <div style=' height:auto; padding-left:4px; padding-right:4px;' id="professional_detail">
+
+                                    </div>
+                                </div>
+                                <div style='padding-top: 2px; max-width: 98%;margin-bottom: -2%;max-height: 180px;overflow: auto; margin-top: 2%'>
+                                    <h6 class='pull-left text-muted' style="font-size: 0.9rem;">Clients</h6>
+                                </div>
+                                <!--<div class="timeline" id="display_fl_clients" style="min-height: 10px;">-->
+                                <div id="display_fl_clients" class="timeline professional-scroll" style="min-height: 10px; overflow-y: scroll; overflow-x: hidden; height:50vh">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div align="center" style="max-width: 100%;height:100vh;background-color: #F5F5F5;margin-top: -0.8%;display:none" id="friendsview_table">
+            <!--<div class="text-muted" style="font-size: 0.9rem;">Add more friends to see more professionals</div>-->
+            <section class="content" style="height:65vh; margin-bottom: 25px; overflow-y: scroll;overflow-x: hidden;">
+                <div class="container"  id='showskfriends'>
+                    <div class="example" style="">
+                        <div class="row" style="height:9.4vh">
+                            <div class="col-md-13" style="padding: 0px 5px 0px 5px;height: 5px">
+                                <div class="timeline" id="display_sk_results">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container" style="display:none" id='showfriends'>
+                    <div class="example" >
+                        <div class="row" >
+                            <div class="col-md-13" style="padding: 0px 5px 0px 5px;height: 5px">
+                                <div class="timeline timeline_pros" id="display_friend_results" style="min-height: 10px;">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div> </div>
+                <div class="container" style="height: 90%;display: none;" id="showfriendfreelancers">
+                    <div class="example" style="height: 90%">
+                        <div class="row" style="height: 90%">
+                            <div class="col-md-13" style="padding: 0px 8px 0px 8px;height: 5px">
+                                <div style='max-width: 98%;margin-bottom: 1%;max-height: 180px;overflow: auto;margin-top: 1%'>
+                                    <i onclick="friendlist();" class='fa fa-arrow-left pull-left' style='color:#808080;font-size: 14px;padding: 0px 15px 0px 0px;'></i>
+                                    <h6 id="friend_name" style="display: inline-block; margin-left: -30px; font-size: 0.9rem; font-weight: bold;" class='pull-center'>Friend name</h6>
+                                </div>
+                                <div style='padding-top: 0px; max-width: 98%;margin-bottom: 1%;max-height: 180px;overflow: auto; margin-top: 1%'>
+                                    <h6 class='pull-left text-muted' style="font-size: 0.9rem;">Professionals</h6>
+                                </div>
+                                <div class="timeline" id="display_friend_pros_result" style="min-height: 10px">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div align="center" style="display: none;" id="searchresult" >
+            <div align="center" style="max-width: 100%;height:470px;border-radius: 5px;background-color: #F5F5F5;" id="mynetworksearch">
+                <section class="content" style="max-height:90%; margin-bottom: 40px; overflow-y: auto;overflow-x: hidden;">
+                    <div class="container" style="width:98%;height: 90%" id="searchresults">
+                        <div class="example" style="height: 70%">
+                            <div class="row" style="height: 90%">
+                                <div class="col-md-13" style="padding: 0px 5px 0px 5px;">
+                                    <div class="timeline" id="display_search_results">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container" style="height: 90%;display: none;" id="searchprosclients">
+                        <div class="example" style="height: 90%">
+                            <div class="row" style="height: 90%">
+                                <div class="col-md-13" style="padding: 0px 8px 0px 8px;height: 5px">
+                                    <div style='max-width: 98%;margin-bottom: 1%;max-height: 180px;overflow: auto;margin-top: 1%'>
+                                        <h7 class='pull-left'>Clients</h7> <a button type="button" onclick="hidesearchFLclients();" class="btn btn-info btn-fill btn-sm pull-right">back</a>
+                                    </div>
+                                    <div class="timeline" id="display_searchfl_clients" style="height: 10px">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="contacts_page" style="display: none;">
+    <div style="position: fixed;width: 100%">
+        <div align="center" style="max-width: 100%;background-color: #F5F5F5;overflow: hidden; height: 2px;">
+            <div id="contact_page_status_info" align="center" style="display: none">
+            </div>
+            <table class="table" style="margin-bottom:0px;table-layout: fixed;">
+                <thead style="position:fixed">
+                <tr>
+                    <!--
+                                        <td width = "25%;" style = "padding: .25rem;">
+                                            <h5 style="margin: 2px 7px 1px;align:left;font-size: 17px;margin-top:0.5rem;color:#444571" >Contacts</h5>
+                                        </td>
+                    -->
+
+                    <td style = "padding: .25rem; text-align: center; width: 10%;">
+                        <!--<i class="fa fa-search text-muted search-icon-contacts"></i>-->
+                        <div style="padding: 1px; width: 160px; max-height: 90px; z-index: 9999; display: none;position:absolute; background:#f5f5f5" id="dropdown" class="dropdown" style="max-width:50px;max-height:10px;background:red;display:none">
+                            <ul style="list-style:none; border: grey 1px solid; max-height: 90px; overflow:auto; padding: 0px; margin-left: 2rem; max-width: 160px;" id="searchList" class="links">
+
+                            </ul>
+                        </div>
+                    </td>
+
+                    <!--
+                                        <td width="35%" style="padding: .25rem;display: inline;">
+                                            <button class="btn btn-primary btn-sm" style="display: inline;margin-top: 0.6rem;margin-bottom: 0px;margin-left: 0%;font-size: 12px"  data-toggle="modal" onclick="openAddContactModal();">Add Contact</button>
+                                        </td>
+                    -->
+                </tr>
+                </thead>
+            </table><br>
+        </div>
+
+        <div align="center" style="height: 90%">
+            <div class="timeline" id="contacts_table_loading">
+                <br><br><br><br><i class="fa fa-circle-o-notch fa-2x fa-pulse" style="color: white" ></i>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+
+        <div align="center" id="contact">
+            <section class="content" style="height:500px;margin-bottom: 25px; margin-top: -3;background-color: #F5F5F5" id="mynetworkfl">
+                <div class="container" style="height: auto; padding-right:.4rem;">
+                    <div class="example" style="height: 90%">
+                        <div class="row">
+                            <div class="inline_block">
+                                <div class="col-md-2 search-scroll" id="alphabet_status_id" >
+                                    <div id="alphabet_scroll" style="height: 98%; overflow-y: auto;">
+                                        <div class="searchbychar"><a href="#A">A</a></div>
+                                        <div class="searchbychar"><a href="#B">B</a></div>
+                                        <div class="searchbychar"><a href="#C">C</a></div>
+                                        <div class="searchbychar"><a href="#D">D</a></div>
+                                        <div class="searchbychar"><a href="#E">E</a></div>
+                                        <div class="searchbychar"><a href="#F">F</a></div>
+                                        <div class="searchbychar"><a href="#G">G</a></div>
+                                        <div class="searchbychar"><a href="#H">H</a></div>
+                                        <div class="searchbychar"><a href="#I">I</a></div>
+                                        <div class="searchbychar"><a href="#J">J</a></div>
+                                        <div class="searchbychar"><a href="#K">K</a></div>
+                                        <div class="searchbychar"><a href="#L">L</a></div>
+                                        <div class="searchbychar"><a href="#M">M</a></div>
+                                        <div class="searchbychar"><a href="#N">N</a></div>
+                                        <div class="searchbychar"><a href="#O">O</a></div>
+                                        <div class="searchbychar"><a href="#P">P</a></div>
+                                        <div class="searchbychar"><a href="#Q">Q</a></div>
+                                        <div class="searchbychar"><a href="#R">R</a></div>
+                                        <div class="searchbychar"><a href="#S">S</a></div>
+                                        <div class="searchbychar"><a href="#T">T</a></div>
+                                        <div class="searchbychar"><a href="#U">U</a></div>
+                                        <div class="searchbychar"><a href="#V">V</a></div>
+                                        <div class="searchbychar"><a href="#W">W</a></div>
+                                        <div class="searchbychar"><a href="#X">X</a></div>
+                                        <div class="searchbychar"><a href="#Y">Y</a></div>
+                                        <div class="searchbychar"><a href="#Z">Z</a></div>
+                                    </div>
+                                </div>
+
+                                <div style="padding: 0px 8px 0px 0px; width: 98%">
+                                    <div class="timeline timeline_contacts" id="contacts_table_ref">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div id="networkfeed_page" style="display: none;">
+    <div style="position: fixed;width: 100%">
+        <div align="center" style="max-width: 100%;background-color: #F5F5F5;margin-top: -0.8%;overflow: hidden;table-layout: fixed;">
+            <table id="networkfeed" class="table" style="margin-bottom:0px;color:#444571">
+                <thead><tr>
+                    <th width="70%" style="background-color:#F5F5F5 "><h4 style="margin: 2px 0 1px;align:left;font-size: 17px;" >Network Feed</h4> </th>
+                    <!--<th width="40%" style="background-color:#edeef0 "><a button="" type="button" id="showpost"  class="btn btn-info btn-fill btn-sm pull-right" onclick="showposts();">Post</a> </th>-->
+<!--
+                    <th width="40%" id="showpost" >
+                        <a button data-toggle="modal" type="button" class="btn btn-info btn-fill btn-sm  text-center" style="margin-top: -5%; background-color: #BF9069;" onclick="showposts();">Looking For...</a>
+                    </th>
+                    <th width="40%" style="background-color:#F5F5F5;display: none; " id="hidepost">
+                        <a button data-toggle="modal" type="button" class="btn btn-warning btn-fill btn-sm  text-center" style="margin-left: 33%;margin-top: -5%;background-color: #FF6666;" onclick="hidepost();">Hide</a>
+                    </th>
+-->
+                </tr>
+                </thead>
+            </table>
+<!--
+            <div class="container" style="width:98%;height: 70%;display: none" id="post">
+                <div class="row">
+                    <div class="text-left" style="margin-top: 0%;padding-right:5px">
+                        <textarea type="text" class="form-control" style="max-width: 500px;height:80px" placeholder="Looking For..." name="ask_in_network" id="ask_in_network"></textarea>
+                    </div>
+                </div>
+                <div class="row pull-right" style="max-width:380px;margin-top:2%;padding-right:5px">
+                    <button class="btn btn-sm  btn-info" style="margin-top: 1%;width:70px;margin-bottom: 5%;background-color:#2C93FF" onclick="askInYourNetwork(); return false;">Post</button>
+                </div>
+            </div>
+-->
+        </div>
+
+        <div align="center" style="max-width: 100%;height:auto;background-color: #F5F5F5;margin-top: -0.8%" id="mynetwork">
+            <section class="content" style="height:99%; margin-bottom: 25px; overflow-y: auto;overflow-x: hidden;">
+                <div class="container"style="height:auto;" id="network">
+                    <div class="example" style="height: 90%">
+                        <div class="row" >
+                            <div class="col-md-13" style="padding: 0px 8px 0px 8px;">
+                                <div class="timeline" id="display_activity_results">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example">
+                        <div class="row" style="margin-top:0%;margin-bottom: -15px">
+                            <div class="col-md-13" style="padding: 0px 8px 0px 8px;">
+                                <div class="timeline" id="ask_in_network_records" style="overflow-y: hidden;">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example" style="height: auto;margin-top: 1.5%;margin-bottom:2px" >
+                        <div class="row">
+                            <div class="col-md-13" style="padding: 0px 8px 0px 8px;">
+                                <div class="timeline" >
+                                    <dl style="width: 99%;">
+                                        <dd class='pos-left clearfix'>
+                                            <div class='events' style='background-color:#f5f5f5;padding-right: 7px;padding-top: 6px; box-shadow: 0.09em 0.09em 0.09em 0.05em #888888; '>
+                                                <p class='pull-right'>
+                                                    <i class='fa fa-lightbulb-o fa-lg' style='color:#ff6666;margin-top: -5%'></i>
+                                                </p>
+                                                <p class='pull-left' style='margin-left:-2%;margin-bottom: 0px'>
+                                                    <img src="images/network_default.png" alt="Smiley face" height="35" width="35" style="margin-top: 5px;margin-bottom: 5px;">
+                                                </p>
+                                                <div class='events-body '>
+                                                    <div align='left'>
+                                                        <h3 class='events-heading text-left' style='display: inline;font-size: 14px;margin-left: 8%'>Network feed</h3>
+                                                    </div>
+                                                    <div align='left'>
+                                                        <p class='text-left' style='line-height:1.1;font-family:monospace;font-size: 12px;word-wrap: break-word;margin-left:8%;margin-top:1%;margin-bottom: 1px;'>Post's from your network. Ask your network for professional with specific skills.</p>
+                                                    </div>
+                                                </div>
+                                <span class='events-body'>
+
+                                    <div  align='center' class='event-body' style='margin-bottom:1%;margin-top: -1px' >
+                                        <div class='pull-left' style='display:inline'>
+                                            <button  data-toggle='modal' type='button'   class='btn btn-default btn-simple btn-lg' style='padding: 1px 1px;background-color:#f5f5f5;margin-left: -5%;font-size: 15px'>&nbsp;<img width="17px" src="images/broadcast.png"></button><span style="font-size: 12px">  &nbsp;Broadcast to your network</span>
+                                        </div>
+                                        <div class='pull-left' style='display:inline'>
+                                            <button  data-toggle='modal' type='button'   class='btn btn-default btn-simple btn-lg' style='padding: 1px 1px;background-color:#f5f5f5;font-size: 15px'><i class='fa fa-share fa-md' style='color:#ff6666'></i></button><span style="font-size: 12px"> &nbsp;Suggest professional from available list</span>
+                                        </div>
+                                        <!--<div class='pull-left' style='display:inline'>-->
+                                        <!--<button  data-toggle='modal' type='button'   class='btn btn-default btn-simple btn-lg' style='padding: 1px 1px;background-color:#dad1cb;margin-left: 0%'><i class='fa fa-linkedin' style='color:#3e569d'></i></button>&nbsp;: &nbsp;View the user?s linked in profile-->
+                                        <!--</div>-->
+                                    </div>
+                                </span>
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example" style="height: auto;margin-top: -8%;margin-bottom:2px" >
+                        <div class="row">
+                            <div class="col-md-13" style="padding: 0px 8px 0px 8px;">
+                                <div class="timeline" >
+                                    <dl style="width: 99%;">
+                                        <dd class='pos-left clearfix' >
+                                            <div class='events' style='background-color:#f5f5f5;padding-right: 7px;padding-top: 6px; box-shadow: 0.09em 0.09em 0.09em 0.05em #888888;'>
+                                                <p class='pull-right'>
+                                                    <i class='fa fa-lightbulb-o fa-lg' style='color:#ff6666;'></i>
+                                                </p>
+                                                <p class='pull-left' style='margin-left:-2%;margin-bottom: 0px'>
+                                                    <img src="images/contacts_default.png" alt="Smiley face" height="35" width="35" style="margin-top: 5px;margin-bottom: 5px;">
+                                                </p>
+                                                <div class='events-body'>
+                                                    <div align='left'>
+                                                        <h3 class='events-heading text-left' style='display: inline;font-size: 14px;margin-left: 8%'>Contacts</h3>
+                                                    </div>
+                                                    <div align='left'>
+                                                        <p class='text-left' style='line-height:1.1;font-family:monospace;font-size: 12px;word-wrap: break-word;margin-left: 8%;margin-top:1%;'>Add, Share, Edit and Delete client and professional.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example" style="height: auto;margin-top: -9%;margin-bottom:2px" >
+                        <div class="row">
+                            <div class="col-md-13" style="padding: 0px 8px 0px 8px;">
+                                <div class="timeline timeline_nwf" >
+                                    <dl style="width: 99%;">
+                                        <dd class='pos-left clearfix' style='margin-top:1%'>
+                                            <div class='events' style='background-color:#f5f5f5;padding-right: 7px;padding-top: 6px;  box-shadow: 0.09em 0.09em 0.09em 0.05em #888888; '>
+                                                <p class='pull-right'>
+                                                    <i class='fa fa-lightbulb-o fa-lg' style='color:#ff6666'></i>
+                                                </p>
+                                                <p class='pull-left' style='margin-left:-2%;margin-bottom: 0px'>
+                                                    <img src="images/professional_default.png" alt="Smiley face" height="35" width="35" style="margin-top: 5px;margin-bottom: 5px;">
+                                                </p>
+                                                <div class='events-body'>
+                                                    <div align='left'>
+                                                        <h3 class='events-heading text-left' style='display: inline;font-size: 14px;margin-left: 8%'>Professionals</h3>
+                                                    </div>
+                                                    <div align='left'>
+                                                        <p class='text-left' style='line-height:1.1;font-family:monospace;font-size: 12px;word-wrap: break-word;margin-left: 8%;margin-top:1%;'>
+                                                            See list of professionals that your friends have worked with.<br>
+                                                            Search professionals by skills.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container" style="height: 90%;display: none;" id="postresponse">
+                    <div class="example" style="height: 90%">
+                        <div class="row" style="height: 90%">
+                            <div class="col-md-13" style="padding: 0px 8px 0px 8px;height: 5px">
+                                <div id=''  style='max-width: 98%;margin-bottom: 1%;max-height: 180px;overflow: auto;margin-top: 1%'>
+                                    <h7 class='pull-left'>Responses</h7> <a button type="button" onclick="hideAskResponses();" class="btn btn-info btn-fill btn-sm pull-right">Back</a>
+                                </div>
+                                <div class="timeline" id="show_ask_responses">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="modal modal-small" id="deletepost" tabindex="-1" role="dialog" aria-hidden="true" >
+            <div id="delete_post_form">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="notifications_page" style="display: none;">
+    <div style="position: fixed;width: 100%">
+        <div align="center" style="max-width: 100%;background-color: #F5F5F5;overflow: hidden;" id="shownotification header">
+            <table class="table" style="margin-bottom:0px;">
+                <thead>
+                <tr>
+                    <th width="100%" style="background-color:#F5F5F5; border-bottom: 0px;">
+                        <h4 style="margin: 2px 0 1px;align:left;font-size: 17px;" >Notifications</h4>
+                    </th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div align="center" style="max-width: 100%;height:100vh;background-color: #F5F5F5;margin-top: -0.8%" id="notificatis_view">
+            <!--<div class="text-muted" style="font-size: 0.9rem;">Add more friends to see more professionals</div>-->
+            <section id="user_notifications" class="content" style="height:65vh; margin-bottom: 15px; overflow-y: auto;overflow-x: hidden;">
+                <div class="container" style="height: 66vh" id="professional_lists">
+                    <div class="example" >
+                        <div class="row" >
+                            <div class="col-md-13" style="padding: 0px 8px 0px 8px; height: 5px">
+                                <div class="timeline timeline_pros" id="notifications" >
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<div id="useralerts_page" style="display: none;">
+    <div style="position: fixed;width: 100%">
+        <div align="center" style="max-width: 100%;background-color: #F5F5F5;overflow: hidden; height: 40px;">
+            <table class="table" style="margin-bottom:0px;table-layout: fixed;">
+                <thead>
+                <tr>
+                    <td width = "80rem;" style = "padding: .25rem;">
+                        <h5 style="margin: 2px 5px 1px;align:left;font-size: 17px;margin-top:0.5rem;color:#444571" >Notifications</h5>
+                    </td>
+                </tr>
+                </thead>
+            </table><br>
+        </div>
+
+        <div align="center" style="height: 90%">
+            <div class="timeline" id="useralerts_loading">
+                <br><br><br><br><i class="fa fa-circle-o-notch fa-2x fa-pulse" style="color: white" ></i>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+
+        <div align="center" id="useralerts">
+            <section class="content" style="height:500px;margin-bottom: 25px;  overflow-y: auto;overflow-x: hidden;margin-top: -3;background-color: #F5F5F5" id="useralertsid">
+                <div class="container" style="height: auto;">
+                    <div class="example" style="height: 90%">
+                        <div class="row">
+                            <div class="col-md-13" style="padding: 0px 8px 0px 8px;">
+                                <div class="timeline" id="useralerts_ref">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div id="reminders_page" style="display: none;">
+    <div style="position: fixed;width: 100%">
+        <div align="center" style="max-width: 100%;background-color: #F5F5F5;overflow: hidden; height: 40px;">
+            <table class="table" style="margin-bottom:0px;table-layout: fixed;">
+                <thead>
+                <tr>
+                    <td width = "80rem;" style = "padding: .25rem;">
+                        <h5 style="margin: 2px 5px 1px;align:left;font-size: 17px;margin-top:0.5rem;color:#444571">Reminders</h5>
+                    </td>
+                </tr>
+                </thead>
+            </table><br>
+        </div>
+
+        <div align="center" style="height: 90%">
+            <div class="timeline" id="reminders_loading">
+                <br><br><br><br><i class="fa fa-circle-o-notch fa-2x fa-pulse" style="color: white" ></i>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+
+        <div align="center" id="reminders">
+            <section class="content" style="height:500px;margin-bottom: 25px;  overflow-y: auto;overflow-x: hidden;margin-top: -3;background-color: #F5F5F5">
+                <div class="container" style="height: auto;">
+                    <div class="example" style="height: 90%">
+                        <div class="row">
+                            <div class="col-md-13" style="padding: 0px 8px 0px 8px;">
+                                <div class="timeline" id="reminders_ref">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div id="myprofile_page" style="background-color: #ffffff; display: none;">
+    <div style="position: fixed; width: 100%;height: 105vh; overflow-x: hidden;background-color:#F5F5F5;">
+        <div align="center" style="height:77%;margin-bottom: 25px;  overflow-y: auto;overflow-x: hidden;margin-top: -3;background-color: #F5F5F5"  >
+            <section class="content" style="margin-bottom: 25px; ">
+                <div class='row'>
+                    <div id="profile_details_status_success" align="center" style="display: none;"></div>
+                    <div id="profile_details_status_failed" align="center" style="display: none;"></div>
+                </div>
+                <div id="profile" style="background-color:#ff9393;height: 115px">
+                    <img id="profile_image" class='img-circle  pull-center' style='max-width:80px;max-height:80px;margin-top:10px; padding: 0px 10px;' src='profile_images/profile.jpg' onError='this.onerror=null;this.src="profile_images/profile.jpg";' onclick="getProfileImage();">
+                    <input type="text" id="profile_name" name="profile_name" class="form-control" style="max-width:225px;margin-top:5px;" placeholder="Profile name">
+                </div>
+                <div class='row' style='margin-bottom:7px;margin-top: 5px'>
+                    <div class='col-xs-4 pull-left'>
+                        <h5 for='title' class='pull-right' style='font-size:14px;margin-top:10px'>Profession</h5></div>
+                    <div class='col-xs-7'>
+                        <input id="profile_profession" type='text' class='form-control' style='max-width: 300px' id='profession' name='profession'>
+                    </div>
+                </div>
+                <div class='row' style='margin-bottom:7px;'>
+                    <div class='col-xs-4 pull-left'>
+                        <h5 for='title' class='pull-right' style='font-size:14px;margin-top:10px'>Expertise</h5></div>
+                    <div class='col-xs-7' >
+                        <input id="profile_expertise" type='text' class='form-control' style='max-width: 300px' id='expertise' name='expertise'>
+                    </div>
+                </div>
+                <div class='row' style='margin-bottom:7px;'>
+                    <div class='col-xs-4 pull-left'>
+                        <h5 for='title' class='pull-right' style='font-size:14px;margin-top:10px'>Experience</h5></div>
+                    <div class='col-xs-7'>
+                        <input id="profile_experience" type='text' class='form-control' style='max-width: 300px' id='experience' name='experience' >
+                    </div>
+                </div>
+                <div class='row' style='margin-bottom:7px;'>
+                    <div class='col-xs-4 pull-left'>
+                        <h5 for='title' class='pull-right' style='font-size:14px;margin-top:10px'>LinkedIn</h5></div>
+                    <div class='col-xs-7'>
+                        <input id="profile_linkedin" type='text' class='form-control' style='max-width: 300px' id='linkedin' name='linkedin'>
+                    </div>
+                </div>
+
+                <div class='row' style='margin-bottom:7px;'>
+                    <div class='col-xs-4 pull-left'>
+                        <h5 for='title' class='pull-right' style='font-size:14px;margin-top:10px'>Location</h5></div>
+                    <div class='col-xs-7'>
+                        <input id="profile_location" type='text' class='form-control' placeholder=" City, State, Country " style='max-width: 300px' id='location' name='location'>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <textarea id="profile_about" type="text" class="form-control" style="max-width:280px;height:50px" placeholder="About yourself"></textarea>
+                    <div>
+                        <div class='row'>
+                            <p  style='font-size:15px;margin-top:5px;margin-bottom: 5px'>Upload business image</p>
+                        </div>
+                        <div class='row'>
+                            <img id="business_details_image" class='img-thumbnail ' style='max-width:40px;max-height:40px;margin-left:7px;display: inline-block;' src='images/upload.jpg' onclick="getBusinessDetailsImage();">
+                        </div>
+                        <center>
+                            <button class='btn btn-info' style='background-color:#ff6666;margin-top: 13px' type='submit' onclick="saveProfileDetails();">Save</button>&nbsp;&nbsp;
+                            <button class='btn btn-secondary active' data-toggle='button' style="margin-top: 13px" data-dismiss='modal' onclick="loadProfessionals();">Close</button>
+                        </center>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div id="contactprofile_page" style="background-color: #ffffff; display: none;">
+    <div style="position: fixed; width: 100%; height: 100vh; overflow-x: hidden;background-color:#F5F5F5;">
+        <div align="center" style="height:77%;margin-bottom: 25px;  overflow-y: auto;overflow-x: hidden;margin-top: -3;background-color: #F5F5F5"  >
+            <section class="content" style="height: 60vh;">
+                <div class='row'>
+                    <div id="contactprofile_details_status_success" align="center" style="display: none;"></div>
+                    <div id="contactprofile_details_status_failed" align="center" style="display: none;"></div>
+                </div>
+                <div id="contactprofile" style="background-color:#ff9393;height: 115px">
+                    <img id="contactprofile_image_display" class='img-circle pull-center' style='max-width:80px;max-height:80px;margin-top:10px; padding: 0px 10px;' src='profile_images/profile.jpg' onError='this.onerror=null;this.src="profile_images/profile.jpg";'>
+                    <input type="text" id="contactprofile_name" name="contactprofile_name" class="form-control" style="max-width:225px;margin-top:5px;" placeholder="Profile name" readonly>
+                </div>
+                <div class='row' style='margin-bottom:7px;margin-top: 5px'>
+                    <div class='col-xs-4 pull-left'>
+                        <h5 for='title' class='pull-right' style='font-size:14px;margin-top:10px'>Profession</h5></div>
+                    <div class='col-xs-7'>
+                        <input id="contactprofile_profession" type='text' class='form-control' style='max-width: 300px' name='contactprofile_profession' readonly="readonly" onkeyup="autoSuggestProfession();">
+                    </div>
+                </div>
+                <div class='row' style='margin-bottom:7px;'>
+                    <div class='col-xs-4 pull-left'>
+                        <h5 for='title' class='pull-right' style='font-size:14px;margin-top:10px'>Expertise</h5></div>
+                    <div class='col-xs-7' >
+                        <input id="contactprofile_expertise" type='text' class='form-control' style='max-width: 300px' name='contactprofile_expertise' readonly>
+                    </div>
+                </div>
+                <div class='row' style='margin-bottom:7px;'>
+                    <div class='col-xs-4 pull-left'>
+                        <h5 for='title' class='pull-right' style='font-size:14px;margin-top:10px'>Experience</h5></div>
+                    <div class='col-xs-7'>
+                        <input id="contactprofile_experience" type='text' class='form-control' style='max-width: 300px' name='contactprofile_experience' readonly>
+                    </div>
+                </div>
+                <div class='row' style='margin-bottom:7px;'>
+                    <div class='col-xs-4 pull-left'>
+                        <h5 for='title' class='pull-right' style='font-size:14px;margin-top:10px'>LinkedIn</h5></div>
+                    <div class='col-xs-7'>
+                        <input id="contactprofile_linkedin" type='text' class='form-control' style='max-width: 300px' name='contactprofile_linkedin' readonly>
+                    </div>
+                </div>
+
+                <div class='row' style='margin-bottom:7px;'>
+                    <div class='col-xs-4 pull-left'>
+                        <h5 for='title' class='pull-right' style='font-size:14px;margin-top:10px'>Location</h5></div>
+                    <div class='col-xs-7'>
+                        <input id="contactprofile_location" type='text' class='form-control' placeholder=" City, State, Country " style='max-width: 300px' name='contactprofile_location' readonly>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <textarea id="contactprofile_about" type="text" class="form-control" style="max-width:280px;height:50px" placeholder="About..." readonly></textarea>
+                    <div>
+                        <center>
+                            <button id="contactprofile_save" class='btn btn-info' style='background-color:#ff6666;margin-top: 13px; display: none;' type='submit' onclick="saveContactProfileDetails();">Save</button>&nbsp;&nbsp;
+                            <!--<button class='btn btn-secondary active' data-toggle='button' style="margin-top: 13px" data-dismiss='modal' onclick="loadContacts();">Close</button>-->
+                            <button class='btn btn-secondary active' data-toggle='button' style="margin-top: 13px" data-dismiss='modal' onclick="showContactsView();">Close</button>
+                        </center>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!--Below are common to all 3 sections-->
+<div class="modal modal-small" id="addprofile" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-width: 550px">
+            <div class="modal-header" id="profileheader" style="background-color:#2C93FF;border-radius: 5px 5px 0px 0px; padding: 10px;" >
+                <button type="button" class="close" data-dismiss="modal" style="opacity: 0.8; color: white;opacity: 0.8" aria-hidden="true">&times;</button>
+                <h5 class="modal-title text-center" style="margin-bottom: 0px;height:5px;color: white;text-align: center" >Add Profile</h5></br>
+            </div>
+            <div class="modal-body">
+                <div id="add_profile_form">
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small" id="addskills" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-width: 550px">
+            <div class="modal-header" id="skillsheader" style="background-color:#2C93FF;border-radius: 5px 5px 0px 0px; padding: 10px;" >
+                <button type="button" class="close" data-dismiss="modal" style="opacity: 0.8; color: white;opacity: 0.8" aria-hidden="true">&times;</button>
+                <h5 class="modal-title text-center" style="margin-bottom: 0px;height:5px;color: white;text-align: center" >Profession Details</h5></br>
+            </div>
+            <div class="modal-body">
+                <div id="add_skills_form">
+                    Please wait...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small" id="sharecontact_mdl" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="share_contact_form">
+    </div>
+</div>
+
+<div class="modal modal-small" id="show_contact_details_mdl" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="show_contact_details">
+    </div>
+</div>
+
+<!--<div class="modal modal-small" id="editcontact_mdl" tabindex="-1" role="dialog" aria-hidden="true">-->
+<div id="edit_contact_form" style="display: none">
+</div>
+<!--</div>-->
+
+<!--<div class="modal modal-small" id="deletecontact_mdl" tabindex="-1" role="dialog" aria-hidden="true">-->
+<!--<div id="deletecontact_mdl">-->
+<div id="delete_contact_form" style="display: none">
+</div>
+<!--</div>-->
+
+<div id="send_notification" style="display: none">
+</div>
+
+<div class="modal modal-small" id="set_profile_mdl" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-width: 550px">
+            <div class="modal-body">
+                <div>
+                    <button type="button" class="close" data-dismiss="modal" style="opacity: 0.4; color: black" aria-hidden="true" style="padding-top: 5px;">&times;</button>
+                    <br><center>Please set your profile name to invite</center><br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small" id="addcontact_mdl_mobile" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="max-width: 550px">
+            <div class="modal-header" style="background-color:#2C93FF;border-radius: 5px 5px 0px 0px; padding: 10px;">
+                <button type="button" class="close" data-dismiss="modal" style="opacity: 0.8; color: white" aria-hidden="true">&times;</button>
+                <h5 class="modal-title text-center" style="margin-bottom: 0px;height:5px;color: white;text-align: center">Add Contact</h5><br>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-3 pull-left" style="align:right;padding-right: 10px;padding-left: 0px">
+                        <p class="pull-right" style="margin-top:20%;font-size:16px">Name</p>
+                    </div>
+                    <div class="col-xs-9" style="padding-left:8px;padding-right: 0px">
+                        <input type="text" name="contact_name_mobile" class="form-control" id="contact_name_mobile" style="margin-left:-4%;margin-top:5%;max-width:225px">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3" style="align:right;padding-right: 10px;padding-left: 0px">
+                        <p class="pull-right" style="margin-top:20%;font-size:16px">Mobile</p>
+                    </div>
+                    <div class="col-xs-9" style="padding-left:8px;padding-right: 0px">
+                        <input type="text" name="contact_number_mobile" class="form-control" id="contact_number_mobile" style="margin-left:-4%;margin-top:5%;max-width:225px">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3" style="align:right;padding-right: 10px;padding-left: 0px">
+                        <p class="pull-right" style="margin-top:20%;font-size:16px">Email</p>
+                    </div>
+                    <div class="col-xs-9" style="padding-left:8px;padding-right: 0px">
+                        <input type="text" name="contact_mail_mobile" class="form-control" id="contact_mail_mobile" style="margin-left:-4%;margin-top:5%;max-width:225px" placeholder="Optional">
+                    </div>
+                </div>
+                <div class="row text-center" style="margin-top: 4%;text-align: center">
+                    <div>
+                        <select class="segment-select" id="connection_mobile">
+                            <option class="option" value="0"></option>
+                            <option class="option" value="1">Friend</option>
+                            <option class="option" value="2">Client</option>
+                            <option class="option" value="3">Professional</option>
+                        </select>
+                    </div>
+                </div>
+                <!--<div id="add_contact_status" align="center"></div>-->
+                <div id="add_contact_status_mobile" align="center" class="alert alert-danger" style="display: none;"></div>
+                <div class="modal-footer"  style='margin-top:-2%;display:inline; border-top: 0px;'>
+                    <center>
+                        <button id="submitAddContactMobile" class="btn btn-fill btn-info" type="submit">Add</button>&nbsp;&nbsp;
+                        <button class="btn btn-fill btn-default" data-toggle="button" data-dismiss="modal">Cancel</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="tooltip1" tabindex="-1" role="dialog" style="opacity: 0.91;overflow: hidden;padding: 0px;z-index: 0;top: 9px">
+    <img align='center' class="text-center" src="images/tooltip_1.png" style="background-repeat: no-repeat;width: 100%; overflow: hidden;height: auto;position:relative;opacity: 1" >
+    <button type="button" class="close" data-dismiss="modal" style="color: white;margin-top: -177%;padding: 7px;opacity: 0.9" aria-hidden="true">&times;</button>
+    <center><button class='btn btn-primary btn-sm' style="color:#ffffff;border-radius: 2.25rem;background-color: #ff6666;font-size: 15px;width:80px;height:40px;margin-top: -100%;opacity: 0.95;margin-left: 30%"  data-dismiss='modal'>Skip</button>&nbsp;&nbsp;
+        <button class='btn btn-primary btn-sm' style="border-radius: 2.25rem;background-color: #ff6666;font-size: 15px;width:80px;height:40px;margin-top: -100%;opacity:0.95"  data-target="#tooltip2" data-toggle='modal' data-dismiss='modal'>Next</button></center>
+</div>
+
+<div class="modal modal-small fade in" id="tooltip2" tabindex="-1" role="dialog" style="background: transparent;background-color:#adadad;opacity: 0.9;overflow: hidden;z-index: 0;top: 9px">
+    <img align='center' class="text-center" src="images/tooltip_2.png" style="background-repeat: no-repeat;width: 100%; overflow: hidden;height: auto;position:relative;opacity: 1" >
+    <button type="button" class="close" data-dismiss="modal" style="color: white;margin-top: -177%;padding: 7px;opacity: 0.9" aria-hidden="true">&times;</button>
+    <center><button class='btn btn-primary btn-sm' style="color:#ffffff;border-radius: 2.25rem;background-color: #ff6666;font-size: 15px;width:80px;height:40px;margin-top: -80%;opacity: 0.95;margin-left: 30%"  data-dismiss='modal'>Skip</button>&nbsp;&nbsp;
+        <button class='btn btn-primary btn-sm' style="border-radius: 2.25rem;background-color: #ff6666;font-size: 15px;width:80px;height:40px;margin-top: -80%;opacity:0.95"  data-target="#tooltip3" data-toggle='modal' data-dismiss='modal'>Next</button></center>
+
+</div>
+<div class="modal modal-small fade in" id="tooltip3" tabindex="-1" role="dialog" style="background: transparent;background-color:#adadad;opacity: 0.9;overflow: hidden;z-index: 0;top: 9px">
+    <img align='center' class="text-center" src="images/tooltip_3.png" style="background-repeat: no-repeat;width: 100%; overflow: hidden;height: auto;position:relative;opacity: 1" >
+    <button type="button" class="close" data-dismiss="modal" style="color: white;margin-top: -177%;padding: 7px;opacity: 0.9" aria-hidden="true">&times;</button>
+    <center><button class='btn btn-primary btn-sm' style="color:#ffffff;border-radius: 2.25rem;background-color: #ff6666;font-size: 15px;width:80px;height:40px;margin-top: -100%;opacity: 0.95;margin-left: 30%"  data-target="#tooltip2" data-toggle='modal' data-dismiss='modal' >Back</button>&nbsp;&nbsp;
+        <button class='btn btn-primary btn-sm' style="border-radius: 2.25rem;background-color: #ff6666;font-size: 15px;width:80px;height:40px;margin-top: -100%;opacity:0.95"  data-dismiss='modal'  data-dismiss='modal'>Close</button></center>
+
+</div>
+<div class="modal modal-small fade" id="addcontact_mdl_fb" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-width: 550px">
+            <div class="modal-header" style="background-color:#2C93FF;border-radius: 5px 5px 0px 0px; padding: 10px;">
+                <button type="button" class="close" data-dismiss="modal" style="color: white" aria-hidden="true">&times;</button>
+                <h5 class="modal-title text-center" style="margin-bottom: 0px;height:5px;color: white;text-align: center">Add Contact</h5><br>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-3 pull-left" style="align:right;padding-right: 10px;padding-left: 0px">
+                        <p class="pull-right" style="margin-top:20%;font-size:16px">Name</p>
+                    </div>
+                    <div class="col-xs-9" style="padding-left:8px;padding-right: 0px">
+                        <input type="text" name="contact_name_fb" class="form-control" id="contact_name_fb" style="margin-left:-4%;margin-top:5%;max-width:225px">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3" style="align:right;padding-right: 10px;padding-left: 0px">
+                        <p class="pull-right" style="margin-top:20%;font-size:16px">Email</p>
+                    </div>
+                    <div class="col-xs-9" style="padding-left:8px;padding-right: 0px">
+                        <input type="text" name="contact_mail_fb" class="form-control" id="contact_mail_fb" style="margin-left:-4%;margin-top:5%;max-width:225px">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3" style="align:right;padding-right: 10px;padding-left: 0px">
+                        <p class="pull-right" style="margin-top:20%;font-size:16px">Mobile</p>
+                    </div>
+                    <div class="col-xs-9" style="padding-left:8px;padding-right: 0px">
+                        <input type="text" name="contact_number_fb" class="form-control" id="contact_number_fb" style="margin-left:-4%;margin-top:5%;max-width:225px" placeholder="Optional">
+                    </div>
+                </div>
+                <div class="row text-center" style="margin-top: 4%;text-align: center">
+                    <div>
+                        <select class="segment-select" id="connection_fb">
+                            <option class="option" value="0"></option>
+                            <option class="option" value="1">Friend</option>
+                            <option class="option" value="2">Client</option>
+                            <option class="option" value="3">Professional</option>
+                        </select>
+                    </div>
+                </div>
+                <!--<div id="add_contact_status" align="center"></div>-->
+                <div id="add_contact_status_fb" align="center" class="alert alert-danger" style="display: none;"></div>
+                <div class="modal-footer"  style='margin-top:-2%;display:inline; border-top: 0px;'>
+                    <center>
+                        <button id="submitAddContactFB" class="btn btn-fill btn-info" type="submit">Add</button>&nbsp;&nbsp;
+                        <button class="btn btn-fill btn-default" data-toggle="button" data-dismiss="modal">Cancel</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<footer class="navbar-fixed-bottom" style="background-color: #dcdcdc; margin-bottom: 0px; padding: 0px;text-align: center;border-top-color: 1px #000000">
+    <div class="container">
+        <div class="social-area pull-center text-center">
+            <img id="footer_icon_pros" src="images/professional.png" alt="Smiley face" height="30" width="30" style="margin-top: 5px;margin-bottom: 5px;margin-left: 15px; margin-right: 15px;" onclick="loadProfessionals();">
+            <img id="footer_icon_contacts" src="images/contacts_default.png" alt="Smiley face" height="30" width="30" style="margin-top: 5px;margin-bottom: 5px;margin-left: 15px; margin-right: 15px;" onclick="loadContacts();">
+            <img id="footer_icon_networkfeed" src="images/network_default.png" alt="Smiley face" height="30" width="30" style="margin-top: 5px;margin-bottom: 5px;margin-left: 15px; margin-right: 15px;" onclick="loadNetworkFeed();">
+            <!--<i id="footer_icon_myaccount" class="fa fa-user fa-2x" style="color: #BF9069;margin-left: 20px;margin-right: 20px;margin-bottom: 5px;" onclick="showReminders();"></i>-->
+            <i id="footer_icon_android_whatsapp" class="fa fa-whatsapp" style="font-size: 30px;color: #34AF23;margin-bottom: 5px;margin-top: 5px;vertical-align: middle;margin-left: 15px; margin-right: 15px;display: none;" onclick="webapp.openWhatsAppIntentToShare('Hi, I would like to join you on Netref. Start here: http://goo.gl/Njkmxu');"></i>
+            <i id="footer_icon_alert" class="fa fa-exclamation fa-2x blink" style="font-size: 35px;color: #FF6666;margin-bottom: 5px;margin-top: 5px;vertical-align: middle;margin-left: 15px; margin-right: 15px;display: none;" onclick="openProfilePage();"></i>
+        </div>
+    </div>
+</footer>
+<script>
+    var vheight;
+    vheight = $(window).height();
+    $('.timeline_contacts').height(vheight - 96);
+    $('.professional-scroll').height(vheight - 278);
+    $('.friend-scroll').height(vheight - 263);
+    $('.search-scroll').height(vheight - 85);
+</script>
+<link href='https://fonts.googleapis.com/css?family=Amaranth:400,400italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=IM+Fell+DW+Pica' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato:400' rel='stylesheet' type='text/css'>
+<script src="resources/js/bootstrap.js" type="text/javascript"></script>
+<script src="resources/js/header.js"></script>
+<script src="resources/js/netref.js" type="text/javascript"></script>
+</html>

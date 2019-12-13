@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+
+<meta charset="utf-8">
+<title>Netref</title>
+
+<link href="resources/css/bootstrap.css" rel="stylesheet">
+<link href="resources/css/get-shit-done.css" rel="stylesheet">
+<link href="resources/css/demo.css" rel="stylesheet">
+<link href="resources/css/docs.css" rel="stylesheet">
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="resources/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="resources/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+
+<script src="resources/js/bootstrap.js" type="text/javascript"></script>
+<script src="resources/js/gsdk-checkbox.js" type="text/javascript"></script>
+<script src="resources/js/gsdk-radio.js" type="text/javascript"></script>
+<script src="resources/js/gsdk-bootstrapswitch.js" type="text/javascript"></script>
+<script src="resources/js/get-shit-done.js" type="text/javascript"></script>
+<script src="resources/js/custom.js" type="text/javascript"></script>
+
+<script src="resources/js/ajaxindicator.js"></script>
+
+<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">-->
+<!--<script src="resources/js/jquery-1.10.2.js" type="text/javascript"></script>-->
+<!--<script src="resources/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>-->
+
+<style>
+    .row-highlight {
+        background-color: rgba(191, 210, 48, .5)
+    }
+
+    label {
+        align-content: center;
+        display: inline-block;
+        font-weight: 700;
+        margin-bottom: 5px;
+        margin-left: 80px;
+        width:160px;
+        line-height: 4;
+    }
+
+    .btn-info-re.btn-fill {
+        color: #5ecf4e;
+        opacity: 1;
+    }
+
+    .fcllex_cafe{
+        position: relative;
+        clear: both;
+    }
+
+    .fcc_content{
+        padding: 0;
+        margin: 10px 1px 51px 3px;
+        list-style: none;
+    }
+
+    .fcc_content li{
+        background: #d6d6d6;
+        width: 100%;
+        display: inline-block;
+        list-style: none;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin: 3px 2px;
+    }
+    .fcc_content li .fcc_item{
+        background: #fff;
+        color: #4c4c4c;
+        position: relative;
+        width: 100%;
+        display: inline-block;
+        text-align: left;
+        border-radius: 4px;
+        border: 1px solid #c1c1c1;
+        padding: 2px 80px 25px 135px;
+        height: 100px;
+    }
+
+    .fcc_content li .fcc_item .fcc_img{
+        display: block;
+        height: 120px;
+        width: 120px;
+        position: absolute;
+        left: -10px;
+        top: 1px;
+        margin-bottom: 15px;
+    }
+
+    .fcc_content li .fcc_item .circle_star img,
+    .fcc_content li .fcc_item .fcc_img img{
+        display: block;
+        width: 80%;
+    }
+
+    .fcc_content li .fcc_item .circle_star{
+        position: absolute;
+        right: 40px;
+        top: 50%;
+        margin-top: -22px;
+        height: 25px;
+        width: 20px;
+        display: block;
+    }
+
+    .fcc_content li .fcc_item .fcc_item_desc{
+        display: inline-block;
+        width: 100%;
+    }
+    .fcc_content li .fcc_item .fcc_item_desc h2{
+        font-size: 24px;
+        line-height: 1;
+        margin-bottom: 8px;
+        color: #25ae5f;
+        font-weight: 600;
+    }
+
+
+    .fcc_content li .fcc_item .fcc_item_desc h2 span,
+    .clr_black{
+        color: #4c4c4c;
+    }
+
+    .fcc_content li .fcc_item .product_name{
+        font-size: 28px;
+        line-height: 1;
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-weight: bold;
+        display: block;
+    }
+
+    .fcc_content li .fcc_item .product_meta{
+        color: #b9b9b9;
+        display: inline-block;
+        width: 100%;
+    }
+    .fcc_content li .fcc_item .product_meta span{
+        display: inline-block;
+        margin-right: 15px;
+        vertical-align: top;
+        margin-bottom: 10px;
+        font-size: 24px;
+        line-height: 1;
+        font-weight: normal;
+    }
+    .fcc_content li .fcc_item .product_meta span i{
+        margin-right: 6px;
+    }
+
+</style>
+
+<script>
+
+
+$(document).ready(function() {
+
+
+
+    $.ajax({
+        type:         "post",
+        url:         "action/get_userid_from_session.jsp",
+
+        success:    function(client_user_id) {
+            client_user_id = escape(client_user_id).replace(/%0A/g, "");
+            client_user_id = client_user_id.replace(/%0D/g, "");
+            client_user_id = unescape(client_user_id);
+
+            if(client_user_id == "-1") {
+                window.location = "register.html";
+            }
+        }
+    });
+
+    $("#signout").click(function(e) {
+        $.ajax({
+            type:         "post",
+            url:         "action/remove_session.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("success") >= 0) {
+                    document.cookie = "netref_cookie_login=;expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/";
+                    window.location = "register.html";
+                }
+            }
+        });
+    });
+
+});
+
+</script>
+</head>
+
+<body>
+<div class="wrapper" class="table-responsive">
+    <nav class="navbar navbar-ct-orange navbar-fixed-top" style="margin-bottom: 0px">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-default2">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" style="padding:1px 15px"><h1 style="margin-top: 0px;font-size: 70px"> <small style="color: white;margin-top: 1px" class="subtitle">netref</small> </h1></a>
+            </div>
+
+            <div style="display: none">
+                <div a data-toggle='modal' href='#addskills' id="click_to_display_skills_form">Add skills</div>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navigation-default2">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                    <li class="page-scroll"><a href="enter.html"><div>Home</div></a></li>
+                    <li><a id="signout"  style="cursor: pointer"><i class="pe-7s-close-circle"></i>&nbsp;&nbsp;Logout</a></li>
+
+
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+</div><br><br><br>
+
+<section id="contact-page" class="navbar-ct-grey">
+    <div class="section section-gray">
+        <div class="container">
+            <h3 class="text-center">Contact</h3><br><br>
+            <div class="media media-post">
+                <form class="form">
+
+                    <div class="media-body">
+
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <b>Please feel free to give us your feedback</b><br><br>
+
+
+                                <b>Email</b><font color = red> *</font><br>
+                                <input type="email" class="form-control" placeholder="Your email"/><br><br>
+                                <b>Subject</b><font color = red> *</font><br>
+                                <input type="text" class="form-control" placeholder="Subject"/><br><br>
+                                <b>Message</b><font color = red> *</font><br>
+                                <textarea class="form-control" placeholder="" rows="6"></textarea><br><br>
+                                <a href="#" style="margin-right: 470px;" class="btn btn-info btn-fill pull-right">Send</a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="form-group" style="margin-left:80px">
+                                <b>  Contact Details:</b> <br>
+                                830 Stewart Dr, <br>
+                                Suite 208,   <br>
+                                Sunnyvale, CA 94085    <br>
+                                Phone: 1-408-212-7194 <br>
+
+                                <small><a href="http://maps.google.co.in/maps?f=q&source=embed&hl=en&geocode=&q=830+Stewart+Drive,+Sunnyvale,+CA,+United+States&aq=t&sll=37.384664,-122.004963&sspn=0.018175,0.042272&gl=in&ie=UTF8&hq=&hnear=830+Stewart+Dr,+Sunnyvale,+California+94085,+United+States&t=m&z=14&ll=37.383747,-122.009654" style="color:#0000FF;text-align:left"> <font face="Comic Sans MS" color="Brown"> View Larger Map </font></a></small>
+                            </div>
+                        </div>
+                    </div><!-- end media-body -->
+                </form>
+            </div> <!-- end media-post -->
+        </div>
+
+    </div> <!-- end container -->
+    </div>
+</section>
+
+</div>
+</body>
+</html>
+

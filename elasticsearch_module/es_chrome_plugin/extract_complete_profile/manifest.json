@@ -1,0 +1,14 @@
+{
+  "browser_action" : { "default_icon" : "icon.png"},
+  "description" : "Extract Linkedin Profile",
+  "icons" : { "128" : "icon.png" },
+  "name" : "Extract Linkedin Profile",
+  "version" : "1.2",
+  "manifest_version": 2,
+  "content_scripts": [
+	{
+	  "matches": ["*://*.linkedin.com/*"],
+	  "js": ["jquery-3.1.1.min.js","extract_linkedin.js"]
+	}
+  ]
+}

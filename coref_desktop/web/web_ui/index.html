@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>coref</title>
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/css/metisMenu.min.css" rel="stylesheet">
+    <link href="resources/css/sb-admin-2.css" rel="stylesheet">
+    <link href="resources/css/bootstrap-social.css" rel="stylesheet">
+    <link href="resources/css/morris.css" rel="stylesheet">
+    <link href="resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/css/coref.css" rel="stylesheet" type="text/css">
+    <link href="resources/css/site.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/css/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="resources/css/dataTables.responsive.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src=//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+ <script>
+     function referals (){
+         $('#myreferals').show();
+         $('#myposts').hide();
+         $('#mycontacts').hide();
+         $('#mypoints').hide();
+     }
+     function contacts (){
+         $('#myreferals').hide();
+         $('#myposts').hide();
+         $('#mycontacts').show();
+         $('#mypoints').hide();
+     }
+     function posts (){
+         $('#myreferals').hide();
+         $('#myposts').show();
+         $('#mycontacts').hide();
+         $('#mypoints').hide();
+     }
+     function points (){
+         $('#myreferals').hide();
+         $('#myposts').hide();
+         $('#mypoints').show();
+         $('#mycontacts').hide();
+     }
+ </script>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;background-color: #ff6666">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html" style="color: #ffffff;font-size: 45px;margin-left: 100px">coref</a>
+            </div>
+            <!-- /.navbar-header -->
+
+
+            <div class="navbar-default sidebar" style="width: 350px" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a onclick="posts();"><i style='margin-left:80px;font-size:25px' class="fa fa-edit fa-fw"></i> <span style='font-size:17px'>Company Feed</span></a>
+                        </li>
+                        <li>
+                            <a onclick="points();"><i style='margin-left:80px;font-size:25px' class="glyphicon glyphicon-tower"></i><span style='font-size:17px'> Points</span></a>
+                        </li>
+
+                        <li>
+                            <a onclick="referals();"><i style='margin-left:80px;font-size:25px' class="fa fa-dashboard fa-fw"></i><span style='font-size:17px'> My Referals</span></a>
+                        </li>
+
+                        <li>
+                            <a onclick="contacts();"><i style='margin-left:80px;font-size:25px' class="fa fa-users"></i><span style='font-size:17px'> My Contacts</span></a>
+                        </li>
+
+
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper" style="margin: 0 0 0 350px">
+
+            <div class="row">
+                <div class="col-lg-9" id="myreferals" style="display: none;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="font-size: 20px;">
+                          My Referals
+
+                                <div class="input-group custom-search-form" style='width:350px;margin-left: 20%'>
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                     </span>
+                                </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+
+                                    <tbody>
+                                    <tr style="height:50px">
+                                        <td style="width: 60px">
+                                            <div class="pull-left" >
+                                                <img  class="img-circle" style="max-width:40px;margin-top: 4px;margin-bottom: 4px" src="images/profile.jpg" class="events-object img-rounded">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h4>Mark Jacob</h4>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-block btn-social btn-linkedin" style="width: 160px;margin-top:10px">
+                                                <i class="fa fa-linkedin"></i>LinkedIn profile
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <h5 class="text-center">Hardware networking</h5>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:50px">
+                                        <td style="width: 60px">
+                                            <div class="pull-left" >
+                                                <img  class="img-circle" style="max-width:40px;margin-top: 4px;margin-bottom: 4px" src="images/profile.jpg" class="events-object img-rounded">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h4>Vijay kumar gupta</h4>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-block btn-social btn-linkedin" style="width: 160px;margin-top:10px">
+                                                <i class="fa fa-linkedin"></i>LinkedIn profile
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <h5 class="text-center">java,python,selenium</h5>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:50px">
+                                        <td style="width: 60px">
+                                            <div class="pull-left" >
+                                                <img  class="img-circle" style="max-width:40px;margin-top: 4px;margin-bottom: 4px" src="images/profile.jpg" class="events-object img-rounded">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h4>Sanjay</h4>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-block btn-social btn-linkedin" style="width: 160px;margin-top:10px">
+                                                <i class="fa fa-linkedin"></i>LinkedIn profile
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <h5 class="text-center">Ruby,Maven</h5>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:50px">
+                                        <td style="width: 60px">
+                                            <div class="pull-left" >
+                                                <img  class="img-circle" style="max-width:40px;margin-top: 4px;margin-bottom: 4px" src="images/profile.jpg" class="events-object img-rounded">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h4>Michen stor</h4>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-block btn-social btn-linkedin" style="width: 160px;margin-top:10px">
+                                                <i class="fa fa-linkedin"></i>LinkedIn profile
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <h5 class="text-center">C,C++,C#</h5>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:50px">
+                                        <td style="width: 60px">
+                                            <div class="pull-left" >
+                                                <img  class="img-circle" style="max-width:40px;margin-top: 4px;margin-bottom: 4px" src="images/profile.jpg" class="events-object img-rounded">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h4>Harikrishnan</h4>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-block btn-social btn-linkedin" style="width: 160px;margin-top:10px">
+                                                <i class="fa fa-linkedin"></i>LinkedIn profile
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <h5 class="text-center">Sales force</h5>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:50px">
+                                        <td style="width: 60px">
+                                            <div class="pull-left" >
+                                                <img  class="img-circle" style="max-width:40px;margin-top: 4px;margin-bottom: 4px" src="images/profile.jpg" class="events-object img-rounded">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h4>Akshith</h4>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-block btn-social btn-linkedin" style="width: 160px;margin-top:10px">
+                                                <i class="fa fa-linkedin"></i>LinkedIn profile
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <h5 class="text-center">Automation testing</h5>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <div class="col-lg-11" id="mycontacts" style="display: none;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="font-size: 20px;">
+                            My Contacts
+
+                            <div class="input-group custom-search-form" style='width:350px;margin-left: 20%'>
+                                <input type="text" class="form-control" placeholder="Search...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                     </span>
+                            </div>
+
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+
+                                    <tbody>
+                                    <tr style="height:50px">
+                                        <td style="width: 60px">
+                                            <div class="pull-left" >
+                                                <img  class="img-circle" style="max-width:40px;margin-top: 4px;margin-bottom: 4px" src="images/profile.jpg" class="events-object img-rounded">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h4>Mark1 Jacob</h4>
+                                        </td>
+                                        <td>
+                                            <button type="button" style='margin-top:7px' class="btn btn-warning btn-circle"><i class="fa fa-edit"></i>
+                                            </button> <a style="color: #f0ad4e;font-size:10px">Edit contact</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-danger btn-circle"><i class="fa fa-trash-o "></i>
+                                            </button> <a style="color: #d9534f;font-size:10px">Delete contact</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-primary btn-circle"><i class="fa fa-user-plus"></i>
+                                            </button> <a style="color: #337ab7;font-size:10px">Add as employee</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-info btn-circle"><i class="fa fa-envelope-o "></i>
+                                            </button> <a style="color: #5bc0de;font-size:10px">Send invitation</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-success btn-circle"><i class="fa fa-link"></i>
+                                            </button> <a style="color: #5cb85c;font-size:10px">Share contact</a>
+
+                                        </td>
+
+                                    </tr>
+                                    <tr style="height:50px">
+                                        <td style="width: 60px">
+                                            <div class="pull-left" >
+                                                <img  class="img-circle" style="max-width:40px;margin-top: 4px;margin-bottom: 4px" src="images/profile.jpg" class="events-object img-rounded">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h4>Vijay kumar gupta</h4>
+                                        </td>
+                                        <td>
+                                            <button type="button" style='margin-top:7px' class="btn btn-warning btn-circle"><i class="fa fa-edit"></i>
+                                            </button> <a style="color: #f0ad4e;font-size:10px">Edit contact</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-danger btn-circle"><i class="fa fa-trash-o "></i>
+                                            </button> <a style="color: #d9534f;font-size:10px">Delete contact</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-primary btn-circle"><i class="fa fa-user-plus"></i>
+                                            </button> <a style="color: #337ab7;font-size:10px">Add as employee</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-info btn-circle"><i class="fa fa-envelope-o "></i>
+                                            </button> <a style="color: #5bc0de;font-size:10px">Send invitation</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-success btn-circle"><i class="fa fa-link"></i>
+                                            </button> <a style="color: #5cb85c;font-size:10px">Share contact</a>
+
+                                        </td>
+                                    </tr>
+                                    <tr style="height:50px">
+                                        <td style="width: 60px">
+                                            <div class="pull-left" >
+                                                <img  class="img-circle" style="max-width:40px;margin-top: 4px;margin-bottom: 4px" src="images/profile.jpg" class="events-object img-rounded">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h4>Sanjay</h4>
+                                        </td>
+                                        <td>
+                                            <button type="button" style='margin-top:7px' class="btn btn-warning btn-circle"><i class="fa fa-edit"></i>
+                                            </button> <a style="color: #f0ad4e;font-size:10px">Edit contact</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-danger btn-circle"><i class="fa fa-trash-o "></i>
+                                            </button> <a style="color: #d9534f;font-size:10px">Delete contact</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-primary btn-circle"><i class="fa fa-user-plus"></i>
+                                            </button> <a style="color: #337ab7;font-size:10px">Add as employee</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-info btn-circle"><i class="fa fa-envelope-o "></i>
+                                            </button> <a style="color: #5bc0de;font-size:10px">Send invitation</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-success btn-circle"><i class="fa fa-link"></i>
+                                            </button> <a style="color: #5cb85c;font-size:10px">Share contact</a>
+
+                                        </td>
+                                    </tr>
+                                    <tr style="height:50px">
+                                        <td style="width: 60px">
+                                            <div class="pull-left" >
+                                                <img  class="img-circle" style="max-width:40px;margin-top: 4px;margin-bottom: 4px" src="images/profile.jpg" class="events-object img-rounded">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h4>Michen stor</h4>
+                                        </td>
+                                        <td>
+                                            <button type="button" style='margin-top:7px' class="btn btn-warning btn-circle"><i class="fa fa-edit"></i>
+                                            </button> <a style="color: #f0ad4e;font-size:10px">Edit contact</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-danger btn-circle"><i class="fa fa-trash-o "></i>
+                                            </button> <a style="color: #d9534f;font-size:10px">Delete contact</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-primary btn-circle"><i class="fa fa-user-plus"></i>
+                                            </button> <a style="color: #337ab7;font-size:10px">Add as employee</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-info btn-circle"><i class="fa fa-envelope-o "></i>
+                                            </button> <a style="color: #5bc0de;font-size:10px">Send invitation</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-success btn-circle"><i class="fa fa-link"></i>
+                                            </button> <a style="color: #5cb85c;font-size:10px">Share contact</a>
+
+                                        </td>
+                                    </tr>
+                                    <tr style="height:50px">
+                                        <td style="width: 60px">
+                                            <div class="pull-left" >
+                                                <img  class="img-circle" style="max-width:40px;margin-top: 4px;margin-bottom: 4px" src="images/profile.jpg" class="events-object img-rounded">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h4>Harikrishnan</h4>
+                                        </td>
+                                        <td>
+                                            <button type="button" style='margin-top:7px' class="btn btn-warning btn-circle"><i class="fa fa-edit"></i>
+                                            </button> <a style="color: #f0ad4e;font-size:10px">Edit contact</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-danger btn-circle"><i class="fa fa-trash-o "></i>
+                                            </button> <a style="color: #d9534f;font-size:10px">Delete contact</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-primary btn-circle"><i class="fa fa-user-plus"></i>
+                                            </button> <a style="color: #337ab7;font-size:10px">Add as employee</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-info btn-circle"><i class="fa fa-envelope-o "></i>
+                                            </button> <a style="color: #5bc0de;font-size:10px">Send invitation</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-success btn-circle"><i class="fa fa-link"></i>
+                                            </button> <a style="color: #5cb85c;font-size:10px">Share contact</a>
+
+                                        </td>
+                                    </tr>
+                                    <tr style="height:50px">
+                                        <td style="width: 60px">
+                                            <div class="pull-left" >
+                                                <img  class="img-circle" style="max-width:40px;margin-top: 4px;margin-bottom: 4px" src="images/profile.jpg" class="events-object img-rounded">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h4>Akshith</h4>
+                                        </td>
+                                        <td>
+                                            <button type="button" style='margin-top:7px' class="btn btn-warning btn-circle"><i class="fa fa-edit"></i>
+                                            </button> <a style="color: #f0ad4e;font-size:10px">Edit contact</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-danger btn-circle"><i class="fa fa-trash-o "></i>
+                                            </button> <a style="color: #d9534f;font-size:10px">Delete contact</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-primary btn-circle"><i class="fa fa-user-plus"></i>
+                                            </button> <a style="color: #337ab7;font-size:10px">Add as employee</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-info btn-circle"><i class="fa fa-envelope-o "></i>
+                                            </button> <a style="color: #5bc0de;font-size:10px">Send invitation</a> &nbsp;
+                                            <button type="button" style='margin-top:7px' class="btn btn-success btn-circle"><i class="fa fa-link"></i>
+                                            </button> <a style="color: #5cb85c;font-size:10px">Share contact</a>
+
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9" id="myposts" >
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="font-size: 20px;">
+                           Company feed
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="text-left" style="margin-top: -5px;display: inline;">
+                                <img  class="img-circle" style="max-width:40px;display: inline;margin-top: -23px" src="images/profile.jpg">
+                                <textarea type="text" class="form-control" style="max-width:65%;height:40px;display: inline;margin-top: -2px" placeholder="Ask in your network" name="ask_in_network" id="ask_in_network"></textarea>
+                                <button class="btn btn-sm btn-fill btn-info" style="width:70px;display: inline;margin-top: -23px" >Post</button>
+                            </div><br>
+                            <div class="container"style="height:auto;" id="">
+                                <div class="example" style="height: 90%">
+                                    <div class="row">
+                                        <div class="col-md-9" style="padding: 0px 8px 0px 8px;">
+                                            <div class="timeline"  style="padding: 0px;overflow: hidden;background-color: #ffffff;">
+                                                <dl style="margin-bottom:0px; width: 99%;padding: 0px;margin-top: 5px">
+                                                    <dd class="pos-left clearfix" >
+                                                        <div class="events" style="margin-top:0px;display:inline;background-color:#f9f8f8;padding-right: 7px; box-shadow: 0.09em 0.09em 0.09em 0.05em #888888;">
+                                                            <p class="pull-left" style="margin-bottom: 0px">
+                                                                <img class="img-circle" style="max-width:40px;margin-top: -15%;" src="images/profile.jpg" class="events-object img-rounded">
+                                                            </p>
+                                                            <div class="events-body" style="margin-bottom:0%;margin-top: -1%">
+                                                                <div align="left" style="margin-left:9px">
+                                                                    <h3 class="events-heading text-left" style="display: inline;font-size: 16px">Ajay  </h3>
+                                                                    <p class="text-left text-muted" style="font-size: 11px; margin: 0 0 0px;display: inline;">2017-12-1</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="events-body" style="line-height:1.2">
+                                                                <div>
+                                                                    <p align ="left" class="pull-left" style="font-size: 14px;line-height:1.3;display:inline;margin-bottom:2px;margin-left: 8px">
+                                                                        Need feed back on the below candidate profile<a>  Ajay kumar gupta</a> <i class="fa fa-linkedin-square" aria-hidden="true" style="color: #5bc0de;font-size: 20px;"></i>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div id=""  style="margin-bottom:20px;display:inline;">
+                                                                <button  style="padding:0px; margin-top: 5px;background-color:#f9f8f8;margin-bottom: 5px;margin-left: 3px" class="btn btn-default btn-simple btn-md pull-left" rel="tooltip" title="Post Response" data-original-title="Post Response" type="button" data-toggle="modal" >
+                                                                    5&nbsp;<i class="fa fa-thumbs-o-up" style="color:#5bc0de;font-size: 20px"></i> &nbsp;&nbsp;&nbsp;
+                                                                </button>
+                                                                <button style="padding:0px; margin-top: 5px;background-color:#f9f8f8;margin-bottom: 5px" class="btn btn-default btn-simple btn-md pull-left" rel="tooltip" title="Post Response" data-original-title="Post Response" type="button" data-toggle="modal" >
+                                                                    2&nbsp;<i class="fa fa-thumbs-o-down" style="color:#fa8072;font-size: 20px"></i>
+                                                                </button>&nbsp;&nbsp;
+
+                                                                <button  style="padding:0px; margin-top: 5px;background-color:#f9f8f8;margin-bottom: 5px" class="btn btn-default btn-simple btn-md pull-right" rel="tooltip" title="Post Response" data-original-title="Post Response" type="button" data-toggle="modal">
+                                                                    10&nbsp;<i class="fa fa-commenting-o" style="color:#F6BB42;font-size: 20px"></i> &nbsp;&nbsp;
+                                                                </button>
+                                                                <br>
+                                                            </div>
+                                                        </div>
+                                                    </dd>
+                                                </dl>
+                                                <dl style="padding: 0px;display:inline;margin-bottom:1%;">
+                                                    <dd class="pos-left clearfix"  style="padding: 0px">
+                                                        <div class="events"  style="background-color:#f9f8f8;padding: 5px 5px 0">
+                                                            <div class="pull-left">
+                                                                <img  class="img-circle" style="max-width:30px;margin-left: 5px;" src="images/profile.jpg" class="events-object img-rounded">
+                                                            </div>
+                                                            <div class="events-body" >
+                                                                <div align="left" class="dont-break-out" style="line-height: 1.25;margin-bottom:4px">
+                                                                    <h5 class="events-heading text-left dont-break-out" style="display: inline;font-size:13px;word-wrap: break-word;margin-left: 5px">Praveen </h5>
+                                                                    <span class="text-muted" style="font-size: 10px">2017-01-05</span><br>
+                                                                    <span style="font-size: 11px;word-wrap: break-word;margin-left: 5px"> Candidate profile seems good  </span><br>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </dd>
+                                                </dl>
+                                                <dl style="padding: 0px;display:inline;margin-bottom:1%;">
+                                                    <dd class="pos-left clearfix"  style="padding: 0px">
+                                                        <div class="events"  style="background-color:#f9f8f8;padding: 5px 5px 0">
+                                                            <div class="pull-left">
+                                                                <img  class="img-circle" style="max-width:30px;margin-left: 5px;" src="images/profile.jpg" class="events-object img-rounded">
+                                                            </div>
+                                                            <div class="events-body" >
+                                                                <h5 class="events-heading text-left dont-break-out" style="display: inline;font-size:13px;word-wrap: break-word;margin-left: 5px">Mahesh gupta </h5>
+                                                                <span class="text-muted" style="font-size: 10px">2017-01-05</span><br>
+                                                                <span style="font-size: 11px;word-wrap: break-word;margin-left: 5px"> As per our company criteria candidate percentage is not upto the mark  </span><br>
+
+                                                            </div>
+                                                        </div>
+                                                </dl>
+                                                </dd>
+                                                <dl style="padding: 0px;display:inline;margin-bottom:1%;">
+                                                    <dd class="pos-left clearfix"  style="padding: 0px">
+                                                        <div class="events" style="background-color:#f9f8f8;padding: 5px 5px 0">
+                                                            <div class="pull-left" >
+                                                                <img  class="img-circle" style="max-width:30px;margin-left: 5px;" src="images/profile.jpg" class="events-object img-rounded">
+                                                            </div>
+                                                            <div class="events-body" >
+                                                                <div align="left" class="dont-break-out" style="line-height: 1.25;margin-bottom:4px">
+                                                                    <h5 class="events-heading text-left dont-break-out" style="display: inline;font-size:13px;word-wrap: break-word;margin-left: 5px">Rakesh Raj </h5>
+                                                                    <span class="text-muted" style="font-size: 10px">2017-01-05</span><br>
+                                                                    <span style="font-size: 11px;word-wrap: break-word;margin-left: 5px"> We need strong background of Hibernate framework candidate know only basic as per the profile </span><br>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </dd>
+                                                </dl>
+                                                <dl style="padding: 0px;display:inline;margin-bottom:1%;">
+                                                    <dd class="pos-left clearfix"  style="padding: 0px">
+                                                        <div class="events" style="background-color:#f9f8f8;padding: 5px 5px 0">
+                                                            <div class="pull-left" >
+                                                                <img  class="img-circle" style="max-width:30px;margin-left: 5px;" src="images/profile.jpg" class="events-object img-rounded">
+                                                            </div>
+                                                            <div class="events-body" >
+                                                                <div align="left" class="dont-break-out" style="line-height: 1.25;margin-bottom:4px">
+                                                                    <h5 class="events-heading text-left dont-break-out" style="display: inline;font-size:13px;word-wrap: break-word;margin-left: 5px">Sohan </h5>
+                                                                    <span class="text-muted" style="font-size: 10px">2017-01-05</span><br>
+                                                                    <span style="font-size: 11px;word-wrap: break-word;margin-left: 5px"> We can give a try by interviewing</span><br>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </dd>
+                                                </dl>
+                                                <div class="text-left" style="margin-top:1;">
+                                                    <textarea type="text" class="form-control" style="max-width:75%;height:30px;display: inline;" placeholder="Comment" name="ask_in_network"></textarea>
+                                                </div> <hr>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-11" id="mypoints" style="display: none;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="font-size: 20px;">
+                            Points
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-4 col-lg-offset-2">
+                                    <div class="panel panel-green">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <i class="fa fa fa-link fa-5x"></i>
+                                                </div>
+                                                <div class="col-xs-9 text-right">
+                                                    <div class="huge">26</div>
+                                                    <div>Referrals</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <i class="glyphicon glyphicon-retweet fa-5x"></i>
+                                                </div>
+                                                <div class="col-xs-9 text-right">
+                                                    <div class="huge">26</div>
+                                                    <div>Feedback</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2" style="width: 11%;">
+
+                                </div>
+                                <div class="col-lg-2 col-lg-offset-2" style="width: 14%;margin-left: 4%">
+                                    <button data-toggle="modal" type="button" class="btn btn-primary btn-lg  text-center" style=" background-color:#ffffff;border-color: #ffffff;color: #000000;">
+                                        <img src="images/111.jpg" style="width: 40px;height: 40px;">
+                                    </button>
+                                </div>
+                                <div class="col-xs-2" style="width: 14%;">
+                                    <button data-toggle="modal" type="button" class="btn btn-primary btn-lg  text-center" style=" background-color:#ffffff;border-color: #ffffff;color: #000000;">
+                                        <img src="images/222.png" style="width: 40px;height: 40px;border-radius:35%;border:#ff6666 solid;">
+                                    </button>
+                                </div>
+                                <div class="col-xs-2" style="width: 14%;">
+                                    <button data-toggle="modal" type="button" class="btn btn-primary btn-lg  text-center" style=" background-color:#ffffff;border-color: #ffffff;color: #000000;opacity: 0.4">
+                                        <img src="images/333.jpg" style="width: 40px;height: 40px;">
+                                    </button>
+                                </div>
+                                <div class="col-xs-2" style="width: 14%;">
+                                    <button data-toggle="modal" type="button" class="btn btn-primary btn-lg  text-center" style=" background-color:#ffffff;border-color: #ffffff;color: #000000;opacity: 0.4">
+                                        <img src="images/444.jpg" style="width: 40px;height: 40px;" >
+                                    </button>
+                                </div>
+                                <div class="col-xs-2" style="width: 14%;">
+                                    <button data-toggle="modal" type="button" class="btn btn-primary btn-lg  text-center" style=" background-color:#ffffff;border-color: #ffffff;color: #000000;opacity: 0.4" >
+                                        <img src="images/555.png" style="width: 40px;height: 40px;">
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10" style="padding: 5px 5px 5px 5px; width: 58%;margin-left: 20%;">
+                                    <div class="progress" style="height: 7px;color: #000000;margin-top: 2px;margin-bottom: 0px" >
+                                        <div data-percentage="0%" style="width: 25%;background-color: #ff6666;" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100" ></div>
+                                    </div>
+
+                                    <p class="text-center" style="color: #000000;margin-top: 3px;margin-bottom: 3px;font-size: 12px">20 more referals required for next level</p>
+                                </div>
+                            </div> <br>
+                            <div>
+                                <div id="noanim-tab-example">
+                                    <ul  class="nav nav-tabs" role="tablist">
+                                        <li  class="active" role="presentation">
+                                            <a  href="#" aria-selected="false" aria-controls="noanim-tab-example-pane-1" role="tab" id="noanim-tab-example-tab-1" style="color:#337ab7;">Top Connectors </a>
+                                        </li>
+                                        <li  class="disabled" role="presentation">
+                                            <a  href="#" aria-selected="false" tabindex="-1" aria-controls="noanim-tab-example-pane-2" role="tab" id="noanim-tab-example-tab-2">Rainmaker of the week</a>
+                                        </li>
+                                        <li class="disabled" role="presentation">
+                                            <a  style="pointer-events:none;" href="#" aria-selected="false" tabindex="-1" aria-controls="noanim-tab-example-pane-3" role="tab" id="noanim-tab-example-tab-3">Analytics</a>
+                                        </li>
+                                    </ul>
+                                    <div  class="tab-content">
+                                        <div class="tab-pane active" aria-hidden="false" role="tabpanel" aria-labelledby="noanim-tab-example-tab-1" id="noanim-tab-example-pane-1">Tab 1 content</div>
+                                        <div class="tab-pane" aria-hidden="true" role="tabpanel" aria-labelledby="noanim-tab-example-tab-2" id="noanim-tab-example-pane-2">Tab 2 content</div>
+                                        <div class="tab-pane" aria-hidden="true" role="tabpanel" aria-labelledby="noanim-tab-example-tab-3" id="noanim-tab-example-pane-3">Tab 3 content</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="resources/js/jquery.min.js"></script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+<meta charset="utf-8">
+<title>Netref</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<link rel='shortcut icon' href="images/favicon.ico" />
+<link href="resources/css/font-awesome.css" rel="stylesheet">
+<link href="resources/css/bootstrap.css" rel="stylesheet">
+<link href="resources/css/site.min.css" rel="stylesheet">
+<link href="resources/css/netref.css" rel="stylesheet">
+<link href="resources/css/segment.css" rel="stylesheet">
+<link href="resources/css/style.css" rel="stylesheet">
+
+<script src="resources/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="resources/js/jquery.longclick-min.js"></script>
+<script src="resources/js/segment.js"></script>
+
+<link href="resources/css/jquery-ui.css" rel="stylesheet"> <!--// i have added-->
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script type="text/javascript">
+    jQuery(function ($){
+        $(".segment-select").Segment();
+    });
+</script>
+
+<style>
+    @media screen and (orientation: portrait) {
+        #friendfl {
+            margin-bottom:-3px;
+            margin-top:1px;
+        }
+        #ask {
+            margin-bottom:6px;
+            padding:0px;
+        }
+        #enquireresponse {
+            margin-bottom:8px;
+            margin-top:-2%;
+        }
+    }
+
+        /* For landscape, we want the tool bar stick on the left */
+
+    @media screen and (orientation: landscape) {
+        #friendfl {
+            margin-bottom:0%;
+            margin-top:2px;
+        }
+        #ask {
+            margin-bottom:0px;
+            padding:0px;
+        }
+        #enquireresponse {
+            margin-bottom:3px;
+            margin-top:0%;
+        }
+    }
+
+    h1 .subtitle {
+        display: block;
+        font-family: 'Grand Hotel',cursive;
+        line-height: 40px;
+        margin: 15px 0 30px;
+    }
+    .redfamily {
+        color: red;
+    }
+    .search-box,.close-icon,.search-wrapper {
+        position: relative;
+        padding: 5px;
+    }
+    .search-wrapper {
+        width: 500px;
+        margin: auto;
+        margin-top: 50px;
+    }
+    .search-box {
+        width: 80%;
+        border: 1px solid #ccc;
+        outline: 0;
+        border-radius: 5px;
+    }
+    .search-box:focus {
+        box-shadow: 0 0 1px 1px #b0e0ee;
+        border: 0px solid #bebede;
+    }
+    .search-icon-pros {
+        color:#a6a6a6;
+        margin-left: -23px;
+        position: relative;
+        vertical-align: middle;
+        z-index:1;
+        right: 195px;
+        text-align: center;
+        font-weight: normal;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .search-icon-contacts {
+        color:#a6a6a6;
+        margin-left: -23px;
+        position: relative;
+        vertical-align: middle;
+        z-index:1;
+        right: 195px;
+        text-align: center;
+        font-weight: normal;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .close-icon {
+        border:1px solid transparent;
+        background-color: transparent;
+        display: inline-block;
+        vertical-align: middle;
+        outline: 0;
+        cursor: pointer;
+        margin-left: -15px;
+    }
+    .close-icon:after {
+        content: "X";
+        display: block;
+        width: 18px;
+        height: 20px;
+        position: absolute;
+        background-color: #FA9595;
+        z-index:1;
+        right: 5px;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        padding: 0px;
+        border-radius: 50%;
+        text-align: center;
+        color: white;
+        font-weight: normal;
+        /*font-size: 12px;*/
+        box-shadow: 0 0 2px #E50F0F;
+        cursor: pointer;
+    }
+    .search-box:not(:valid) ~ .close-icon {
+        display: none;
+    }
+    .blink {
+        animation: blink-animation 1s steps(5, start) infinite;
+        -webkit-animation: blink-animation 1s steps(5, start) infinite;
+    }
+    @keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+    @-webkit-keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+		
+    .searchbychar a:focus, a:hover {
+        color: #ff5656;
+        text-decoration: none;
+    }
+</style>
+</head>
+
+<body onload="window.showReminders_Admin(); " style="overflow: hidden;">
+<div class="rd-navbar-wrap">
+    <nav data-md-device-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-static"  class="rd-navbar rd-navbar-default rd-navbar-transparent" data-lg-auto-height="true" data-md-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-stick-up="true">
+        <div class="rd-navbar-inner">
+            <!-- RD Navbar Panel-->
+            <div class="rd-navbar-panel">
+                <!-- RD Navbar Toggle-->
+                <button  data-rd-navbar-toggle=".rd-navbar, .rd-navbar-nav-wrap" class="rd-navbar-toggle pull-right"><span></span></button>
+                <!--Navbar Brand-->
+                <div class="rd-navbar-brand"><h1 style="margin-top: 1px;font-size: 70px"> <small style="color: white;margin-top: 2px;margin-left:10px" class="subtitle">netref</small> </h1></div>
+            </div>
+
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div id="reminders_page">
+    <div style="position: fixed;width: 100%">
+        <div align="center" style="max-width: 100%;background-color: #F5F5F5;overflow: hidden; height: 40px;">
+            <div id="reminder_page_status_info" align="center" style="display: none">
+            </div>
+            <table class="table" style="margin-bottom:0px;table-layout: fixed;">
+                <thead>
+                <tr>
+                    <td width = "80rem;" style = "padding: .25rem;">
+                        <h5 style="margin: 2px 5px 1px;align:left;font-size: 17px;margin-top:0.5rem;color:#444571">Reminders</h5>
+                    </td>
+                </tr>
+                </thead>
+            </table><br>
+        </div>
+
+        <div align="center" style="height: 90%">
+            <div class="timeline" id="reminders_loading">
+                <br><br><br><br><i class="fa fa-circle-o-notch fa-2x fa-pulse" style="color: white" ></i>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+
+        <div align="center" id="reminders">
+            <section class="content" style="height:500px;margin-bottom: 25px;  overflow-y: auto;overflow-x: hidden;margin-top: -3;background-color: #F5F5F5">
+                <div class="container" style="height: auto;">
+                    <div class="example" style="height: 90%">
+                        <div class="row">
+                            <div class="col-md-13" style="padding: 0px 8px 0px 8px;">
+                                <div class="timeline" id="reminders_ref" style="margin-bottom: 110px;">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+</body>
+<link href='http://fonts.googleapis.com/css?family=Lato:400' rel='stylesheet' type='text/css'>
+<script src="resources/js/bootstrap.js" type="text/javascript"></script>
+<script src="resources/js/header.js"></script>
+<script src="resources/js/netref.js" type="text/javascript"></script>
+</html>

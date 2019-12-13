@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-locale="en-US" xmlns="http://www.w3.org/1999/html">
+
+<head>
+<title>coref</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css" >
+     <link href="resources/css/style_new2.css" rel="stylesheet" type="text/css" >
+    <link href="resources/css/style_new.css" rel="stylesheet" type="text/css" >
+    <script src="resources/js/jquery.min.js"></script>
+     <script>
+	        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js", function(){
+	            particlesJS('particles-js',
+	                    {
+	                        "particles": {
+	                            "number": {
+	                                "value": 80,
+	                                "density": {
+	                                    "enable": true,
+	                                    "value_area": 800
+	                                }
+	                            },
+	                            "color": {
+	                                "value": "#ffffff"
+	                            },
+	                            "shape": {
+	                                "type": "circle",
+	                                "stroke": {
+	                                    "width": 0,
+	                                    "color": "#000000"
+	                                },
+	                                "polygon": {
+	                                    "nb_sides": 5
+	                                },
+	                                "image": {
+	                                    "width": 100,
+	                                    "height": 100
+	                                }
+	                            },
+	                            "opacity": {
+	                                "value": 0.5,
+	                                "random": false,
+	                                "anim": {
+	                                    "enable": false,
+	                                    "speed": 1,
+	                                    "opacity_min": 0.1,
+	                                    "sync": false
+	                                }
+	                            },
+	                            "size": {
+	                                "value": 5,
+	                                "random": true,
+	                                "anim": {
+	                                    "enable": false,
+	                                    "speed": 40,
+	                                    "size_min": 0.1,
+	                                    "sync": false
+	                                }
+	                            },
+	                            "line_linked": {
+	                                "enable": true,
+	                                "distance": 150,
+	                                "color": "#ffffff",
+	                                "opacity": 0.4,
+	                                "width": 1
+	                            },
+	                            "move": {
+	                                "enable": true,
+	                                "speed": 6,
+	                                "direction": "none",
+	                                "random": false,
+	                                "straight": false,
+	                                "out_mode": "out",
+	                                "attract": {
+	                                    "enable": false,
+	                                    "rotateX": 600,
+	                                    "rotateY": 1200
+	                                }
+	                            }
+	                        },
+	                        "interactivity": {
+	                            "detect_on": "canvas",
+	                            "events": {
+	                                "onhover": {
+	                                    "enable": true,
+	                                    "mode": "repulse"
+	                                },
+	                                "onclick": {
+	                                    "enable": true,
+	                                    "mode": "push"
+	                                },
+	                                "resize": true
+	                            },
+	                            "modes": {
+	                                "grab": {
+	                                    "distance": 400,
+	                                    "line_linked": {
+	                                        "opacity": 1
+	                                    }
+	                                },
+	                                "bubble": {
+	                                    "distance": 400,
+	                                    "size": 40,
+	                                    "duration": 2,
+	                                    "opacity": 8,
+	                                    "speed": 3
+	                                },
+	                                "repulse": {
+	                                    "distance": 200
+	                                },
+	                                "push": {
+	                                    "particles_nb": 4
+	                                },
+	                                "remove": {
+	                                    "particles_nb": 2
+	                                }
+	                            }
+	                        },
+	                        "retina_detect": true,
+	                        "config_demo": {
+	                            "hide_card": false,
+	                            "background_color": "#b61924",
+	                            "background_image": "",
+	                            "background_position": "50% 50%",
+	                            "background_repeat": "no-repeat",
+	                            "background_size": "cover"
+	                        }
+	                    }
+	            );
+
+	        });
+    </script>
+</head>
+
+<nav class="top persistent">
+    <img style="width: 120px; margin-top: 10px; margin-left: 30px;" src="images_new/logo1.png">
+</nav>
+<div id="page" >
+<div id="page_contents" data-qa="page_contents" class="">
+<div id="find_team_flow" class="col span_3_of_6 margin_auto float_none find_team_flow_wrapper">
+    <center><div id="signup_wrapper" class="fs_split_pane fs_split_pane_full_width very_large_bottom_margin " style="width:430px">
+        <div id="get_started_svg_wrapper" style="margin-top: 95px;margin-bottom: 5px" class="get_started_img large_bottom_margin"></div>
+        <h1 class="small_bottom_margin">Start with a team</h1>
+        <p class="large_bottom_margin medium_right_padding">In Coref, everything happens on a team. A Coref network is  a group of people using Coref together like your company or organization.</p>
+
+        <div onclick="window.location='check_invite.html'" class="clear_both cta_lead medium_top_margin email_handling" data-option="join" data-clog-click="true" data-clog-event="GROWTH_FIND_YOUR_TEAM" data-clog-params="step=start_with_a_team,action=join_existing_team">
+		<span class="team_icon_block small_right_margin">
+			<span class="icon_bg icon_bg_join small_right_margin" style="background: #00b8d4"><i class="fa fa-user-plus"></i></span>
+		</span>
+		<span class="cta_text">
+			<span class="link_head">Join to existing team</span>
+			<span class="descrip">Find teams you've been invited to join.</span>
+		</span>
+            <i style="color:#00b8d4;font-size:30px;margin-left: -15px " class="fa fa-angle-right"></i>
+        </div>
+
+        <div onclick="window.location='https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86enw01rzt6kfs&redirect_uri=http://coref.co/coref/linkedin/getLIDetails.jsp&state=PankNrLinAcs&scope=r_basicprofile%20r_emailaddress%20w_share'" class="clear_both cta_lead email_handling" data-option="create" data-clog-click="true" data-clog-event="GROWTH_FIND_YOUR_TEAM" data-clog-params="step=start_with_a_team,action=create_new_team">
+           <span class="team_icon_block small_right_margin">
+			<span class="icon_bg icon_bg_join small_right_margin" style="background: #00b8d4"><i class="fa fa-plus"></i></span>
+		</span>
+		<span class="cta_text">
+			<span class="link_head">Create a new team</span>
+			<span class="descrip">Make a Coref team from scratch.</span>
+		</span>
+            <i style="color:#00b8d4;font-size:30px;margin-left: -15px " class="fa fa-angle-right"></i>
+        </div>
+
+    </div>
+    </center>
+
+</div>
+
+
+
+
+</body>
+</html>

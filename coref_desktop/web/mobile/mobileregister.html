@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Coref</title>
+
+    <script>
+        var uagent = navigator.userAgent.toLowerCase();
+
+        var isAndroid = uagent.indexOf("android") > -1; //&& ua.indexOf("mobile");
+        var isWindowsPhone = uagent.indexOf("windows phone") > -1; //&& ua.indexOf("mobile");
+        var isiPhone = uagent.indexOf("iphone") > -1;
+        var isiPad = uagent.indexOf("ipad") > -1;
+
+        var device_type = "windows";
+
+        if(isAndroid) {
+            device_type = 'android';
+        } else if(isiPhone || isiPad) {
+            device_type = 'ios';
+        } else if(isWindowsPhone) {
+            device_type = 'windows';
+        }
+
+        function readCookieMobileLogin_default() {          //check for the cookie with user mobile login
+            var cookie_name = "coref_cookie_mobile";
+            var cookie_value = "";
+
+            var nameEQ = cookie_name + "=";
+            var ca = document.cookie.split(';');
+
+            var cookie_found = false;
+
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+
+                while (c.charAt(0) == ' ')
+                    c = c.substring(1,c.length);
+
+                if (c.indexOf(nameEQ) >= 0) {
+                    var cookie_on_success = c;
+                    cookie_found = true;
+                    break;
+                }
+            }
+
+            if(cookie_found == true) {                            //Cookie with user mobile number exists, get the userId from cookie and set session
+                cookie_value = cookie_on_success.substring(nameEQ.length, cookie_on_success.length);
+
+                setSessionAndRedirect_Mobile(cookie_value);
+            } else {                                             //Cookie with user mobile number does not exists, redirect to the login page
+                window.location = "mobileregister_nc.html";
+            }
+        }
+
+        var xmlHttp_Mobile;
+
+        function setSessionAndRedirect_Mobile(cookie_value) {
+            if (typeof XMLHttpRequest != "undefined") {
+                xmlHttp_Mobile = new XMLHttpRequest();
+            }
+            else if (window.ActiveXObject) {
+                xmlHttp_Mobile = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            if (xmlHttp_Mobile == null) {
+                alert("Browser does not support XMLHTTP Request");
+                return;
+            }
+
+            var redirect_url = "set_session_from_cookie_mobile.jsp";
+            redirect_url += "?coref_cookie_login_mobile_value="+encodeURIComponent(cookie_value);
+
+            xmlHttp_Mobile.onreadystatechange = stateChangeRedirect_Mobile;
+            xmlHttp_Mobile.open("GET", redirect_url, true);
+            xmlHttp_Mobile.send(null);
+        }
+
+        function stateChangeRedirect_Mobile() {
+            if (xmlHttp_Mobile.readyState == 4 || xmlHttp_Mobile.readyState == "complete") {
+                var user_details_json = xmlHttp_Mobile.responseText.trim();
+
+                user_details_json = escape(user_details_json).replace(/%0A/g, "");
+                user_details_json = user_details_json.replace(/%0D/g, "");
+                user_details_json = unescape(user_details_json);
+
+                if(user_details_json != null && user_details_json.indexOf("session_expired") >= 0) {
+                    window.location = "mobileregister_nc.html";
+                } else if(user_details_json != null && user_details_json == "failed") {
+                    window.location = "mobileregister_nc.html";
+                }
+
+                var user_details_arr = JSON.parse(user_details_json);       //Arraylist of HashMap; contains userId and userType
+
+                if(user_details_arr == null || user_details_arr.length <= 0) {
+                    window.location = "mobileregister_nc.html";
+                }
+
+                var userId = -1;
+                var userType = -1;
+
+                for(var cnt = 0; cnt < user_details_arr.length; cnt++) {
+                    try {
+                        userId = parseInt(user_details_arr[cnt].user_id);
+                        userType = parseInt(user_details_arr[cnt].user_type);
+                    } catch (error) {
+                        continue;
+                    }
+                }
+
+                var redirectURL = 'mobilefriend.html';
+
+                if(userType == 2) {                                         //2 - user of type HR
+                    redirectURL = 'mobilehr.html';
+                }
+
+//                alert("userId: "+userId+", userType: "+userType+", redirectURL: "+redirectURL);
+
+                if(userId > 0) {
+                    try {
+                        if(device_type == "android") {
+                            webapp.openContactsView(userId, redirectURL);   //if android, read contacts from device
+                        } else {
+                            window.location = redirectURL;                  //if not android, redirect to employee or hr page based on the user_type
+                        }
+                    } catch (err) {
+                        if(err.toString().indexOf("webapp") >= 0) {
+                            window.location = redirectURL;
+                        }
+                    }
+                } else {
+                    window.location = "mobileregister_nc.html";         //redirect to login page, if no cookie
+                }
+            }
+        }
+    </script>
+</head>
+
+<body onload="readCookieMobileLogin_default();" style = "background-color: #ff6666;">
+<!--<body style = "background-color: #ff6666;">-->
+
+    <div style="vertical-align: middle;padding-left: 43%; padding-top:50%">
+        <img src="images/landing_logo.gif" alt="Logo" style="width:40px;height:40px;">
+    </div>
+
+<!--
+    <div>
+        <p style="font-size:25px; margin-top: 50%; text-align: center; color: white; vertical-align: middle;font-family:monospace">
+            Coref
+        </p>
+    </div>
+-->
+
+<div id="login_screen_loading">
+    <div style="vertical-align: middle;padding-left: 45%; padding-top:20%">
+        <img src="images/loader.gif" alt="Logo" style="width:25px;height:25px;">
+    </div>
+</div>
+
+</body>
+</html>

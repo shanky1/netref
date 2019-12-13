@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>coref</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <script src="resources/js/jquery.min.js"></script>
+    <!-- //js -->
+    <link href="resources/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="resources/css/sb-admin-2.css" rel="stylesheet">
+    <link href="resources/css/bootstrap-social.css" rel="stylesheet">
+    <link href="resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Raleway:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Aldrich" rel="stylesheet">
+
+    <script>
+        function setCIESession(cie) {
+            $.ajax({
+                type:         "post",
+                url:          "action/set_cie_session.jsp",
+                data:         "cie="+cie,
+
+                success:    function(status) {
+                    status = escape(status).replace(/%0A/g, "");
+                    status = status.replace(/%0D/g, "");
+                    status = unescape(status);
+
+                    if(status != null && status.indexOf("invalid_cie") >= 0) {
+                        //alert user and stop entering inside
+                       // alert("Invalid URL");
+                    } else if(status != null && status.indexOf("malformed_cie") >= 0) {
+                        //alert user and stop entering inside
+                        //Do nothing
+                       // alert("Malformed URL");
+                    } else if(status != null && status.indexOf("success") >= 0) {
+                        //Do nothing, user continues to login
+                       // alert("Valid URL");
+                    } else {
+                        //alert user and stop entering inside
+                       // alert("Unknown URL");
+                    }
+                }
+            });
+        }
+
+        var cie;
+        // http://stackoverflow.com/a/3855394/1475891
+        (function($) {
+            $.QueryString = (function(a) {
+                if (a == "") {
+                   // alert("Invalid URL");
+                    return {};
+                } else {
+                    cie = a;
+                    setCIESession(cie);
+                }
+            })(window.location.search.substr(1).split('&'))
+        })(jQuery);
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0;background-color: #00B8D4">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand"  style="color: #ffffff;font-size: 35px;margin-left: 15px;font-family: 'Aldrich', sans-serif;">coref</a>
+    </div>
+    <!-- /.navbar-header -->
+
+</nav>
+
+<div class="main">
+    <h1>Ask your network for professionals</h1>
+    <div class="container text-center">
+        <a href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86enw01rzt6kfs&redirect_uri=http://localhost:8080/coref/linkedin/getLIDetailsAndJoin.jsp&state=PankNrLinAcs&scope=r_basicprofile%20r_emailaddress%20w_share" class="btn btn-lg btn-social btn-linkedin txt-center">
+            <i class="fa fa-linkedin"></i> Sign in with LinkedIn
+        </a>
+    </div>
+</div>
+</body>
+</html>

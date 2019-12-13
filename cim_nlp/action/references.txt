@@ -1,0 +1,5 @@
+neo4j cypher update existing node or create new node
+    http://stackoverflow.com/questions/25177788/neo4j-cypher-update-existing-node-or-create-new-node
+
+Neo4j: Using aliases to handle messy data
+    http://www.markhneedham.com/blog/2013/11/26/neo4j-using-aliases-to-handle-messy-data/
