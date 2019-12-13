@@ -1,0 +1,14 @@
+{
+  "browser_action" : { "default_icon" : "icon.png"},
+  "description" : "Extract Linkedin Search Profiles",
+  "icons" : { "128" : "icon.png" },
+  "name" : "Extract Linkedin Search Profiles",
+  "version" : "2.1",
+  "manifest_version": 2,
+  "content_scripts": [
+	{
+	  "matches": ["*://*.linkedin.com/vsearch/p*"],
+	  "js": ["jquery-3.1.1.min.js","extract_li_search_profiles.js"]
+	}
+  ]
+}

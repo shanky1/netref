@@ -1,0 +1,9 @@
+@charset "UTF-8";
+@font-face {
+  font-family: 'entypo';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/entypo.woff');
+}
+.entypo-facebook:before{content:"\f30c"}.entypo-block:before{content:"\1f6ab"}.entypo-mobile:before{content:"\1f4f1"}.entypo.triangle-down:before{ content:'\25BE'; }
+.entypo.triangle-up:before{ content:'\25B4'; }

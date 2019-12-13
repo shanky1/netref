@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>coref</title>
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/css/metisMenu.min.css" rel="stylesheet">
+    <link href="resources/css/sb-admin-2.css" rel="stylesheet">
+    <link href="resources/css/bootstrap-social.css" rel="stylesheet">
+    <link href="resources/css/morris.css" rel="stylesheet">
+    <link href="resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/css/coref.css" rel="stylesheet" type="text/css">
+    <link href="resources/css/site.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/css/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="resources/css/dataTables.responsive.css" rel="stylesheet">
+    <script src="resources/js/jquery.min.js"></script>
+</head>
+
+<script>
+    $(document).ready(function()
+    {
+        new_row=" <tr> <td ><input type='email'  class='form-control' id='email' style='width: 250px' placeholder='example@domain.com'></td>" +
+                "<td> <input type='email'  class='form-control' id='firstname' style='width: 200px;margin-left:2%' placeholder='firs tname'></td>" +
+                "<td><input type='email'  class='form-control' id='lastname' style='width: 200px;margin-left:2%' placeholder='last name'></td>" +
+                "<td><a href='#' id='my_button1' title='' class='add-author'><i style='margin-left: 5px;color: red;' class='fa fa-times'></i></a></td>" +
+        "</tr>";
+        $("#my_button").click(function()
+        {
+            $("#my_table").append(new_row);
+            return false;
+
+        })
+        $('#my_button1').click(function(e){
+            $(this).closest('tr').remove()
+        })
+    });
+
+</script>
+
+<body>
+
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;background-color: #ff6666">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html" style="color: #ffffff;font-size: 45px;margin-left: 100px">coref</a>
+            </div>
+        </nav>
+          <div class="container" style="background-color: #ffffff;margin-top: 30px;height: 450px">
+              <div class="row text-center">
+                      <h1> Add team members</h1>
+
+              </div>
+              <div class=" container-fluid" style="max-height: 200px">
+                  <!--<table class="authors-list" style="margin-left: 4%" id="my_table">
+                      <thead style="margin-left: 5%">
+                      <tr>
+                          <th style="margin-left: 5%">&nbsp;Email Address</th>
+                          <th>&nbsp;&nbsp;First Name</th>
+                          <th>&nbsp;&nbsp;Last Name</th>
+                      </tr>
+                      </thead>
+                      <tbody style="margin-left: 5%">
+                      <tr >
+                          <td ><input type="email"  class="form-control" id="email" style="width: 250px" placeholder="example@domain.com"></td>
+                          <td> <input type="email"  class="form-control" id="firstname" style="width: 200px;margin-left:2%" placeholder="firs tname"></td>
+                          <td><input type="email"  class="form-control" id="lastname" style="width: 200px;margin-left:2%" placeholder="last name"></td>
+                          <td><a href="#" id="my_button" title="" class="add-author"><i style="margin-left: 5px;color: #5bc0de;" class="fa fa-plus"></i></a></td>
+                      </tr>
+                      </tbody>
+                  </table>-->
+                  <div class="row">
+                      <div class="col-lg-12 col-lg-offset-2">
+                          <p>&nbsp;Email addresses:</p>
+                          <textarea   name="ask_in_network" placeholder="example@domain.com" style="max-width:65%;height:100px;display: inline;margin-top: -2px" class="form-control" type="text"></textarea>
+                          <p class="text-muted">Separate email addresses with a comma.</p>
+                      </div>
+                  </div>
+              </div>
+              <div>
+                  <button class="btn btn-info btn-lg pull-right" style="margin-right: 18%;margin-top: 5%" type="button">Add team member(s)</button>
+              </div>
+
+          </div>
+    </div>
+    <!-- jQuery -->
+
+
+
+
+</body>
+
+</html>

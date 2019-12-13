@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>CIM</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="../resources/css/custom.css" rel="stylesheet">
+    <link href="../resources/css/bootstrap.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Play:400,700" rel="stylesheet">
+    <script src="../resources/js/jquery.js"></script>
+    <script src="../resources/js/bootstrap.js"></script>
+    <script src="../resources/js/cim.js" type="text/javascript"></script>
+</head>
+<body onload="window.searchdata();">
+<div align="center" style="height: 90%">
+    <div class="timeline" id="load_data_loading" style="display: none;">
+        <br><br><br><br><i class="fa fa-circle-o-notch fa-2x fa-pulse" style="color: white" ></i>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+</div>
+<hgroup class="mb20" style="background-color: #f1f1f1;padding-top: 8px;border-top: 2px solid #3b5998;">
+    <a class="navbar-brand" href="javascript: void(0);" style="color: #ffffff;font-family: 'Play', sans-serif;font-size: 37px;margin-left: 5px;color: #3b5998;padding-left:0px; cursor: default;">CIM</a>
+    <div id="custom-search-input" style="margin-bottom: 25px;margin-top: 8px">
+        <div class="input-group col-md-5">
+            <input type="text" class="search-query form-control" placeholder="Search" style="height: 40px" id="search_for"/>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="button" style="height: 40px;width: 40px;background-color: #3b5998" onclick="loadSearchResults();">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </span>
+        </div>
+    </div>
+</hgroup>
+<div class="container" style="width: 90%;height: 99%;margin-top: 1px">
+    <section class="col-xs-12 col-sm-10 col-md-10">
+        <article class="search-result row" style="margin-top: 1px">
+            <div style="padding-left: 15px; padding-top: 5px; display: block;" class="text-muted" id='ser_result_cnt' >
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-12" id='ser_result_short' style="display: block">
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-12" id='ser_result_complete' style="display: block">
+            </div>
+        </article>
+    </section>
+</div>
+</hgroup>
+</body>
+</html>

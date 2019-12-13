@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Coref</title>
+
+<!-- Bootstrap Core CSS -->
+<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="resources/css/font-awesome.css" rel="stylesheet">
+<link href="resources/css/full-slider.css" rel="stylesheet">
+
+<style>
+    h1 .subtitle {
+        display: block;
+        font-family: 'Grand Hotel',cursive;
+        line-height: 40px;
+        margin: 15px 0 30px;
+    }
+    #button1{
+        width: 100px;
+        height: 40px;
+        display:inline-block;
+
+    }
+    #button2{
+        width: 100px;
+        height: 40px;
+        display:inline-block;
+    }
+
+    .login {
+        margin:0 auto;
+        max-width:500px;
+    }
+    .login-header {
+        color:#fff;
+        text-align:center;
+        font-size:300%;
+    }
+    .login-header h1 {
+        text-shadow: 0px 5px 15px #000;
+    }
+    .login-form {
+        border:2px solid #999;
+        background:#2c3e50;
+        border-radius:10px;
+        box-shadow:0px 0px 10px #000;
+
+    }
+    .login-form h3 {
+        text-align:left;
+        margin-left:40px;
+        color:#fff;
+    }
+    .login-form {
+        box-sizing:border-box;
+        padding-top:15px;
+        margin-top:35%;
+        text-align:center;
+        overflow: hidden;
+    }
+    .login input[type="text"],
+    .login input[type="password"] {
+        width: 100%;
+        max-width:400px;
+        height:35px;
+        font-family: 'Ubuntu', sans-serif;
+        margin:10px 0;
+        border-radius:5px;
+        border:2px solid #f2f2f2;
+        outline:none;
+        padding-left:10px;
+    }
+    .login-form input[type="button"] {
+        height:30px;
+        width:100px;
+        background:#fff;
+        border:1px solid #f2f2f2;
+        border-radius:20px;
+        color: slategrey;
+        text-transform:uppercase;
+        font-family: 'Ubuntu', sans-serif;
+        cursor:pointer;
+    }
+    .sign-up{
+        color:#f2f2f2;
+        margin-left:-400px;
+        cursor:pointer;
+        text-decoration:underline;
+    }
+    .no-access {
+        color:#E86850;
+        margin:20px 0px 20px -300px;
+        text-decoration:underline;
+        cursor:pointer;
+    }
+    .try-again {
+        color:#f2f2f2;
+        text-decoration:underline;
+        cursor:pointer;
+    }
+
+        /*Media Querie*/
+    @media only screen and (min-width : 150px) and (max-width : 530px){
+        .login-form h3 {
+            text-align:center;
+            margin:0;
+        }
+        .sign-up, .no-access {
+            margin:10px 0;
+        }
+        .login-button {
+            margin-bottom:10px;
+        }
+    }
+    @-ms-viewport {
+        width: device-width;
+    }
+</style>
+
+
+<script type="text/javascript">
+    function resetLoginForm()  {
+        $('#country_code').val("+");
+        $('#phonenum').val("");
+        $('#verification_code').val("");
+        $('#country_code').focus();
+    }
+
+    var uagent = navigator.userAgent.toLowerCase();
+
+    var isAndroid = uagent.indexOf("android") > -1; //&& ua.indexOf("mobile");
+    var isWindowsPhone = uagent.indexOf("windows phone") > -1; //&& ua.indexOf("mobile");
+    var isiPhone = uagent.indexOf("iphone") > -1;
+    var isiPad = uagent.indexOf("ipad") > -1;
+
+    var device_type = "windows";
+
+    if(isAndroid) {
+        device_type = 'android';
+    } else if(isiPhone || isiPad) {
+        device_type = 'ios';
+    } else if(isWindowsPhone) {
+        device_type = 'windows';
+    }
+</script>
+
+<script type="text/javascript">
+function registerAndSendVerificationCode() {
+    document.getElementById("status").innerHTML = "";
+
+    var deviceIMEI = "";
+
+    if(device_type == "android") {
+        try {
+            deviceIMEI = webapp.getDeviceIMEI();
+        } catch (err) {
+            console.log("Error while getting the device id: "+err);
+//            alert("Error while getting the device id: "+err);
+        }
+    }
+
+    var register_path = "action/register_user_phone.jsp";
+
+    var phonenum = document.getElementById("phonenum");
+    var country_code = document.getElementById("country_code");
+
+    if (country_code.value.indexOf("+") >= 0) {
+        if (country_code.value == null || country_code.value.length < 2) {
+            if (country_code.value.match(/\s/g)){
+                document.getElementById("status").innerHTML = "<font color = 'white' style='font-size: 18px'>Please enter valid country code</font>"+country_code.value.length;
+                country_code.focus();
+                country_code.select();
+                return false;
+            }
+            if($.isNumeric(country_code.value) === false) {
+                document.getElementById("status").innerHTML = "<font color = 'white' style='font-size: 18px'>Please enter valid country code</font>"+country_code.value.length;
+                country_code.focus();
+                country_code.select();
+                return false;
+            }
+
+            document.getElementById("status").innerHTML = "<font color = 'white' style='font-size: 18px'>Please enter valid country code</font>"+country_code.value.length;
+            country_code.focus();
+            country_code.select();
+            return false;
+        } else {
+            if (country_code.value.match(/\s/g)){
+                document.getElementById("status").innerHTML = "<font color = 'white' style='font-size: 18px'>Please enter valid country code</font>"+country_code.value.length;
+                country_code.focus();
+                country_code.select();
+                return false;
+            }
+            if($.isNumeric(country_code.value) === false) {
+                document.getElementById("status").innerHTML = "<font color = 'white' style='font-size: 18px'>Please enter valid country code</font>"+country_code.value.length;
+                country_code.focus();
+                country_code.select();
+                return false;
+            }
+        }
+    } else {
+        document.getElementById("status").innerHTML = "<font color = 'white' style='font-size: 18px'>Please enter valid country code</font>" + country_code.value.length;
+        country_code.focus();
+        country_code.select();
+        return false;
+    }
+
+    if (phonenum.value != null && phonenum.value.length > 0) {
+        if (phonenum.value.match(/\s/g)){
+            document.getElementById("status").innerHTML = "<font color = 'white' style='font-size: 18px'>Please enter valid 10 digit phone number</font>";
+            phonenum.focus();
+            phonenum.select();
+            return false;
+        }
+
+        if (!($.isNumeric(phonenum.value))) {
+            document.getElementById("status").innerHTML = "<font color = 'white' style='font-size: 18px'>Please enter valid 10 digit phone number</font>";
+            phonenum.focus();
+            phonenum.select();
+            return false;
+        } else {
+            if(phonenum.value.trim().length != 10) {
+                document.getElementById("status").innerHTML = "<font color = 'white' style='font-size: 18px'>Please enter valid 10 digit phone number</font>";
+                phonenum.focus();
+                phonenum.select();
+                return false;
+            }
+        }
+    } else {
+        document.getElementById("status").innerHTML = "<font color = 'white' style='font-size: 18px'>Please enter valid phone number</font>";
+        phonenum.focus();
+        phonenum.select();
+        return false;
+    }
+
+    var xmlHttpSendCode;
+
+    if (typeof XMLHttpRequest != "undefined") {
+        xmlHttpSendCode= new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject) {
+        xmlHttpSendCode= new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    if (xmlHttpSendCode==null) {
+        alert("Browser does not support XMLHTTP Request");
+        return;
+    }
+
+    register_path = register_path+"?country_code="+encodeURIComponent(country_code.value)+"&phonenum="+phonenum.value+"&deviceIMEI="+deviceIMEI+"&deviceType="+device_type;
+
+    xmlHttpSendCode.onreadystatechange = function() {
+        if (xmlHttpSendCode.readyState==4 || xmlHttpSendCode.readyState=="complete") {
+
+            var user_id_str = xmlHttpSendCode.responseText.trim();
+
+            var user_id = parseInt(user_id_str);
+
+            if(user_id > 0) {
+                sendVerificationCode(user_id, country_code, phonenum);
+            } else {
+                document.getElementById("status").innerHTML = "<font color='white' style='font-size: 18px'>Could not send the verification code. ERR: NR_RU</font>";
+            }
+        }
+    };
+
+    xmlHttpSendCode.open("GET", register_path, true);
+    xmlHttpSendCode.send(null);
+}
+
+function sendVerificationCode(user_id, country_code, phonenum) {
+    document.getElementById("status").innerHTML = "";
+    var smscode_path = "action/smscode.jsp";
+
+    var xmlHttpSendCode;
+
+    if (typeof XMLHttpRequest != "undefined") {
+        xmlHttpSendCode= new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject) {
+        xmlHttpSendCode= new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    if (xmlHttpSendCode==null) {
+        alert("Browser does not support XMLHTTP Request");
+        return;
+    }
+
+    var url_sendcode = smscode_path;
+    url_sendcode = url_sendcode+"?user_id="+user_id+"&country_code="+encodeURIComponent(country_code.value)+"&phonenum="+phonenum.value;
+
+    xmlHttpSendCode.onreadystatechange = function() {
+        if (xmlHttpSendCode.readyState==4 || xmlHttpSendCode.readyState=="complete") {
+
+            var status = xmlHttpSendCode.responseText.trim();
+
+            if(status.indexOf('Success') >= 0) {
+                document.getElementById("status").innerHTML = "<font color='white'>"+status+"</font>";
+            } else {
+                document.getElementById("status").innerHTML = "<font color='white' style='font-size: 18px'>Could not send the verification code. ERR: NR_SVC</font>";
+            }
+        }
+    };
+
+    xmlHttpSendCode.open("GET", url_sendcode, true);
+    xmlHttpSendCode.send(null);
+}
+
+function verifyPhoneNumber() {
+    document.getElementById("status").innerHTML = "";
+    var verifycode_path = "action/verifycode.jsp";
+
+    var verification_code = document.getElementById("verification_code");
+
+    var country_code = document.getElementById("country_code");
+    var phonenum = document.getElementById("phonenum");
+
+    if (country_code.value == null || country_code.value.length < 2) {
+        document.getElementById("status").innerHTML = "<font color = 'white' style='font-size: 18px'>Please enter valid country code</font>";
+        country_code.focus();
+        country_code.select();
+        return false;
+    }
+
+    if (phonenum.value != null && phonenum.value.length > 0) {
+        if (!isInteger(phonenum.value)) {
+            document.getElementById("status").innerHTML = "<font color = 'white' style='font-size: 18px'>Please enter valid 10 digit phone number to verify the code</font>";
+            phonenum.focus();
+            phonenum.select();
+            return false;
+        } else {
+            if(phonenum.value.length != 10) {
+                document.getElementById("status").innerHTML = "<font color = 'white' style='font-size: 18px'>Please enter valid 10 digit phone number to verify the code</font>";
+                phonenum.focus();
+                phonenum.select();
+                return false;
+            }
+        }
+    } else {
+        document.getElementById("status").innerHTML = "<font color = 'white' style='font-size: 18px'>Please enter valid phone number to verify the code</font>";
+        phonenum.focus();
+        phonenum.select();
+        return false;
+    }
+
+    if (verification_code.value == null || verification_code.value.length <= 0) {
+        document.getElementById("status").innerHTML = "<font color = 'white' style='font-size: 18px'>Please enter valid verification code</font>";
+        verification_code.focus();
+        verification_code.select();
+        return false;
+    }
+
+    var xmlHttpVerifyCode;
+
+    if (typeof XMLHttpRequest != "undefined"){
+        xmlHttpVerifyCode= new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject){
+        xmlHttpVerifyCode= new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    if (xmlHttpVerifyCode==null){
+        alert("Browser does not support XMLHTTP Request");
+        return;
+    }
+
+    var url_verifycode = verifycode_path;
+    url_verifycode = url_verifycode+"?country_code="+encodeURIComponent(country_code.value);
+    url_verifycode = url_verifycode+"&phonenum="+phonenum.value;
+    url_verifycode = url_verifycode+"&verification_code="+verification_code.value;
+
+    xmlHttpVerifyCode.onreadystatechange = function() {
+        if (xmlHttpVerifyCode.readyState == 4 || xmlHttpVerifyCode.readyState == "complete") {
+            var user_details_json = xmlHttpVerifyCode.responseText.trim();
+
+            user_details_json = escape(user_details_json).replace(/%0A/g, "");
+            user_details_json = user_details_json.replace(/%0D/g, "");
+            user_details_json = unescape(user_details_json);
+
+            if(user_details_json != null && user_details_json.indexOf("session_expired") >= 0) {
+                window.location = "mobileregister_nc.html";
+            } else if(user_details_json.indexOf('doesn') >= 0) {
+                document.getElementById("status").innerHTML = "<font color='white'>"+user_details_json+"</font>";
+                return;
+            }
+
+            var user_details_arr = JSON.parse(user_details_json);       //Arraylist if HashMap
+
+            if(user_details_arr == null || user_details_arr.length <= 0) {
+                return;
+            }
+
+            var userId = -1;
+            var userType = -1;
+
+            for(var cnt = 0; cnt < user_details_arr.length; cnt++) {
+                try {
+                    userId = parseInt(user_details_arr[cnt].user_id);
+                    userType = parseInt(user_details_arr[cnt].user_type);
+                } catch (error) {
+                    continue;
+                }
+            }
+
+            var redirectURL = 'mobilefriend.html';
+
+            if(userType == 2) {
+                redirectURL = 'mobilehr.html';
+            }
+
+            if(userId >= 0) {
+                document.getElementById("status").innerHTML = "<font color='white' style='font-size: 18px'>Successfully verified the mobile<br>Please wait...</font>";
+                setCookieForMobileLoginAndOpenContactsList(country_code.value+""+phonenum.value, userId, redirectURL);
+            } else {
+                document.getElementById("status").innerHTML = "<font color='white' style='font-size: 18px'>Could not verify. Please try again.</font>";
+            }
+        }
+    };
+
+    xmlHttpVerifyCode.open("GET", url_verifycode, true);
+    xmlHttpVerifyCode.send(null);
+}
+
+function setCookieForMobileLoginAndRedirect(coref_cookie_mobile_val, redirectURL) {
+    var cookie_name = "coref_cookie_mobile";
+    var cookie_value = coref_cookie_mobile_val;
+    var days = 365;
+
+    var date = new Date();
+    var time = date.getTime()+(days*24*60*60*1000);
+    date.setTime(time);
+    var expires = "; expires="+date.toGMTString();
+
+    var cookie_set = cookie_name+"="+cookie_value+expires+"; path=/";
+
+    document.cookie = cookie_set;
+
+    window.location = redirectURL;
+}
+
+function setCookieForMobileLoginAndOpenContactsList(coref_cookie_mobile_val, userId, redirectURL) {
+    var cookie_name = "coref_cookie_mobile";
+    var cookie_value = coref_cookie_mobile_val;
+    var days = 365;
+
+    var date = new Date();
+    var time = date.getTime()+(days*24*60*60*1000);
+    date.setTime(time);
+    var expires = "; expires="+date.toGMTString();
+
+    var cookie_set = cookie_name+"="+cookie_value+expires+"; path=/";
+
+    document.cookie = cookie_set;
+
+    try {
+        if(device_type == "android") {
+            webapp.openContactsView(userId, redirectURL);
+        } else {
+            setCookieForMobileLoginAndRedirect(coref_cookie_mobile_val, redirectURL);
+        }
+    } catch (err) {
+        if(err.toString().indexOf("webapp") >= 0) {
+            setCookieForMobileLoginAndRedirect(coref_cookie_mobile_val, redirectURL);
+        }
+    }
+}
+
+function isInteger(s) {
+    var i;
+    for (i = 0; i < s.length; i++)
+    {
+        var c = s.charAt(i);
+        if (((c < "0") || (c > "9"))) return false;
+    }
+    return true;
+}
+</script>
+</head>
+
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="height: 55px">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+
+            <div class="rd-navbar-brand">
+                <h1 style="margin-top: 0px;font-size: 45px">
+                    <small style="color: white;margin-top: 2px;margin-left:10px;" >Coref</small>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+<body onload="resetLoginForm();" style="background: url('images/login_background.jpg')no-repeat 0px 0px;background-size: cover;
+	background-attachment: fixed;
+    background-position: center;">
+
+<div class="login" style="max-width: 95%">
+    <div class="login-form" id='container'>
+        <input type="text" type="text" name="country_code" id="country_code" placeholder="+1" size="1" style="width: 35px;padding: 3px 3px 3px 10px;display: inline-block;font-size: 18px">&nbsp;
+        <input type="text" class="text-left" name="phonenum" id="phonenum" placeholder="Mobile Number"  style="width: 140px;padding: 3px;display: inline-block; margin-left: -1%;font-size: 18px">&nbsp;
+        <input type="button" type="button" name="sendcode_submit" id="sendcode_submit" value="Submit" onclick="registerAndSendVerificationCode();" style="display: inline-block; padding: 5px; width: 70px;height: 40px;background-color: #ff6666;border: 1px solid #ff6666;color: white;"/>
+        <br>
+        <input type="text" class="text-center" type="text" name="verification_code" id="verification_code" placeholder="Verification Code" style="width:195px;padding: 3px;display: inline-block;font-size: 18px" />&nbsp;
+        <input type="button" type="button" name="verify_submit" id="verify_submit" value="Verify" onclick="verifyPhoneNumber();" style="display: inline-block; padding: 5px; width: 70px;height:40px;background-color: #ff6666;border: 1px solid #ff6666;color: white;">
+        <br>   <br>
+        <p id="status"></p>
+    </div>
+</div>
+
+<footer class="navbar-fixed-bottom"  data-tap-toggle="false"  data-role="footer"  style="background-color: #dad1cb; margin-bottom: 0px; padding: 0px;text-align: center;">
+    <div class="social-area pull-center text-center">
+        <button onClick="window.location='mobileregister_nc.html';" style="display: inline-table;font-size:25px;color: white;border-color:orange;background-color: #ff5656;border-radius: 0px;" type="button" class="btn btn-danger btn-sm btn-block">
+            <i class="fa fa-arrow-left" aria-hidden="true" style="margin-left: -5px;color:#000000;font-size: 18px"></i>&nbsp;Back</button>
+    </div>
+</footer>
+
+</body>
+
+<script src="resources/js/jquery-1.10.2.js"></script>
+</html>

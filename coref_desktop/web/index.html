@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>coref</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/css/metisMenu.min.css" rel="stylesheet">
+    <link href="resources/css/sb-admin-2.css" rel="stylesheet">
+    <link href="resources/css/bootstrap-social.css" rel="stylesheet">
+    <link href="resources/css/morris.css" rel="stylesheet">
+    <link href="resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/css/coref.css" rel="stylesheet" type="text/css">
+    <link href="resources/css/site.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/css/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="resources/css/dataTables.responsive.css" rel="stylesheet">
+    <script src="resources/js/jquery.min.js"></script>
+    <script src="resources/js/bootstrap.js"></script>
+    <script src="resources/js/coref.js"></script>
+    <script src="resources/js/ajaxindicator.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Aldrich" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <script>
+        function points (){
+            $('#myreferals').hide();
+            $('#myposts').hide();
+            $('#mypoints').show();
+            $('#mycontacts').hide();
+        }
+    </script>
+    <style>
+        div h3 span{
+            color : #FFF;
+            font-size:14px;
+        }
+
+        .example {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        .login_box{
+            background: #f32d27; /* Old browsers */
+            /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+            background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMTAwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjUlIiBzdG9wLWNvbG9yPSIjZjMyZDI3IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iOTklIiBzdG9wLWNvbG9yPSIjZmY2YjQ1IiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
+            background: -moz-linear-gradient(45deg,  #00B8D4 5%, #26A69A 99%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left bottom, right top, color-stop(5%,#00B8D4), color-stop(99%,#26A69A)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(45deg,  #00B8D4 5%,#26A69A 99%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(45deg,  #00B8D4 5%,#26A69A 99%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(45deg,  #00B8D4 5%,#26A69A 99%); /* IE10+ */
+            background: linear-gradient(45deg,  #00B8D4 5%,#26A69A 99%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00B8D4', endColorstr='#26A69A',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
+
+
+            position:absolute;
+            top:15%;
+            left:32.5%;
+
+            -webkit-box-shadow: 0px 0px 8px 0px rgba(50, 50, 50, 0.54);
+            -moz-box-shadow:    0px 0px 8px 0px rgba(50, 50, 50, 0.54);
+            box-shadow:         0px 0px 8px 0px rgba(50, 50, 50, 0.54);
+        }
+
+        @media (max-width: 767px) {
+            .login_box{
+                background: #f32d27; /* Old browsers */
+                /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+                background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMTAwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjUlIiBzdG9wLWNvbG9yPSIjZjMyZDI3IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iOTklIiBzdG9wLWNvbG9yPSIjZmY2YjQ1IiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
+                background: -moz-linear-gradient(45deg,  #00B8D4 5%, #26A69A 99%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left bottom, right top, color-stop(5%,#00B8D4), color-stop(99%,#26A69A)); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(45deg,  #00B8D4 5%,#26A69A 99%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(45deg,  #00B8D4 5%,#26A69A 99%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(45deg,  #00B8D4 5%,#26A69A 99%); /* IE10+ */
+                background: linear-gradient(45deg,  #00B8D4 5%,#26A69A 99%); /* W3C */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00B8D4', endColorstr='#26A69A',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
+
+                width:90%;
+                height:80%;
+                position:absolute;
+                top:10%;
+                left:5%;
+
+                -webkit-box-shadow: 0px 0px 8px 0px rgba(50, 50, 50, 0.54);
+                -moz-box-shadow:    0px 0px 8px 0px rgba(50, 50, 50, 0.54);
+                box-shadow:         0px 0px 8px 0px rgba(50, 50, 50, 0.54);
+            }
+        }
+
+        .image-circle{
+            border-radius: 50%;
+            width: 135px;
+            height: 135px;
+            border: 4px solid #FFF;
+            margin: 10px;
+        }
+
+        .follow{
+            background-color:#FC563B;
+            height: 80px;
+            cursor:pointer;
+        }
+
+        .follow:hover {
+            background-color:#F22F26;
+            height: 80px;
+            cursor:pointer;
+        }
+
+        .login_control{
+            background-color:#FFF;
+            padding:10px;
+
+        }
+
+        .control {
+            color:#000;
+            margin:10px;
+        }
+
+        .label {
+            color: #00B8D4;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+
+        .btn-orange{
+            background-color: #00B8D4;
+            border-radius: 0px;
+            margin: 5px;
+            padding: 5px;
+            width: 150px;
+            font-size: 20px;
+            font-weight: inherit;
+        }
+
+        .btn-orange:hover {
+            background-color: #00B8D4;
+            border-radius: 0px;
+            margin: 5px;
+            padding: 5px;
+            width: 150px;
+            font-size: 20px;
+            font-weight: inherit;
+            color:#FFF !important;
+        }
+
+        .line{
+            border-bottom : 2px solid #004D40;
+        }
+
+
+        .outter{
+            padding: 0px;
+            border: 1px solid rgba(255, 255, 255, 0.29);
+            border-radius: 50%;
+            width: 160px;
+            height: 160px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+
+        .drop {
+            background-color: #02C0F8;
+            position: absolute;
+            display: block;
+            width: 2px;
+            height: 15px;
+            top: -15px;
+        }
+
+        .controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #02C0F8;
+            text-shadow: -1px -1px 0px #222;
+        }
+
+        .controls input {
+            color: #02C0F8;
+            text-align: center;
+            margin: 5px;
+        }
+         .dont-break-out {
+
+		            /* These are technically the same, but use both */
+		            overflow-wrap: break-word;
+		            word-wrap: break-word;
+
+		            -ms-word-break: break-all;
+		            /* This is the dangerous one in WebKit, as it breaks things wherever */
+		            word-break: break-all;
+		            /* Instead use this non-standard one: */
+		            word-break: break-word;
+
+		            /* Adds a hyphen where the word breaks, if supported (No Blink) */
+		            -ms-hyphens: auto;
+		            -moz-hyphens: auto;
+		            -webkit-hyphens: auto;
+		            hyphens: auto;
+
+        }
+        body {
+            font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        .bar {
+            fill: #00B8D4;
+        }
+
+        .bar:hover {
+            fill: orangered ;
+        }
+
+        .x.axis path {
+            display: none;
+        }
+
+        .d3-tip {
+            line-height: 1;
+            font-weight: bold;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            border-radius: 2px;
+        }
+
+            /* Creates a small triangle extender for the tooltip */
+        .d3-tip:after {
+            box-sizing: border-box;
+            display: inline;
+            font-size: 10px;
+            width: 100%;
+            line-height: 1;
+            color: rgba(0, 0, 0, 0.8);
+            content: "\25BC";
+            position: absolute;
+            text-align: center;
+        }
+
+            /* Style northward tooltips differently */
+        .d3-tip.n:after {
+            margin: -1px 0 0 0;
+            top: 100%;
+            left: 0;
+        }
+
+
+
+        .drop {
+            background-color: #02C0F8;
+            position: absolute;
+            display: block;
+            width: 2px;
+            height: 15px;
+            top: -15px;
+        }
+
+        .controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #02C0F8;
+            text-shadow: -1px -1px 0px #222;
+        }
+
+        .controls input {
+            color: #02C0F8;
+            text-align: center;
+            margin: 5px;
+        }
+        #custom-search-form {
+            margin:0;
+            margin-top: 5px;
+            padding: 0;
+        }
+
+        #custom-search-form .search-query {
+            padding-right: 3px;
+            padding-right: 4px \9;
+            padding-left: 3px;
+            padding-left: 4px \9;
+            /* IE7-8 doesn't have border-radius, so don't indent the padding */
+
+            margin-bottom: 0;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+        }
+
+        #custom-search-form button {
+            border: 0;
+            background: none;
+            /** belows styles are working good */
+            padding: 2px 5px;
+            margin-top: 2px;
+            position: relative;
+            left: -28px;
+            /* IE7-8 doesn't have border-radius, so don't indent the padding */
+            margin-bottom: 0;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+        }
+
+        .search-query:focus + button {
+            z-index: 3;
+        }
+        .mas {
+		            white-space: pre-wrap;
+        }
+    </style>
+
+    <script>
+        function myOnloadFunction(){
+            //TODO, what to do onLoad
+        }
+    </script>
+
+    <!--Load the Linkedin SDK-->
+    <script src="//platform.linkedin.com/in.js">
+        api_key:   86enw01rzt6kfs
+        authorize: true
+    </script>
+
+    <script type="text/javascript">
+        IN.init({
+            onLoad: myOnloadFunction
+            // any other parameters you'd normally put beneath the script element would be here
+        });
+    </script>
+    <script>
+
+        window.showtopconnector = function () {
+            $('#rain').addClass('disabled');
+            $('#rain').removeClass('active');
+            $('#toprewards').removeClass('active');
+            $('#toprewards').addClass('disabled');
+            $('#top').removeClass('disabled');
+            $('#top').addClass('active');
+            $(analytics).removeClass('active');
+            $('#topreferals').show();
+            $('#graph2').hide();
+            $("#no_of_refferals").hide();
+            $("#no_of_refferals_date").hide();
+            $('#analytics_graph').hide();
+            $('#top_rewards_earned').hide();
+            $('#rain_maker_of_the_week').hide();
+        };
+
+        window.showanalytics = function () {
+          $('#rain').addClass('disabled');
+		  $('#rain').removeClass('active');
+		  $('#top').addClass('disabled');
+		  $('#top').removeClass('active');
+		  $('#analytics').addClass('active');
+		  $('#analytics').removeClass('disabled');
+		  $('#topreferals').hide();
+		  $('#rain_maker_of_the_week').hide();
+		  $('#analytics_graph').show();
+		  $('#graph2').show();
+		  $("#no_of_refferals").show();
+            $("#no_of_refferals_date").show();
+        };
+
+        var intervalId = "";
+
+        $(document).ready(function() {
+            intervalId = setInterval("letItRain()",50);
+            $('.rain-type').change(function() {
+                clearInterval(intervalId);
+                intervalId = setInterval("letItRain()", $(this).val());
+            });
+            $('.water').animate({
+                bottom: "+=20px"
+            }, 80000);
+        });
+
+        function letItRain() {
+            var x = Math.floor(Math.random() * 500) + 1;
+            $('.rain').append("<div class='drop' style='left: "+x+"px;'></div>");
+            $('.drop').animate({
+                top: "500px",
+                left: "+=1px"
+            }, 1200, function() {
+                $(this).remove();
+            });
+        }
+    </script>
+    		 <script>
+	    jQuery(document).ready(function(){
+	        $('.content:not(.focus)').keyup(function(){
+
+
+	            var value = $(this).val();
+	            var contentAttr = $(this).attr('name');
+
+	            $('.'+contentAttr+'').html(value);
+
+	        })
+	    });
+    </script>
+</head>
+
+<body style="background-color: #ffffff;" onload=" getDetailForbarchart();">
+<div id="wrapper">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0; background-color: #00B8D4">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html" style=""><img style="width: 160px; margin-top: -12px; margin-left: 30px;" src="images/logo.png"></a>
+    </div>
+
+    <div class="navbar-default sidebar" style="width: 350px;padding:4px 30px 0px 30px;height: 1200px" role="navigation">
+        <div class="sidebar-nav navbar-collapse" >
+            <div class="panel panel-default">
+                <div class="panel-heading" style="font-size: 20px; min-height:50px;padding: 5px 15px;">
+
+                </div>
+                <div class="panel-body">
+                    <ul class="nav" id="side-menu">
+                        <li style="cursor: pointer">
+                            <a onclick="loadNetworkActivities();">
+                                <i style='margin-left:15px; font-size:25px; cursor: pointer; width: 20px; color: #00B8D4;' class="fa fa-edit fa-fw"></i>
+                                <span style='font-size:18px; color: #00B8D4;font-family: "Lato",sans-serif;font-family: "Lato",sans-serif;'>&nbsp;&nbsp;Profiles</span>
+                            </a>
+                        </li>
+                        <li style="cursor: pointer">
+                            <a onclick="gamification();">
+                                <i style='margin-left:15px; font-size:25px; cursor: pointer; width: 20px; color: #00B8D4;' class="glyphicon glyphicon-tower"></i>
+                                <span style='font-size:18px; color: #00B8D4;font-family: "Lato" ,sans-serif;'>&nbsp;&nbsp;Points</span>
+                            </a>
+                        </li>
+                        <li style="cursor: pointer">
+                            <a onclick="loadMyReferals();">
+                                <i style='margin-left:15px; font-size:25px; cursor: pointer; width: 20px; color: #00B8D4;' class="fa fa-dashboard fa-fw"></i>
+                                <span style='font-size:18px; color: #00B8D4;font-family: "Lato" ,sans-serif;'>&nbsp;&nbsp;&nbsp;My Referrals</span>
+                            </a>
+                        </li>
+                        <li style="cursor: pointer; display: none;" id="li_my_contacts">
+                            <a onclick="loadMycontacts();">
+                                <i style='margin-left:15px; font-size:25px; cursor: pointer; width: 20px; color: #00B8D4;' class="fa fa-users"></i>
+                                <span style='font-size:18px; color: #00B8D4;font-family: "Lato",sans-serif;'>&nbsp;&nbsp;&nbsp;My Team Members</span>
+                            </a>
+                        </li>
+
+                        <li style="cursor: pointer;" id="li_my_ask">
+                            <a onclick="loadPostRequirements();">
+                                <i style='margin-left:15px; font-size:25px; cursor: pointer; width: 20px; color: #00B8D4;' class="fa fa-envelope-open"></i>
+                                <span style='font-size:18px; color: #00B8D4;font-family: "Lato",sans-serif;'>&nbsp;&nbsp;&nbsp;Ask</span>
+                            </a>
+                        </li>
+                        <li style="cursor: pointer;" id="Hired">
+                            <a onclick="loadHiredCandidates();">
+                                <i style='margin-left:15px; font-size:25px; cursor: pointer; width: 20px; color: #00B8D4;' class="fa fa-handshake-o"></i>
+                                <span style='font-size:18px; color: #00B8D4;font-family: "Lato",sans-serif;'>&nbsp;&nbsp;&nbsp;&nbsp;Hired</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="nav navbar-top-links navbar-right">
+        <li class="dropdown" style="margin: 0px">
+            <a class="dropdown-toggle" style="padding: 8px;width: 220px" data-toggle="dropdown" href="#">
+                     <span style="display: inline;">
+                                <div class="col-lg-2" style="padding: 0px;margin-top: -2px">
+                                    <img id="lin_profile_img" src="images/profile.jpg" style="width: 35px;margin-left: 3px;display: inline;" class="img-circle text-center"> </div>
+                                <div class="col-lg-10" style="padding: 0px;margin-top: 0px">
+                                    <span id="lin_profile_name" style="font-size: 15px; display: inline;color: #ffffff;margin-left: 8px;margin-top: 5px;font-family: 'Lato',sans-serif;"></span>
+                                    <i style="color: #ffffff;" class="fa fa-caret-down"></i><br>
+                                   <span id="lin_profile_domain" style="font-size: 12px; color: #ffffff;margin-left: 8px;font-family: 'Lato',sans-serif;"></span>
+                                </div>
+                      </span>
+            </a>
+            <ul class="dropdown-menu dropdown-user" style="width:200px;margin-left:30px;margin-right:10px">
+                <li><a onclick="openProfilePage();">
+                    <i class="fa fa-user fa-fw" style="color: #00B8D4;"></i>
+                    <span style="color: #00B8D4;font-family: 'Lato',sans-serif;"> My profile</span>
+                </a>
+                <li class="divider"></li>
+                <li><a id="signoutAll" >
+                    <i class="fa fa-sign-out fa-fw" style="color: #c9302c;"></i>
+                    <span style="color: #c9302c;font-family: "Lato",sans-serif;"> Logout</span>
+                </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <div style="display: none">
+        <div a data-toggle='modal' href='#refer_a_friend_form' id="click_to_display_refer_a_friend_form">Open Refer a friend Modal</div>
+        <div a data-toggle='modal' href='#contactprofile_page' id="click_to_display_profile_form">Open Add profile Modal</div>
+        <div a data-toggle='modal' href='#edit_contact' id="click_to_display_edit_contact_form">Edit Client</div>
+        <div a data-toggle='modal' href='#deletecontact_mdl' id="click_to_display_delete_form">Delete Contact</div>
+        <div a data-toggle='modal' href='#myprofile_page' id="click_to_my_profile_form">My profile</div>
+        <div a data-toggle='modal' href='#deletepost' id="click_to_display_deletepost_form">Delete Post Confirmation</div>
+    </div>
+</nav>
+
+<div id="page-wrapper" style="margin: 55px 0 0 350px">
+    <div class="row">
+        <div class="col-lg-9" id="mypoints" style="display: none;">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="font-size: 20px;font-family: 'Lato',sans-serif;">
+                    Points
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div id="load_gamifications">
+
+                    </div>
+                    <br>
+                    <div>
+                        <div id="noanim-tab-example">
+                            <ul  class="nav nav-tabs" role="tablist">
+                                <li  class="active" role="presentation" id="top">
+                                    <a  href="#" aria-selected="false" aria-controls="noanim-tab-example-pane-1" role="tab" style="cursor: pointer;font-family: 'Lato',sans-serif;font-size: 12px"  onclick="showtopconnector();">Top Connectors </a>
+
+                                </li>
+                                <li  class="disabled" role="presentation" id="rain">
+                                    <a  href="#" aria-selected="false" tabindex="-1" aria-controls="noanim-tab-example-pane-2" style="cursor: pointer;font-family: 'Lato',sans-serif;font-size: 12px" role="tab" onclick="showrainmaker();" >Rainmaker of the week</a>
+                                </li>
+                                <li class="disabled" role="presentation" id="analytics">
+                                    <a  href="#" aria-selected="false" tabindex="-1" aria-controls="noanim-tab-example-pane-3" style="cursor: pointer;font-family: 'Lato',sans-serif;font-size: 12px" role="tab" onclick="showanalytics();" >Analytics</a>
+                                </li>
+                            </ul>
+                            <div  class="tab-content">
+                                <div class="tab-pane active" aria-hidden="false" role="tabpanel" aria-labelledby="noanim-tab-example-tab-1" id="topreferals">
+                                    <div id="load_topreferals" role="tablist" aria-multiselectable="true">
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane" aria-hidden="true" role="tabpanel" aria-labelledby="noanim-tab-example-tab-2"  id="rain_maker_of_the_week">
+                                        <div class="col-lg-12 col-sm-6 col-md-4 col-lg-4" style="width: 75%;margin-left: 75px;margin-top: 10px" >
+                                            <div class="rain" style="overflow: hidden;width: 100px"></div>
+                                             <div class='panel panel-info' id="load_rainmaker">
+
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane"  aria-hidden="true" role="tabpanel" aria-labelledby="noanim-tab-example-tab-3" id="analytics_graph">
+                                    <div >
+                                        <p style="margin-left: 2px;margin-bottom: 0px;display: none;vertical-align: sub;" id="no_of_refferals">Referrals</p>
+                                        <div class="chart tab-pane active" id="graph2" style="position: relative; height: 300px;width:auto;display: none;"></div>
+                                        <p class="text-center" style="margin-left: -20px;margin-bottom: 0px;display: none;" id="no_of_refferals_date"><---------------------Date-----------------></p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9" id="myreferals" style="display: none;">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="font-size: 20px;">
+                    <div class="row" style="margin-left: 0px">
+                        <div class="col-md-3" style="padding-left: 0px;font-family: 'Lato',sans-serif;">
+                            My Referrals
+                        </div>
+                        <div class="col-md-8  pull-right">
+                            <a button style="background-color: #00B8D4;font-family: 'Lato' ,sans-serif;" class="btn btn-info btn-md pull-right" onclick="getReferAFriendForm();" data-target="modal" type="submit">Refer a friend</a>
+                        </div>
+                    </div>
+                    <center>
+                        <div class="input-group custom-search-form" style='width: 350px;'>
+                            <input type="text" class="form-control" placeholder="Search..." style="border-top-right-radius: 4px; border-bottom-right-radius: 4px;font-family:'Lato' ,sans-serif;">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" style="margin-left: 5px; border-top-left-radius: 4px; border-bottom-left-radius: 4px;">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                             </span>
+                        </div>
+                    </center>
+                </div>
+                <div class="panel-body">
+                    <div class="container"style="height:auto;width: auto;" id="">
+                        <div class="example" style="width: auto;">
+                            <div class="row">
+                                <div class="col-xs-12" style="padding: 0px 8px 0px 8px;">
+                                    <div class="timeline" id="load_referrals" style="padding: 0px; overflow: hidden;background-color: #ffffff;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="example" style="width: auto;">
+                            <div class="row">
+                                <div class="col-xs-12" style="padding: 0px 8px 0px 8px;">
+                                    <div class="timeline"  id="display_myreferals_dl" style="padding: 0px; overflow-x: hidden;background-color: #ffffff;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="contact_status_info" align="center" style="display: none" class="col-lg-9">
+        </div>
+        <div class="col-lg-9" id="mycontacts" style="display: none;">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="font-size: 20px;">
+                    <div class="row" style="margin-left: 0px">
+                        <div class="col-md-4" style="padding-left: 0px;font-family: 'Lato',sans-serif;">
+                            My team members
+                        </div>
+                        <div class="col-md-8  pull-right">
+                            <a button class="btn btn-info btn-md pull-right" href="add_team_members.html" style="background-color: #00B8D4;font-family: 'Lato',sans-serif;" data-target="modal"  type="submit">Add team member(s)</button></a>
+                        </div>
+                    </div>
+                    <center>
+                        <div class="input-group custom-search-form" style='width: 350px; max-width: 400px;'>
+                            <input type="text" class="form-control" placeholder="Search..." style="border-top-right-radius: 4px; border-bottom-right-radius: 4px;font-family: 'Lato',sans-serif;">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" style="margin-left: 5px; border-top-left-radius: 4px; border-bottom-left-radius: 4px;">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                             </span>
+                        </div>
+                    </center>
+                </div>
+                <div class="panel-body" id="contacts_display">
+                    <div class="table-responsive" style="overflow-x: hidden;">
+                        <div class="row text-center" style="margin-bottom: 10px; margin-top: 2px; display: none;font-family: 'Lato',sans-serif;" id="mycontacts_menu">
+                            <a onclick="openContactEditForm();" style="display: inline; background-color: #00B8D4; border-radius: 50px;font-family: 'Lato',sans-serif;" class="btn btn-info btn-sm"><b>Edit team member</b></a>&nbsp;&nbsp;
+                            <a onclick='getContactDetailsToDelete();' style="display: inline; background-color: #00B8D4; border-radius: 50px;font-family: 'Lato',sans-serif;"class="btn btn-info btn-sm"><b>Delete team member</b></a>&nbsp;&nbsp;
+                            <a style="display: inline; background-color: #00B8D4; border-radius: 50px;font-family: 'Lato',sans-serif;" class="btn btn-info btn-sm disabled"><b>Invite team member</b></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <!--<a onclick="getContactProfileDetails();" style="display: inline;font-size: 14px;cursor: pointer;color: #00B8D4;"><b>Refer team member</b></a>-->
+                        </div>
+                        <table class="table table-striped table-hover" id="display_contacts">
+
+
+                        </table>
+                    </div>
+                </div>
+                <div class="panel-body" id="teamreferals">
+                    <div class="container"style="height:auto;width: auto;">
+                        <div class="example" style="width: auto;">
+                            <div class="row">
+                                <div class="col-xs-12" style="padding: 0px 8px 0px 8px;">
+                                    <div class="timeline" id="load_teammeber_referals" style="padding: 0px; overflow: hidden;background-color: #ffffff;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="example" style="width: auto;">
+                            <div class="row">
+                                <div class="col-xs-12" style="padding: 0px 8px 0px 8px;">
+                                    <div class="timeline"  id="display_teammember_referaldetails" style="padding: 0px; overflow-x: hidden;background-color: #ffffff;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="company_feed_status_info" align="center" style="display: none" class="col-lg-9">
+        </div>
+        <div class="col-lg-9" id="myposts" >
+            <div class="panel panel-default">
+                <div class="panel-heading" style="font-size: 20px;font-family: 'Lato',sans-serif;">
+                    Profiles
+
+                </div>
+
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                 <span  id="custom-search-form" class="form-search form-horizontal pull-center" style="margin-left: 10px;margin-bottom: 20px">
+				                          <span id="search_by_val_div" class="input-append span12">
+				                         <input style="padding: 8px;font-size: 15px; border: 1px solid #00B8D4;border-radius: 5px;width: 450px;margin-bottom: 10px; " required class="search-box" id="search_by_val" type="text" class="search-query" placeholder="Search" >
+				                         <button style="padding: 0px" class="close-icon" type="reset" onclick="clearproscontent();"> <i class="fa fa-search text-muted search-icon-pros" style="font-size: 15px"></i></button>
+				                          </span>
+                    </span>
+                    <div class="container"style="height:auto;width: auto;" id="">
+                        <div class="example" style="width: auto;">
+                            <div class="row">
+                                <div class="col-xs-12" style="padding: 0px 8px 0px 8px;">
+                                    <div class="timeline" id="display_activity_results_dl" style="padding: 0px; overflow: hidden;background-color: #ffffff;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="example">
+                            <div class="row">
+                                <div class="col-md-12" style="padding: 0px 8px 0px 8px;">
+                                    <div class="timeline"  id="display_my_activity_results_dl" style="padding: 0px; overflow: hidden;background-color: #ffffff;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="example" style="width: auto;">
+                            <div class="row">
+                                <div class="col-xs-12" style="padding: 0px 8px 0px 8px;">
+                                    <div class="timeline"  id="display_post_dl" style="padding: 0px; overflow-x: hidden;background-color: #ffffff;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9" id="posts" style="display: none;">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="font-size: 20px;font-family: 'Lato',sans-serif;">
+                    Requirements
+
+                </div>
+
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="text-left"  id="post_requirement_to_network" style="margin-top: -5px;display: none;margin-bottom: 20px;">
+                        <textarea type="text" class="form-control" style="max-width:65%;height:40px;display: inline;margin-top: -2px;resize:none;font-family: 'Lato',sans-serif;" placeholder="Ask in your network" name="mas" id="ask_in_network" ></textarea>
+                        <button class="btn btn-info btn-md" style="display: inline; margin-top: -32px; background-color: #00B8D4;" onclick="askInYourNetwork();">Post</button>
+                    </div>
+                    <div class="container"style="height:auto;width: auto;" id="">
+                        <div class="example" style="width: auto;">
+                            <div class="row">
+                                <div class="col-xs-12" style="padding: 0px 8px 0px 8px;">
+                                    <div class="timeline" id="display_requirement_activity_results_dl" style="padding: 0px; overflow: hidden;background-color: #ffffff;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="example">
+                            <div class="row">
+                                <div class="col-md-12" style="padding: 0px 8px 0px 8px;">
+                                    <div class="timeline"  id="display_my_requirement_activity_results_dl" style="padding: 0px; overflow: hidden;background-color: #ffffff;">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="example" style="width: auto;">
+                    <div class="row">
+                        <div class="col-xs-12" style="padding: 0px 8px 0px 8px;">
+                            <div class="timeline"  id="display_requirement_post_dl" style="padding: 0px; overflow-x: hidden;background-color: #ffffff;">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="example">
+                    <div class="row">
+                        <div class="col-md-12" style="padding: 0px 8px 0px 8px;">
+                            <div class="timeline"  id="show_suggestions" style="padding: 0px; overflow: hidden;background-color: #ffffff;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-9" id="hire" style="display: none;">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="font-size: 20px;font-family: 'Lato',sans-serif;">
+                    Hired
+                </div>
+                <div class="container"style="height:auto;width: auto;" id="">
+                    <div class="example" style="width: auto;">
+                        <div class="row">
+                            <div class="col-xs-12" style="padding: 0px 8px 0px 8px;">
+                                <div class="timeline" id="display_hired_candidates_results_dl" style="padding: 0px; overflow: hidden;background-color: #ffffff;">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-9" id="post_likes_dislikes_details" style="display: none;">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="container"style="height:auto;width: auto;">
+                        <div class="example" style="width: auto;">
+                            <div class="row">
+                                <div class="col-xs-12" style="padding: 0px 8px 0px 8px;">
+                                    <div class="timeline"  style="padding: 0px; overflow: hidden;background-color: #ffffff;">
+                                        <dl style='margin-top:5px;padding:0px;'>
+                                            <dd class='pos-left clearfix'>
+                                                <div class='events' style='margin-top:0px;display:inline;background-color:#f9f8f8;padding-right: 7px; box-shadow: 0.01em 0.01em 0.01em 0.01em #d5d5d5'>
+                                                    <div class='events-body' style='line-height:1.2'>
+                                                        <div class='row' id="like_row">
+                                                            <div class='col-xs-1' >
+                                                                <button  id="likes_status" style='display:none;padding:0px; margin-top: 1px;background-color: transparent;margin-left:1%' class='btn btn-default btn-simple btn-md ' rel='tooltip' title='like' data-original-title='like' type='button' data-toggle='modal'>
+                                                                    <i class='fa fa-thumbs-o-up' style='color:#00B8D4; font-size: 20px'></i> &nbsp;&nbsp;&nbsp;
+                                                                </button>
+                                                            </div>
+                                                            <div class='col-xs-9' id="likes_details">
+
+                                                            </div>
+                                                        </div>
+                                                        <div class='row'  >
+                                                            <div class='col-xs-1'>
+                                                                <button id="dislikes_status" style='display:none;padding:0px; margin-top: 1px;background-color: transparent;margin-left:1%' class='btn btn-default btn-simple btn-md ' rel='tooltip' title='like' data-original-title='like' type='button' data-toggle='modal'>
+                                                                    <i class='fa fa-thumbs-o-down' style='color:#fa8072; font-size: 20px'></i> &nbsp;&nbsp;&nbsp;
+                                                                </button>
+                                                            </div>
+                                                            <div class='col-xs-9' id="dislikes_details">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="modal modal-small" id="deletepost" tabindex="-1" data-toggle="modal" role="dialog" aria-hidden="true" >
+    <div id="delete_post_form">
+    </div>
+</div>
+
+<div class="modal fade" id="myprofile_page" tabindex="-1" role="dialog" style="margin-top: -30px" style="display: none;" aria-hidden="true">
+    <div class="row login_box" id="profile_details"  style="width: 35%;margin-top: -30px">
+        <div class='line'><h2 class='text-center' style='color: #ffffff;'>My profile</h2></div>
+        <div class='col-md-12 col-xs-12' align='center'>
+            <div class='outter'><img id='profile_image' src='images/profile.jpg'  class='image-circle'/></div>
+            <h4 style='width: 250Px; color: white;' id='profile_name'></h4>
+        </div>
+        <div class='col-md-12 col-xs-12 login_control'>
+            <div class='control'>
+                <div class='row'>
+                    <div class='col-md-4 col-xs-4 login_control '>
+                        <div class='label pull-right'>Linkedin</div>
+                    </div>
+                    <div class='col-md-6 col-xs-9 login_control'>
+                        <input id='profile_linkedin' type='text' class='form-control' placeholder="linkedin" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class='control'>
+                <div class='row'>
+                    <div class='col-md-4 col-xs-4 login_control '>
+                        <div class='label pull-right'>Skills</div>
+                    </div>
+                    <div class='col-md-6 col-xs-9 login_control'>
+                        <input id='profile_expertise' type='text' class='form-control' placeholder="skills"/>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-4 col-xs-4 login_control '>
+                        <div class='label pull-right'>Company</div>
+                    </div>
+                    <div class='col-md-6 col-xs-9 login_control'>
+                        <input id='my_domain_name' type='text' class='form-control' placeholder='eg:coref.com' readonly/>
+                    </div>
+                </div>
+                <div class='row text-center' style='margin-bottom:7px;'>
+                    <div style="padding-top: 5px; padding-left: 15px; padding-right: 15px;" id="hr_consent_label">
+                        <!--<input id="hr_consent" type='checkbox' style='max-width: 300px' name='hr_consent'> I am responsible for hiring-->
+                    </div>
+                </div>
+                <div align='center' style="margin-top: -5px">
+                    <button id='contactprofile_save' type='submit'  data-toggle='button' class='btn btn-orange' style='color: #ffffff;' onclick='saveProfileDetails();'>Save</button>
+                    <button data-dismiss='modal' class='btn btn-orange' style='color: #ffffff;'>Close</button>
+                </div>
+                <div class='row' style="margin-top: -0px;margin-bottom: 0px">
+                    <div id='profile_details_status_success' align='center' style='display: none;margin-top: 1px;margin-bottom: 0px'></div>
+                    <div id='profile_details_status_failed' align='center' class="alert alert-danger" style='display: none;margin-top: 1px;margin-bottom: 0px'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="contactprofile_page" tabindex="-1" role="dialog" style="margin-top: -20px"  aria-hidden="true">
+    <div class="row login_box" id="contacts_details"  style="width: 35%;margin-top: -30px">
+
+    </div>
+</div>
+
+<div class="modal fade" id="refer_a_friend_form" tabindex="-1" role="dialog" style="margin-top: -20px"  aria-hidden="true">
+    <div class="row login_box" id="refer_a_friend_details"  style="width: 35%;margin-top: -30px">
+
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="edit_contact" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div id="edit_contact_form">
+    </div>
+</div>
+
+<div class="modal modal-small" id="deletecontact_mdl" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="delete_contact_form">
+    </div>
+</div>
+<!-- jQuery -->
+
+</body>
+<script src="resources/js/jquery.min.js"></script>
+
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script>
+    function getDetailForbarchart() {
+
+        $.ajax({
+            type:   "post",
+            url:    "action/getGraphforAnalytics.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("failed") > 0) {
+                  //  alert(msg);
+
+                } else {
+                    //alert(msg);
+                    barchart(msg);
+
+                }
+
+            }
+        });
+    }
+
+    function barchart(dataa) {
+
+        // set the dimensions and margins of the graph
+        var margin = {top: 20, right: 20, bottom: 30, left: 40},
+                width = 700 - margin.left - margin.right,
+                height = 270 - margin.top - margin.bottom;
+
+        // set the ranges
+        var x = d3.scaleBand()
+                .range([0, width])
+                .padding(0.1);
+        var y = d3.scaleLinear()
+                .range([height, 0]);
+
+        var tip = d3.tip()
+                .attr('class', 'd3-tip')
+                .offset([-10, 0])
+                .html(function(d) {
+                    return "<strong>Frequency:</strong> <span style='color:red'>" + d.referrals + "</span>";
+                })
+
+        // append the svg object to the body of the page
+        // append a 'group' element to 'svg'
+        // moves the 'group' element to the top left margin
+        var svg = d3.select("#graph2").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+        // get the data
+
+        var data = JSON.parse(dataa);
+        //alert(data);
+
+        // format the data
+        data.forEach(function(d) {
+            d.referrals = +d.referrals;
+            //alert(d.sales);
+        });
+
+        //var max=0;
+        // Scale the range of the data in the domains
+        x.domain(data.map(function(d) { return d.date; }));
+        //alert(data);
+        /* alert(d3.max(data, function(d) { if(max < d.sales){
+         max = d.sales
+         //alert(max);
+         return max;
+         }}));*/
+        /*  y.domain([0, d3.max(data, function(d) {
+         if(max < d.sales){
+         max = d.sales
+         //alert(max);
+         return max;
+         }})]);*/
+
+        y.domain([0, d3.max(data, function(d) { return d.referrals; })]);
+
+        // append the rectangles for the bar chart
+        svg.selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", function(d) { return x(d.date); })
+                .attr("width", x.bandwidth())
+                .attr("y", function(d) { return y(d.referrals); })
+                .attr("height", function(d) { return height - y(d.referrals); });
+
+        // add the x Axis
+        svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .style("text-anchor", "end")
+                .attr("dx", "-.8em")
+                .attr("dy", ".15em")
+                .attr("transform", "rotate(-20)");
+
+
+        // add the y Axis
+        svg.append("g")
+                .call(d3.axisLeft(y));
+    }
+
+
+</script>
+</html>

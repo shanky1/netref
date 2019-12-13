@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>netref</title>
+
+    <script>
+        var uagent = navigator.userAgent.toLowerCase();
+
+        var isAndroid = uagent.indexOf("android") > -1; //&& ua.indexOf("mobile");
+        var isWindowsPhone = uagent.indexOf("windows phone") > -1; //&& ua.indexOf("mobile");
+        var isiPhone = uagent.indexOf("iphone") > -1;
+        var isiPad = uagent.indexOf("ipad") > -1;
+
+        var device_type = "windows";
+
+        if(isAndroid) {
+            device_type = 'android';
+        } else if(isiPhone || isiPad) {
+            device_type = 'ios';
+        } else if(isWindowsPhone) {
+            device_type = 'windows';
+        }
+
+        function readCookieMobileLogin_default() {
+            var cookie_name = "netref_cookie_mobile";
+            var cookie_value = "";
+
+            var nameEQ = cookie_name + "=";
+            var ca = document.cookie.split(';');
+
+            console.log(new Date()+"\t login document.cookie onload -> "+document.cookie);
+//            alert("document.cookie onload -> "+document.cookie);
+
+            var cookie_found = false;
+
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+
+                while (c.charAt(0) == ' ')
+                    c = c.substring(1,c.length);
+
+                if (c.indexOf(nameEQ) >= 0) {
+                    var cookie_on_success = c;
+                    cookie_found = true;
+                    break;
+                }
+            }
+
+            if(cookie_found == true) {
+                console.log(nameEQ.length+" : "+cookie_on_success.length+" : "+cookie_on_success);
+//                alert(nameEQ.length+" : "+cookie_on_success.length+" : "+cookie_on_success);
+
+                cookie_value = cookie_on_success.substring(nameEQ.length, cookie_on_success.length);
+
+                setSessionAndRedirect_Mobile(cookie_value);
+            } else {
+                readCookieMobileSkip_default();
+            }
+        }
+
+        var xmlHttp_Mobile;
+
+        function setSessionAndRedirect_Mobile(cookie_value) {
+            if (typeof XMLHttpRequest != "undefined") {
+                xmlHttp_Mobile = new XMLHttpRequest();
+            }
+            else if (window.ActiveXObject) {
+                xmlHttp_Mobile = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            if (xmlHttp_Mobile == null) {
+                alert("Browser does not support XMLHTTP Request");
+                return;
+            }
+
+            var redirect_url = "set_session_from_cookie_mobile.jsp";
+            redirect_url += "?netref_cookie_login_mobile_value="+encodeURIComponent(cookie_value);
+
+            xmlHttp_Mobile.onreadystatechange = stateChangeRedirect_Mobile;
+            xmlHttp_Mobile.open("GET", redirect_url, true);
+            xmlHttp_Mobile.send(null);
+        }
+
+        function stateChangeRedirect_Mobile() {
+            if (xmlHttp_Mobile.readyState == 4 || xmlHttp_Mobile.readyState == "complete") {
+                var userId_str = xmlHttp_Mobile.responseText.trim();
+
+                var userId = parseInt(userId_str);
+
+                if(userId > 0) {
+                    try {
+                        webapp.openContactsView(userId);
+                    } catch (err) {
+                        if(err.toString().indexOf("webapp") >= 0) {
+                            window.location = "mobilefriend.html";
+                        }
+                    }
+                } else {
+                    console.log("userId <=  0");
+
+                    window.location = "mobileregister_nc.html";         //redirect if no cookie
+                }
+            }
+        }
+
+        function readCookieMobileSkip_default() {
+            var cookie_name = "netref_cookie_deviceid";
+            var cookie_value = "";
+
+            var nameEQ = cookie_name + "=";
+            var ca = document.cookie.split(';');
+
+            console.log(new Date()+"\t skip document.cookie onload -> "+document.cookie);
+//            alert("document.cookie onload -> "+document.cookie);
+
+            var cookie_found = false;
+
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+
+                while (c.charAt(0) == ' ')
+                    c = c.substring(1,c.length);
+
+                if (c.indexOf(nameEQ) >= 0) {
+                    var cookie_on_success = c;
+                    cookie_found = true;
+                    break;
+                }
+            }
+
+            if(cookie_found == true) {
+                console.log(nameEQ.length+" : "+cookie_on_success.length+" : "+cookie_on_success);
+//                alert(nameEQ.length+" : "+cookie_on_success.length+" : "+cookie_on_success);
+
+                cookie_value = cookie_on_success.substring(nameEQ.length, cookie_on_success.length);
+
+                setSessionAndRedirect_MobileSkip(cookie_value);
+            } else {
+                console.log(new Date()+"\t cookie not found");
+
+                window.location = "mobileregister_nc.html";         //redirect if no cookie
+            }
+        }
+
+        var xmlHttp_Mobile;
+
+        function setSessionAndRedirect_MobileSkip(cookie_value) {
+            if (typeof XMLHttpRequest != "undefined") {
+                xmlHttp_Mobile = new XMLHttpRequest();
+            }
+            else if (window.ActiveXObject) {
+                xmlHttp_Mobile = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            if (xmlHttp_Mobile == null) {
+                alert("Browser does not support XMLHTTP Request");
+                return;
+            }
+
+            var redirect_url = "set_session_from_cookie_mobileskip.jsp";
+            redirect_url += "?netref_cookie_skip_mobile_id="+encodeURIComponent(cookie_value);
+
+            xmlHttp_Mobile.onreadystatechange = stateChangeRedirect_MobileSkip;
+            xmlHttp_Mobile.open("GET", redirect_url, true);
+            xmlHttp_Mobile.send(null);
+        }
+
+        function stateChangeRedirect_MobileSkip() {
+            if (xmlHttp_Mobile.readyState == 4 || xmlHttp_Mobile.readyState == "complete") {
+                var userId_str = xmlHttp_Mobile.responseText.trim();
+
+                var userId = parseInt(userId_str);
+
+                if(userId > 0) {
+                    try {
+                        webapp.openContactsView(userId);
+                    } catch (err) {
+                        if(err.toString().indexOf("webapp") >= 0) {
+                            window.location = "mobilefriend.html";
+                        }
+                    }
+                } else {
+                    console.log("userId <=  0");
+
+                    window.location = "mobileregister_nc.html";         //redirect if no cookie
+                }
+            }
+        }
+    </script>
+</head>
+
+<body onload="readCookieMobileLogin_default();" style = "background-color: #ff6666;">
+<div style="vertical-align: middle;padding-left: 43%; padding-top:50%">
+    <img src="images/landing_logo.gif" alt="Logo" style="width:40px;height:40px;">
+</div>
+
+<div id="login_screen_loading">
+    <div style="vertical-align: middle;padding-left: 45%; padding-top:20%">
+        <img src="images/loader1.gif" alt="Logo" style="width:25px;height:25px;">
+    </div>
+</div>
+
+</body>
+</html>

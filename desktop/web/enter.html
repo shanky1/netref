@@ -1,0 +1,2427 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+
+<meta charset="utf-8">
+<title>Netref</title>
+<link rel='shortcut icon' href="images/favicon.ico" />
+
+<link href="resources/css/bootstrap.css" rel="stylesheet">
+<link href="resources/css/get-shit-done.css" rel="stylesheet">
+<link href="resources/css/demo.css" rel="stylesheet">
+<link href="resources/css/docs.css" rel="stylesheet">
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+<link href='https://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.0/css/bootstrap-responsive.min.css' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="resources/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="resources/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">-->
+<!--<script src="resources/js/jquery-1.10.2.js" type="text/javascript"></script>-->
+<!--<script src="resources/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>-->
+
+<script src="resources/js/bootstrap.js" type="text/javascript"></script>
+<script src="resources/js/gsdk-checkbox.js" type="text/javascript"></script>
+<script src="resources/js/gsdk-radio.js" type="text/javascript"></script>
+<script src="resources/js/gsdk-bootstrapswitch.js" type="text/javascript"></script>
+<script src="resources/js/get-shit-done.js" type="text/javascript"></script>
+<script src="resources/js/custom.js" type="text/javascript"></script>
+
+<script src="resources/js/ajaxindicator.js"></script>
+
+<style>
+    .row-highlight {
+        background-color: rgba(191, 210, 48, .5)
+    }
+
+    label {
+        align-content: center;
+        display: inline-block;
+        font-weight: 700;
+        margin-bottom: 5px;
+        margin-left: 80px;
+        width:160px;
+        line-height: 4;
+    }
+
+    .btn-info-re.btn-fill {
+        color: #5ecf4e;
+        opacity: 1;
+    }
+
+    .fcllex_cafe{
+        position: relative;
+        clear: both;
+    }
+
+    .fcc_content{
+        padding: 0;
+        margin: 10px 1px 51px 3px;
+        list-style: none;
+    }
+
+    .fcc_content li{
+        background: #fffcf3;
+        width: 100%;
+        display: inline-block;
+        list-style: none;
+        padding-left: 7px;
+        padding-right: 7px;
+        /*margin: 3px 2px;*/
+    }
+    .fcc_content li .fcc_item{
+        background: #fff;
+        color: #4c4c4c;
+        position: relative;
+        width: 100%;
+        display: inline-block;
+        text-align: left;
+        border-radius: 4px;
+        border: 2px solid #F0D89C;
+        /*padding: 2px 80px 25px 135px;*/
+        padding: 2px 20px 12px 105px;
+        /*height: 100px;*/
+    }
+
+    .fcc_content li .fcc_item .fcc_img{
+        display: block;
+        height: 80px;
+        width: 90px;
+        position: absolute;
+        left: 10px;
+        top: 1px;
+        margin-bottom: 15px;
+    }
+
+    .fcc_content li .fcc_item .circle_star img,
+    .fcc_content li .fcc_item .fcc_img img{
+        display: block;
+        width: 80%;
+    }
+
+    .fcc_content li .fcc_item .circle_star{
+        position: absolute;
+        right: 40px;
+        top: 50%;
+        margin-top: -22px;
+        height: 25px;
+        width: 20px;
+        display: block;
+    }
+
+    .fcc_content li .fcc_item .fcc_item_desc{
+        display: inline-block;
+        width: 100%;
+    }
+    .fcc_content li .fcc_item .fcc_item_desc h2{
+        font-size: 24px;
+        line-height: 1;
+        margin-bottom: 8px;
+        color: #25ae5f;
+        font-weight: 600;
+    }
+
+
+    .fcc_content li .fcc_item .fcc_item_desc h2 span,
+    .clr_black{
+        color: #4c4c4c;
+    }
+
+    .fcc_content li .fcc_item .product_name{
+        font-size: 28px;
+        line-height: 1;
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-weight: bold;
+        display: block;
+    }
+
+    .fcc_content li .fcc_item .product_meta{
+        color: #b9b9b9;
+        display: inline-block;
+        width: 100%;
+    }
+    .fcc_content li .fcc_item .product_meta span{
+        display: inline-block;
+        margin-right: 15px;
+        vertical-align: top;
+        margin-bottom: 10px;
+        font-size: 24px;
+        line-height: 1;
+        font-weight: normal;
+    }
+    .fcc_content li .fcc_item .product_meta span i{
+        margin-right: 6px;
+    }
+
+        /* Let's get this party started */ ::-webkit-scrollbar { width: 12px; } /* Track */ ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); -webkit-border-radius: 10px; border-radius: 10px; } /* Handle */ ::-webkit-scrollbar-thumb { -webkit-border-radius: 10px; border-radius: 10px; background: rgba(218,224,230); -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); } ::-webkit-scrollbar-thumb:window-inactive { background: rgba(255,0,0,0.4); }
+
+</style>
+
+<style type="text/css">
+    .row-highlight {
+        background-color: rgba(191, 210, 48, .5)
+    }
+
+    .row-highlight .td-actions .btn {
+        opacity: 1;
+    }
+
+    .close:hover, .close:focus {
+        opacity: 1;
+    }
+</style>
+
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: '107693579580192',
+            status: true,
+            cookie: true,
+            xfbml: true
+        });
+    };
+
+    // Load the SDK asynchronously
+    (function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
+
+    //login() is not used for now
+    function login() {
+        FB.login(function(response) {
+
+            // handle the response
+            console.log("Response goes here!");
+
+        }, {scope: 'public_profile,email,user_friends'});
+    }
+
+    function logout() {
+        FB.logout(function(response) {
+            console.log("Netref: user is now successfully logged out from facebook");
+            // user is now logged out
+        });
+    }
+
+    var status = FB.getLoginStatus();
+
+    console.log("FB login status: "+status);
+
+</script>
+
+<script>
+
+var developer_id;
+var fcm_id;
+var activity_id;
+
+$(document).ready(function() {
+
+    $("body").tooltip({ selector: '[rel=tooltip]' });
+
+    ajaxindicatorstart("Please wait...");
+
+    $.ajax({
+        type:         "post",
+        url:         "action/get_userid_from_session.jsp",
+
+        success:    function(client_user_id) {
+            client_user_id = escape(client_user_id).replace(/%0A/g, "");
+            client_user_id = client_user_id.replace(/%0D/g, "");
+            client_user_id = unescape(client_user_id);
+
+            if(client_user_id == "-1") {
+                window.location = "register.html";
+            }
+        }
+    });
+
+    getUserDetails();   // to display the user details in the header
+
+    function getUserDetails() {
+        $.ajax({
+            type:         "post",
+            url:         "action/get_user_details.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg != "") {
+                    $("#show_user_details").html(msg);
+                }
+            }
+        });
+    }
+
+    window.loadActivities = function() {
+        $.ajax({
+            type:         "post",
+            url:         "action/load_activities.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "register.html";
+                } else if(msg != null) {
+                    $("#display_activity_results").html(msg);
+                }
+                ajaxindicatorstop();
+            }
+        });
+    };
+
+    window.loadAskList = function() {
+        $.ajax({
+            type:         "post",
+            url:         "action/load_ask_list.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "register.html";
+                } else if(msg != null) {
+                    $("#askpost_table_ref").html(msg);
+                }
+            }
+        });
+    };
+
+    window.loadFBFriends = function() {
+        $.ajax({
+            type:         "post",
+            url:         "action/load_fb_friends.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null) {
+                    $("#display_friend_results").html(msg);
+                }
+            }
+        });
+    };
+
+    window.loadSKFriends = function() {
+        $.ajax({
+            type:         "post",
+            url:         "action/load_sklist.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null) {
+                    $("#display_sk_results").html(msg);
+                }
+            }
+        });
+    };
+
+//    getAllActiveClientList();  //Retrive the client data
+
+    function getAllActiveClientList() {
+        $.ajax({
+            type:         "post",
+            url:         "action/get_all_active_clients.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+
+                if(msg != null && msg.indexOf("fa fa-share") > 0) {
+                    $("#fl_table_ref tbody tr").remove();
+                    $("#fl_table_ref").last().append(msg);
+                } else {
+                    //DO NOTHING
+                }
+            }
+
+        });
+    }
+
+//    getAllActiveFLlist();  //Retrive the freelancer data
+
+//    function getAllActiveFLlist() {
+//        $.ajax({
+//            type:         "post",
+//            url:         "action/get_all_active_fls.jsp",
+//
+//            success:    function(msg) {
+//                msg = escape(msg).replace(/%0A/g, "");
+//                msg = msg.replace(/%0D/g, "");
+//                msg = unescape(msg);
+//
+//
+//                if(msg != null && msg.indexOf("fa fa-share") > 0) {
+//                    $("#fl_table_ref tbody tr").remove();
+//                    $("#fl_table_ref").last().append(msg);
+//                } else {
+//                    //DO NOTHING
+//                }
+//            }
+//        });
+//    }
+
+    window.approveFL = function(fcm_id) {
+
+        $("#btn_fcm_"+fcm_id).prop('disabled', true);
+
+        $.ajax({
+            type:         "post",
+            url:         "action/approve_fl.jsp",
+            data:        "fcm_id="+fcm_id,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "register.html";
+                } else if(msg != null && msg.indexOf("success") >= 0) {
+                    $("#fcm_"+fcm_id).html("Approved");
+                } else {
+                    $("#btn_fcm_"+fcm_id).prop('disabled', false);
+                    alert("failed");
+                }
+            }
+        });
+    };
+
+    $("#signout").click(function(e) {
+        $.ajax({
+            type:         "post",
+            url:         "action/remove_session.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("success") >= 0) {
+                    document.cookie = "netref_cookie_login=;expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/";
+                    window.location = "register.html";
+                }
+            }
+        });
+    });
+
+    $("#signoutAll").click(function(e) {
+        $.ajax({
+            type:         "post",
+            url:         "action/remove_session.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("success") >= 0) {
+
+                    javascript:logout();
+
+                    setTimeout(function() {
+                        document.cookie = "netref_cookie_login=;expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/";
+                        window.location = "register.html";
+                    }, 200);
+                }
+            }
+        });
+    });
+
+    $("#get_search_results").click(function(e) {
+
+//        var search_by = "experience";
+//        var search_by = "email";
+        var search_by = $('#search_by').val();
+        var search_value = $('#search_results').val();
+
+        $.ajax({
+            type:         "post",
+            url:         "action/get_search_results.jsp",
+            data:        "search_by="+search_by+
+                    "&search_value=" + search_value,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "register.html";
+                } else if(msg != null) {
+                    $("#display_search_results").html(msg);
+                }
+            }
+        });
+    });
+
+    window.enquireFLInNetwork = function(search_fl_path, fl_userid) {
+        $.ajax({
+            type:         "post",
+            url:          "action/enquire_fl.jsp",
+            data:         "fl_userid="+fl_userid,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "register.html";
+                } else if(msg != null && msg.indexOf("success") >= 0) {
+                    $("#"+search_fl_path+"_"+fl_userid).removeAttr('onclick');
+                    $("#"+search_fl_path+"_"+fl_userid).attr('style','padding: 1px 5px; cursor: auto;');
+                    $("#"+search_fl_path+"_"+fl_userid).attr('class','btn btn-success btn-simple btn-lg');
+                    $("#"+search_fl_path+"_"+fl_userid).attr('data-original-title','Success');
+                    $("#"+search_fl_path+"_"+fl_userid+" i").removeClass("fa fa-question-circle fa-lg").addClass("fa fa-check-circle fa-lg");
+                } else {
+                    //DO NOTHING
+                }
+
+            }
+        });
+    };
+
+    window.broadcastAskInNetwork = function(broadcast_ask_path, activity_id, owner_id) {
+
+        $.ajax({
+            type:         "post",
+            url:          "action/broadcast_ask_in_network.jsp",
+            data:         "activity_id="+activity_id+
+                    "&owner_id=" + owner_id,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "register.html";
+                } else if(msg != null && msg.indexOf("success") >= 0) {
+                    $("#"+broadcast_ask_path+"_"+activity_id+"_"+owner_id).removeAttr('onclick');
+                    $("#"+broadcast_ask_path+"_"+activity_id+"_"+owner_id).attr('style','padding: 1px 5px; cursor: auto;');
+                    $("#"+broadcast_ask_path+"_"+activity_id+"_"+owner_id).attr('class','btn btn-success btn-simple btn-lg');
+                    $("#"+broadcast_ask_path+"_"+activity_id+"_"+owner_id).attr('data-original-title','Success');
+//                    $("#"+broadcast_ask_path+"_"+activity_id+" i").removeClass("fa fa-wifi fa-lg").addClass("fa fa-check-circle fa-lg");
+                    $("#"+broadcast_ask_path+"_"+activity_id+"_"+owner_id+" img").removeAttr("src").attr("src","images/broadcast_success.png");
+                } else {
+                    //DO NOTHING
+                }
+            }
+        });
+    };
+
+    window.askInYourNetwork = function() {
+
+        var comments = $("#ask_in_network").val();
+
+        $.ajax({
+            type:         "post",
+            url:          "action/ask_in_network.jsp",
+            data:         "comments="+encodeURIComponent(comments),
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "register.html";
+                } else if(msg != null && msg.indexOf("success") >= 0) {
+                    $('#ask_in_network').val('');
+                    loadAskList();
+                } else {
+                    $("#ask_in_network_status").html("<font color=red>Failed to post</font>");
+                }
+            }
+        });
+    };
+
+    window.postResponseToAsk = function(activity_id, owner_id) {
+
+        var comments = $("#ask_response_"+activity_id+"_"+owner_id).val();
+
+        $.ajax({
+            type:         "post",
+            url:          "action/post_response_to_ask.jsp",
+            data:         "comments="+comments+
+                    "&activity_id="+activity_id,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "register.html";
+                } else if(msg != null && msg.indexOf("success") >= 0) {
+//                    $("#ask_response_"+activity_id+"_"+owner_id).val('');
+                } else {
+                    $("#post_response_to_ask_status").html("<font color=red>Failed to post</font>");
+                }
+            }
+        });
+    };
+
+    window.recommendFL = function(activity_id, fl_userid, recommend) {
+
+        $.ajax({
+            type:         "post",
+            url:          "action/recommend_fl.jsp",
+            data:         "activity_id="+activity_id +
+                    "&fl_userid=" + fl_userid+
+                    "&recommend=" + recommend,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "register.html";
+                } else if(msg != null && msg.indexOf("success") >= 0) {
+//                    alert("Success");
+                } else {
+                    //DO NOTHING
+                }
+            }
+        });
+    };
+
+    function getDeveloperslistforfriend() {
+
+        developer_id = "";
+
+        $.ajax({
+            type:         "post",
+            url:         "action/get_all_activedevelopers_list.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("fa fa-share") > 0) {
+                    $("#developer_table_freelance tbody tr").remove();
+                    $("#developer_table_freelance1 tbody tr").remove();
+                    $("#developer_table_freelance2 tbody tr").remove();
+                    $("#developer_table_freelance").last().append(msg);
+                    $("#developer_table_freelance1").last().append(msg);
+                    $("#developer_table_freelance2").last().append(msg);
+                } else {
+                    //DO NOTHING
+                }
+            }
+        });
+    }
+
+    function getAllActiveSKlist() {
+
+        $.ajax({
+            type:         "post",
+            url:         "action/get_all_sk_list.jsp",
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("fa fa-question-circle fa-lg") > 0) {
+                    $("#developer_table_lists tbody tr").remove();
+                    $("#developer_table_lists").last().append(msg);
+                } else {
+                    //DO NOTHING
+                }
+            }
+        });
+    }
+
+    function getAllActiveprojectlist() {
+        developer_id = "";
+
+        $.ajax({
+            type:         "post",
+            url:         "action/get_all_active_projects.jsp",
+            data:         "developer_id="+developer_id,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null) {
+                    $("#project_table_ref").last().append(msg);
+                    $("#developer_id").val(developer_id);
+                } else {
+                    //DO NOTHING
+                }
+            }
+        });
+    }
+
+    window.showfls = function () {
+        $(ser).removeClass('active');
+        $(developer).addClass('active');
+//        $(client).removeClass('active');
+        $(ask).removeClass('active');
+//        $(list).removeClass('active');
+        $(network).removeClass('active');
+        $(friend).removeClass('active');
+//        getAllActiveFLlist();
+        getAllActiveClientList();
+        $('#tasks').hide();
+        $('#search').hide();
+        $('#show_hide_tasks').hide();
+        $('#friends').hide();
+        $('#ask_friend').hide();
+//        $('#lists').hide();
+        $('#mynetwork').hide();
+        $('#dev').show();
+//        $('#clients').hide();
+    };
+
+//    window.showclients = function () {
+//        $(ser).removeClass('active');
+//        $(developer).removeClass('active');
+//        $(client).addClass('active');
+//        $(ask).removeClass('active');
+////        $(list).removeClass('active');
+//        $(network).removeClass('active');
+//        $(friend).removeClass('active');
+//        getAllActiveClientList();
+//        $('#tasks').hide();
+//        $('#search').hide();
+//        $('#show_hide_tasks').hide();
+//        $('#friends').hide();
+//        $('#ask_friend').hide();
+//        $('#lists').hide();
+//        $('#mynetwork').hide();
+//        $('#dev').hide();
+//        $('#clients').show();
+//    };
+
+    window.showask = function () {
+        $(ser).removeClass('active');
+        $(developer).removeClass('active');
+//        $(client).removeClass('active');
+//        $(list).removeClass('active');
+        $(ask).addClass('active');
+        $(network).removeClass('active');
+        $(friend).removeClass('active');
+        $('#tasks').hide();
+        $('#search').hide();
+        $('#show_hide_tasks').hide();
+        $('#friends').hide();
+        $('#dev').hide();
+        $('#lists').hide();
+        $('#mynetwork').hide();
+        $('#ask_friend').show();
+//        $('#clients').hide();
+    };
+
+    window.showfriends = function () {
+        $(ser).removeClass('active');
+        $(developer).removeClass('active');
+//        $(client).removeClass('active');
+        $(ask).removeClass('active');
+//        $(list).removeClass('active');
+        $(network).removeClass('active');
+        $(friend).addClass('active');
+//        getDeveloperslistforfriend();
+        $('#tasks').hide();
+        $('#search').hide();
+        $('#dev').hide();
+        $('#show_hide_tasks').hide();
+        $('#ask_friend').hide();
+        $('#lists').hide();
+        $('#mynetwork').hide();
+        $('#friends').show();
+//        $('#clients').hide();
+    };
+
+    window.showtasklist = function () {
+        $(developer).removeClass('active');
+//        $(client).removeClass('active');
+        $(ser).removeClass('active');
+        $(ask).removeClass('active');
+        $(friend).removeClass('active');
+        $(network).removeClass('active');
+//        $(list).removeClass('active');
+//        getAllActiveClientProjects();
+        $('#dev').hide();
+        $('#search').hide();
+        $('#show_hide_tasks').hide();
+        $('#friends').hide();
+        $('#ask_friend').hide();
+        $('#lists').hide();
+        $('#mynetwork').hide();
+        $('#tasks').show();
+//        $('#clients').hide();
+    };
+
+    window.showsearchtable = function () {
+        $(developer).removeClass('active');
+//        $(client).removeClass('active');
+        $(ser).addClass('active');
+        $(ask).removeClass('active');
+//        $(list).removeClass('active');
+        $(network).removeClass('active');
+        $(friend).removeClass('active');
+        $('#dev').hide();
+        $('#tasks').hide();
+        $('#show_hide_tasks').hide();
+        $('#friends').hide();
+        $('#ask_friend').hide();
+//        $('#lists').hide();
+        $('#mynetwork').hide();
+        $('#search').show();
+//        $('#clients').hide();
+    };
+
+    window.networks = function () {
+        $(developer).removeClass('active');
+//        $(client).removeClass('active');
+        $(ser).removeClass('active');
+        $(ask).removeClass('active');
+        $(friend).removeClass('active');
+//        $(list).removeClass('active');
+        $(network).addClass('active');
+        $('#dev').hide();
+        $('#tasks').hide();
+        $('#show_hide_tasks').hide();
+        $('#friends').hide();
+        $('#ask_friend').hide();
+//        $('#lists').hide();
+        $('#search').hide();
+//        $('#clients').hide();
+
+        loadActivities();
+        loadAskList();
+        loadFBFriends();
+        loadSKFriends();
+
+        $('#mynetwork').show();
+    };
+
+//    window.sklist = function () {
+//        $(developer).removeClass('active');
+//        $(client).removeClass('active');
+//        $(ser).removeClass('active');
+//        $(ask).removeClass('active');
+//        $(friend).removeClass('active');
+//        $(network).removeClass('active');
+//        $(list).addClass('active');
+//        getAllActiveSKlist();
+//        $('#dev').hide();
+//        $('#tasks').hide();
+//        $('#show_hide_tasks').hide();
+//        $('#friends').hide();
+//        $('#ask_friend').hide();
+//        $('#search').hide();
+//        $('#mynetwork').hide();
+//        $('#lists').show();
+//        $('#clients').hide();
+//    };
+
+    window.openAddProjectForm = function() {
+        $('#project_title').val("");
+        $('#project_description').val("");
+        $("#addproject_status").html("");
+
+        var post_url = "action/get_fl_details_for_client_project.jsp";
+
+        $.ajax({
+            type:         "post",
+            url:          post_url,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null) {
+                    $("#add_fl_list_to_client_project_form").html(msg);
+                } else {
+                    $("#addproject_status").html("<font color='red'>Could not get freelancer details. Please try again</font>");
+                }
+            }
+        });
+        $("#click_to_display_fl_details_for_client").click();
+    };
+
+    $("#submitAddProject").click(function(e) {
+        var prj_title = $('#project_title').val();
+        var prj_desc = $('#project_description').val();
+        var fl_email = $('#addproject_fl').val();
+
+        if(prj_title == null || prj_title == "") {
+            $("#addproject_status").html("<font color='red'>Please enter project title</font>");
+            $("#project_title").focus();
+            return false;
+        }
+
+        if(prj_desc == null || prj_desc == "") {
+            $("#addproject_status").html("<font color='red'>Please enter project description</font>");
+            $("#project_description").focus();
+            return false;
+        }
+
+        if(fl_email.indexOf("select") >= 0) {
+            $("#addproject_status").html("<font color='red'>Please select Freelancer from the list</font>");
+            return false;
+        }
+
+        $("#addproject_status").html("");
+
+        ajaxindicatorstart("Please wait...");
+
+        $.ajax({
+            type:         "post",
+            url:         "action/client_add_project.jsp",
+            data:        "prj_title="+encodeURIComponent(prj_title)+
+                    "&prj_desc="+encodeURIComponent(prj_desc)+
+                    "&fl_email="+encodeURIComponent(fl_email),
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("success") >= 0) {
+                    $("#addproject_status").html("<font color='blue'>Successfully added the project</font>");
+                } else {
+                    $("#addproject_status").html("<font color='red'>Could not add project. Please try again</font>");
+                }
+                ajaxindicatorstop();
+            }
+        });
+    });
+
+    $("#submitAddFL").click(function(e) {
+        $("#add_fl_status").hide();
+
+        var freelancer_name = $('#freelancer_name').val().trim();
+        var freelancer_mail = $('#freelancer_mail').val().trim();
+
+        if(freelancer_name == null || freelancer_name == "") {
+            $("#add_fl_status").html("Freelancer name cannot be empty");
+            $("#add_fl_status").show();
+            $("#freelancer_name").focus();
+            return false;
+        }
+
+        if(freelancer_mail == null || freelancer_mail == "") {
+            $("#add_fl_status").html("Freelancer email cannot be empty");
+            $("#add_fl_status").show();
+            $("#freelancer_mail").focus();
+            return false;
+        }
+
+        ajaxindicatorstart("Please wait...");
+
+        $.ajax({
+            type:         "post",
+            url:         "action/addfreelancerprocess.jsp",
+            data:        "freelancer_name="+freelancer_name+
+                    "&freelancer_mail="+freelancer_mail,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "register.html";
+                } else if(msg != null && msg.indexOf("fa fa-share") > 0) {
+                    $('#addfreelancer_mdl').modal('hide');
+                    $("#fl_table_ref").last().append(msg);
+                } else {
+                    $("#add_fl_status").html(msg);
+                }
+
+                ajaxindicatorstop();
+            }
+        });
+    });
+
+    $("#submitAddClient").click(function(e) {
+        $("#add_client_status").hide();
+
+        var client_name = $('#client_name').val().trim();
+        var client_email = $('#client_email').val().trim();
+
+        if(client_name == null || client_name == "") {
+            $("#add_client_status").html("Client name cannot be empty");
+            $("#add_client_status").show();
+            $("#client_name").focus();
+            return false;
+        }
+
+        if(client_email == null || client_email == "") {
+            $("#add_client_status").html("Client email cannot be empty");
+            $("#add_client_status").show();
+            $("#client_email").focus();
+            return false;
+        }
+
+        ajaxindicatorstart("Please wait...");
+
+        $.ajax({
+            type:         "post",
+            url:         "action/addclientprocess.jsp",
+            data:        "client_name="+client_name+
+                    "&client_email="+client_email,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "register.html";
+                } else if(msg != null && msg.indexOf("fa fa-share") > 0) {
+                    $('#addclient_mdl').modal('hide');
+                    $("#fl_table_ref").last().append(msg);
+                } else {
+                    $("#add_client_status").html(msg);
+                }
+
+                ajaxindicatorstop();
+            }
+        });
+    });
+
+    //Clear the values entered in privacy and security on modal close
+    $('#addfreelancer_mdl').on('hidden.bs.modal', function () {
+        $("#add_fl_status").hide();
+        $('#freelancer_name').val("");
+        $('#freelancer_mail').val("");
+    });
+    $('#addclient_mdl').on('hidden.bs.modal', function () {
+        $("#add_client_status").hide();
+        $('#client_name').val("");
+        $('#client_email').val("");
+    });
+
+    $("#fl_table_ref").delegate("tr", "click", function(e) {
+        var tr = $('#fl_table_ref').find('tr');
+        var values = '';
+
+        var tds = $(this).find('td');
+
+//        iterating all the td values under selected table row - NOT USED FOR NOW
+        $.each(tds, function(index, item) {
+            values = values + 'td' + (index + 1) + ':' + item.innerHTML + '<br/>';
+        });
+//        End
+
+        if(values.indexOf("fa fa-share") > 0) {
+            if(this.id == fcm_id) {     //checking if the same <tr> is selected/clicked again
+                tr.removeClass('row-highlight');
+                $(this).addClass('row-highlight');
+                // DO NOTHING
+                return;
+            }
+
+            fcm_id = this.id;
+
+            tr.removeClass('row-highlight');
+
+            $(this).addClass('row-highlight');
+        }
+    });
+
+    $("#fl_table_ref").delegate("tr", "click", function(e) {
+        var tr = $('#fl_table_ref').find('tr');
+        var values = '';
+
+        var tds = $(this).find('td');
+
+//        iterating all the td values under selected table row - NOT USED FOR NOW
+        $.each(tds, function(index, item) {
+            values = values + 'td' + (index + 1) + ':' + item.innerHTML + '<br/>';
+        });
+//        End
+
+        if(values.indexOf("fa fa-share") > 0) {
+            if(this.id == fcm_id) {     //checking if the same <tr> is selected/clicked again
+                tr.removeClass('row-highlight');
+                $(this).addClass('row-highlight');
+                // DO NOTHING
+                return;
+            }
+
+            fcm_id = this.id;
+
+            tr.removeClass('row-highlight');
+
+            $(this).addClass('row-highlight');
+        }
+    });
+
+    $("#askpost_table_ref").delegate("dd", "click", function(e) {
+        var tr = $('#askpost_table_ref').find('tr');
+        var values = '';
+
+        var tds = $(this).find('td');
+
+//        iterating all the td values under selected table row - NOT USED FOR NOW
+        $.each(tds, function(index, item) {
+            values = values + 'dl' + (index + 1) + ':' + item.innerHTML + '<br/>';
+        });
+//        End
+
+        if(values.indexOf("fa fa-times") > 0) {
+            if(this.id == activity_id) {     //checking if the same <tr> is selected/clicked again
+                tr.removeClass('row-highlight');
+                $(this).addClass('row-highlight');
+                // DO NOTHING
+                return;
+            }
+
+            activity_id = this.id;
+
+            tr.removeClass('row-highlight');
+
+            $(this).addClass('row-highlight');
+        }
+    });
+
+    window.deleteClient = function() {
+
+        setTimeout(function() {
+            $.ajax({
+                type:         "post",
+                url:          "action/delete_cldetails.jsp",
+                data:         "fcm_id="+encodeURIComponent(fcm_id),
+
+                success:    function(msg) {
+                    msg = escape(msg).replace(/%0A/g, "");
+                    msg = msg.replace(/%0D/g, "");
+                    msg = unescape(msg);
+
+                    if(msg != null && msg.indexOf("session_expired") >= 0) {
+                        window.location = "register.html";
+                    } else if(msg != null && msg.indexOf("Successfully") >= 0) {
+                        $('#deleteCL_mdl').modal('hide');
+                        $("table#fl_table_ref tbody tr#"+fcm_id).remove(); //remove the Deleted row client fom UI
+                    } else {
+                        $("#delete_fl_status").html(msg);
+                    }
+                }
+            });
+        }, 50);
+    };
+
+    window.deleteFL = function() {
+
+        setTimeout(function() {
+            $.ajax({
+                type:         "post",
+                url:          "action/delete_fldetails.jsp",
+                data:         "fcm_id="+encodeURIComponent(fcm_id),
+
+                success:    function(msg) {
+                    msg = escape(msg).replace(/%0A/g, "");
+                    msg = msg.replace(/%0D/g, "");
+                    msg = unescape(msg);
+
+                    if(msg != null && msg.indexOf("session_expired") >= 0) {
+                        window.location = "register.html";
+                    } else if(msg != null && msg.indexOf("Successfully") >= 0) {
+                        $('#deleteFL_mdl').modal('hide');
+                        $("table#fl_table_ref tbody tr#"+fcm_id).remove(); //remove the Deleted row client fom UI
+                    } else {
+                        $("#delete_cl_status").html(msg);
+                    }
+                }
+            });
+        }, 50);
+    };
+
+    window.getpostdetailstodelete = function(activity_id) {
+//        alert(fcm_id);
+        var post_url = "action/get_postdetail_form.jsp";
+
+        $.ajax({
+            type:         "post",
+            url:          post_url,
+            data:         "activity_id="+activity_id,
+
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("Delete post") >= 0) {
+
+                    $("#delete_post_form").html(msg);
+                } else {
+                    alert(msg);
+                }
+            }
+        });
+        $("#click_to_display_deletepost_form").click();
+    };
+
+
+    window.DeletePost = function(activity_id) {
+
+        $.ajax({
+            type:         "post",
+            url:          "action/deletepost.jsp",
+            data:         "activity_id="+activity_id,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "mobileregister.html";
+                } else if(msg != null && msg.indexOf("success") >= 0) {
+//                    $("#ask_in_network_records").html;
+                    $("#deletepost").modal('hide');
+                    $("#askpost_table_ref #"+activity_id).remove(); //remove the Deleted row client fom UI
+                } else {
+                    //DO NOTHING
+                }
+            }
+        });
+    };
+
+//    window.deleteASKPost = function() {
+//        $.ajax({
+//            type:         "post",
+//            url:          "action/deletepost.jsp",
+//            data:         "activity_id="+activity_id,
+//
+//            success:    function(msg) {
+//                msg = escape(msg).replace(/%0A/g, "");
+//                msg = msg.replace(/%0D/g, "");
+//                msg = unescape(msg);
+//
+//                if(msg != null && msg.indexOf("session_expired") >= 0) {
+//                    window.location = "register.html";
+//                } else if(msg != null && msg.indexOf("Successfully") >= 0) {
+//                    $('#deleteASKPost_mdl').modal('hide');
+//                    $("table#askpost_table_ref tbody tr#"+activity_id).remove(); //remove the Deleted row client fom UI
+//                } else {
+//                    $("#delete_askpost_status").html(msg);
+//                }
+//            }
+//        });
+//    };
+});
+
+$(document).ready(function() {
+    window.openSkillsForm = function() {
+        var post_url = "action/get_skills_form.jsp";
+
+        $.ajax({
+            type:         "post",
+            url:          post_url,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "register.html";
+                } else if(msg != null) {
+                    $("#add_skills_form").html(msg);
+                } else {
+                    alert(msg);
+                }
+            }
+        });
+        $("#click_to_display_skills_form").click();
+    };
+
+    window.updateSkills = function() {
+        $("#add_skills_status").hide();
+
+        var skills = $("#skills").val().trim();
+        var experience = $("#experience").val().trim();
+        var linkedin = $("#linkedin").val().trim();
+
+        if(skills == null || skills.length <= 0) {
+            $("#skills").focus();
+            $("#add_skills_status").html("Skills cannot be empty");
+            $("#add_skills_status").show();
+            return;
+        }
+
+        if(experience == null || experience.length <= 0) {
+            $("#experience").focus();
+            $("#add_skills_status").html("Experience cannot be empty");
+            $("#add_skills_status").show();
+            return;
+        }
+
+        if(linkedin == null || linkedin.length <= 0) {
+            $("#linkedin").focus();
+            $("#add_skills_status").html("Linkedin cannot be empty");
+            $("#add_skills_status").show();
+            return;
+        }
+
+        var post_url = "action/addskills_fl.jsp";
+
+        $.ajax({
+            type:         "post",
+            url:           post_url,
+            data:         "skills="+encodeURIComponent(skills)+
+                    "&experience="+encodeURIComponent(experience)+
+                    "&linkedin="+encodeURIComponent(linkedin),
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "register.html";
+                } else if(msg != null && msg.indexOf("Successfully") >= 0) {
+                    $('#addskills_mdl').modal('hide');
+                } else if(msg != null) {
+                    $("#add_skills_status").html(msg);
+                }
+            }
+        });
+    };
+
+    window.openFLEditForm = function(freelancer_name, freelancer_email, fcm_id) {
+        // alert(freelancer_name);
+        var post_url = "action/get_editfl_form.jsp";
+
+        $.ajax({
+            type:         "post",
+            url:          post_url,
+            data:         "fcm_id="+fcm_id,
+
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("Name") >= 0) {
+                    $("#add_fl_form").html(msg);
+                } else {
+                    alert(msg);
+                }
+            }
+        });
+        $("#click_to_display_fl_form").click();
+    };
+
+    window.updateFldetails = function(fcm_id) {
+        $("#edit_fl_status").hide();
+
+        var freelancer_name = $('#edit_freelancer_name').val().trim();
+        var freelancer_email = $('#edit_freelancer_email').val().trim();
+        var edit_fl_status_msg = $('#edit_fl_status_msg').val().trim();
+
+        if(freelancer_name == null || freelancer_name == "") {
+            $("#edit_fl_status").html("Freelancer name cannot be empty");
+            $("#edit_fl_status").show();
+            $("#edit_freelancer_name").focus();
+            return false;
+        }
+
+        if(freelancer_email == null || freelancer_email == "") {
+            $("#edit_fl_status").html("Freelancer email cannot be empty");
+            $("#edit_fl_status").show();
+            $("#edit_freelancer_email").focus();
+            return false;
+        }
+
+        ajaxindicatorstart("Please wait...");
+
+        $.ajax({
+            type:         "post",
+            url:          "action/update_fldetails.jsp",
+            data:         "freelancer_name="+encodeURIComponent(freelancer_name)+
+                    "&freelancer_email="+encodeURIComponent(freelancer_email)+
+                    "&fcm_id="+encodeURIComponent(fcm_id)+
+                    "&status_msg="+encodeURIComponent(edit_fl_status_msg),
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "register.html";
+                } else if(msg != null) {
+                    $('#editfl_mdl').modal('hide');
+
+                    $("table#fl_table_ref tr#"+fcm_id).replaceWith(msg);
+                    $("table#fl_table_ref tr#"+fcm_id).addClass('row-highlight');
+                } else {
+                    //DO NOTHING
+                }
+                ajaxindicatorstop();
+            }
+        });
+    };
+
+    window.openCLEditForm = function(client_name, client_email, fcm_id) {
+        // alert(freelancer_name);
+        var post_url = "action/get_editcl_form.jsp";
+
+        $.ajax({
+            type:         "post",
+            url:          post_url,
+            data:         "fcm_id="+fcm_id,
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("Name") >= 0) {
+                    $("#add_cl_form").html(msg);
+                } else {
+                    alert(msg);
+                }
+            }
+        });
+        $("#click_to_display_cl_form").click();
+    };
+
+    window.updateCldetails = function(fcm_id) {
+        $("#edit_client_status").hide();
+
+        var client_name = $('#edit_client_name').val().trim();
+        var client_email = $('#edit_client_email').val().trim();
+        var edit_client_status_msg = $('#edit_client_status_msg').val().trim();
+
+        if(client_name == null || client_name == "") {
+            $("#edit_client_status").html("Client name name cannot be empty");
+            $("#edit_client_status").show();
+            $("#edit_client_name").focus();
+            return false;
+        }
+
+        if(client_email == null || client_email == "") {
+            $("#edit_client_status").html("Client email cannot be empty");
+            $("#edit_client_status").show();
+            $("#edit_client_email").focus();
+            return false;
+        }
+
+        ajaxindicatorstart("Please wait...");
+
+        $.ajax({
+            type:         "post",
+            url:          "action/update_cldetails.jsp",
+            data:         "client_name="+encodeURIComponent(client_name)+
+                    "&client_email="+encodeURIComponent(client_email)+
+                    "&fcm_id="+encodeURIComponent(fcm_id)+
+                    "&status_msg="+encodeURIComponent(edit_client_status_msg),
+
+            success:    function(msg) {
+                msg = escape(msg).replace(/%0A/g, "");
+                msg = msg.replace(/%0D/g, "");
+                msg = unescape(msg);
+
+                if(msg != null && msg.indexOf("session_expired") >= 0) {
+                    window.location = "register.html";
+                } else if(msg != null) {
+                    $('#editcl').modal('hide');
+
+                    $("table#fl_table_ref tr#"+fcm_id).replaceWith(msg);
+                    $("table#fl_table_ref tr#"+fcm_id).addClass('row-highlight');
+                } else {
+                    //DO NOTHING
+                }
+                ajaxindicatorstop();
+            }
+        });
+    };
+
+    window.changePlacehoder = function(sel) {
+
+        $("#search_results").val("");
+
+        var selval = sel.value;
+
+        if(selval == "skills") {
+            $("#search_results").attr('placeholder','E.g. Android, Networking, ...');
+        } else if(selval == "email") {
+            $("#search_results").attr('placeholder','E.g. someone@domain.com');
+        } else if(selval == "experience") {
+            $("#search_results").attr('placeholder','E.g. 5 years');
+        } else if(selval == "linkedin") {
+            $("#search_results").attr('placeholder','E.g. someone');
+        }
+    }
+});
+
+function showdetails()  {
+    $('#showdetails').hide();
+    $('#hidedetails').show();
+
+}
+function hidedetails()  {
+    $('#showdetails').show();
+    $('#hidedetails').hide();
+
+}
+function showdetails1()  {
+    $('#showdetails1').hide();
+    $('#hidedetails1').show();
+
+}
+function hidedetails1()  {
+    $('#showdetails1').show();
+    $('#hidedetails1').hide();
+
+}
+function showdetails2()  {
+    $('#showdetails2').hide();
+    $('#hidedetails2').show();
+
+}
+function hidedetails2()  {
+    $('#showdetails2').show();
+    $('#hidedetails2').hide();
+}
+
+function showprojects(fl_userid)  {
+    getAllActiveprojectlist1(fl_userid);
+    $('#showprojectdetails'+fl_userid).hide();
+    $('#hideprojectdetails'+fl_userid).show();
+    $('#projects_'+fl_userid).show();
+}
+
+function hideprojects(fl_userid)  {
+    $('#showprojectdetails'+fl_userid).show();
+    $('#hideprojectdetails'+fl_userid).hide();
+    $('#projects_'+fl_userid).hide();
+}
+
+function showFLRecommendations(fl_userid)  {
+    $.ajax({
+        type:         "post",
+        url:         "action/show_fl_recommendations.jsp",
+        data:         "fl_userid="+fl_userid,
+
+        success:    function(msg) {
+            msg = escape(msg).replace(/%0A/g, "");
+            msg = msg.replace(/%0D/g, "");
+            msg = unescape(msg);
+
+            if(msg != null && msg.indexOf("session_expired") >= 0) {
+                window.location = "register.html";
+            } else if(msg != null) {
+                $("#showfl_"+fl_userid).html(msg);
+            } else {
+                //DO NOTHING
+            }
+        }
+    });
+
+    $('#showrecommendations_'+fl_userid).hide();
+    $('#hiderecommendations_'+fl_userid).show();
+    $('#showfl_'+fl_userid).show();
+}
+
+function hideFLRecommendations(fl_userid)  {
+    $('#showrecommendations_'+fl_userid).show();
+    $('#hiderecommendations_'+fl_userid).hide();
+    $('#showfl_'+fl_userid).hide();
+}
+
+function showFLRecommendationsOfFriend(fl_userid)  {
+    $.ajax({
+        type:         "post",
+        url:         "action/show_fl_recommendations.jsp",
+        data:         "fl_userid="+fl_userid,
+
+        success:    function(msg) {
+            msg = escape(msg).replace(/%0A/g, "");
+            msg = msg.replace(/%0D/g, "");
+            msg = unescape(msg);
+
+            if(msg != null && msg.indexOf("session_expired") >= 0) {
+                window.location = "register.html";
+            } else if(msg != null) {
+                $("#showfl_of_friend_"+fl_userid).html(msg);
+            } else {
+                //DO NOTHING
+            }
+        }
+    });
+
+    $('#showrecommendations_of_friend_'+fl_userid).hide();
+    $('#hiderecommendations_of_friend_'+fl_userid).show();
+    $('#showfl_of_friend_'+fl_userid).show();
+}
+
+function hideFLRecommendationsOfFriend(fl_userid)  {
+    $('#showrecommendations_of_friend_'+fl_userid).show();
+    $('#hiderecommendations_of_friend_'+fl_userid).hide();
+    $('#showfl_of_friend_'+fl_userid).hide();
+}
+
+function showFLRecommendationsOfsk(fl_userid)  {
+    $.ajax({
+        type:         "post",
+        url:         "action/show_sk_recommendations.jsp",
+        data:         "fl_userid="+fl_userid,
+
+        success:    function(msg) {
+            msg = escape(msg).replace(/%0A/g, "");
+            msg = msg.replace(/%0D/g, "");
+            msg = unescape(msg);
+
+            if(msg != null && msg.indexOf("session_expired") >= 0) {
+                window.location = "register.html";
+            } else if(msg != null) {
+                $("#showrecommendation_of_sk_"+fl_userid).html(msg);
+            } else {
+                //DO NOTHING
+            }
+        }
+    });
+
+    $('#showrecommendation_of_sks_'+fl_userid).hide();
+    $('#hiderecommendation_of_sks_'+fl_userid).show();
+    $('#showrecommendation_of_sk_'+fl_userid).show();
+}
+
+function hiderecommendationsofsk(fl_userid)  {
+    $('#showrecommendation_of_sks_'+fl_userid).show();
+    $('#hiderecommendation_of_sks_'+fl_userid).hide();
+    $('#showrecommendation_of_sk_'+fl_userid).hide();
+}
+
+function show_search_result_table()  {
+    $('#search_result').show();
+}
+
+function showFLRecommendationsHome(activity_id, fl_userid)  {
+    $.ajax({
+        type:         "post",
+        url:         "action/show_fl_recommendations.jsp",
+        data:         "fl_userid="+fl_userid,
+
+        success:    function(msg) {
+            msg = escape(msg).replace(/%0A/g, "");
+            msg = msg.replace(/%0D/g, "");
+            msg = unescape(msg);
+
+            if(msg != null && msg.indexOf("session_expired") >= 0) {
+                window.location = "register.html";
+            } else if(msg != null) {
+                $("#showfl_home_"+activity_id+"_"+fl_userid).html(msg);
+            } else {
+                //DO NOTHING
+            }
+        }
+    });
+
+    $('#showrecommendations_home_'+activity_id+"_"+fl_userid).hide();
+    $('#hiderecommendations_home_'+activity_id+"_"+fl_userid).show();
+    $('#showfl_home_'+activity_id+"_"+fl_userid).show();
+}
+
+function hideFLRecommendationsHome(activity_id, fl_userid)  {
+    $('#showrecommendations_home_'+activity_id+"_"+fl_userid).show();
+    $('#hiderecommendations_home_'+activity_id+"_"+fl_userid).hide();
+    $('#showfl_home_'+activity_id+"_"+fl_userid).hide();
+}
+
+function showAskResponsesNF(activity_id, posted_by)  {
+    $.ajax({
+        type:         "post",
+        url:         "action/show_ask_responses.jsp",
+        data:         "activity_id="+activity_id,
+
+        success:    function(msg) {
+            msg = escape(msg).replace(/%0A/g, "");
+            msg = msg.replace(/%0D/g, "");
+            msg = unescape(msg);
+
+            if(msg != null && msg.indexOf("session_expired") >= 0) {
+                window.location = "register.html";
+            } else if(msg != null) {
+                $("#show_ask_responses_"+activity_id+"_"+posted_by).html(msg);
+            } else {
+                //DO NOTHING
+            }
+        }
+    });
+
+    $('#showaskresponses_'+activity_id+"_"+posted_by).hide();
+    $('#hideaskresponses_'+activity_id+"_"+posted_by).show();
+    $('#show_ask_responses_'+activity_id+"_"+posted_by).show();
+}
+
+function hideAskResponsesNF(activity_id, posted_by)  {
+    $('#showaskresponses_'+activity_id+"_"+posted_by).show();
+    $('#hideaskresponses_'+activity_id+"_"+posted_by).hide();
+    $('#show_ask_responses_'+activity_id+"_"+posted_by).hide();
+}
+
+function showAskResponses(activity_id)  {
+    $.ajax({
+        type:         "post",
+        url:         "action/show_ask_responses.jsp",
+        data:         "activity_id="+activity_id,
+
+        success:    function(msg) {
+            msg = escape(msg).replace(/%0A/g, "");
+            msg = msg.replace(/%0D/g, "");
+            msg = unescape(msg);
+
+            if(msg != null && msg.indexOf("session_expired") >= 0) {
+                window.location = "register.html";
+            } else if(msg != null) {
+                $("#show_ask_responses_"+activity_id).html(msg);
+            } else {
+                //DO NOTHING
+            }
+        }
+    });
+
+    $('#showaskresponses_'+activity_id).hide();
+    $('#hideaskresponses_'+activity_id).show();
+    $('#show_ask_responses_'+activity_id).show();
+}
+
+function hideAskResponses(activity_id)  {
+    $('#showaskresponses_'+activity_id).show();
+    $('#hideaskresponses_'+activity_id).hide();
+    $('#show_ask_responses_'+activity_id).hide();
+}
+
+function showfllist(friend_userid) {
+    $.ajax({
+        type:         "post",
+        url:         "action/get_fl_list.jsp",
+        data:         "friend_userid="+friend_userid,
+
+        success:    function(msg) {
+            msg = escape(msg).replace(/%0A/g, "");
+            msg = msg.replace(/%0D/g, "");
+            msg = unescape(msg);
+
+            if(msg != null && msg.indexOf("session_expired") >= 0) {
+                window.location = "register.html";
+            } else if(msg != null)  {
+                $("#fl_"+friend_userid).html(msg);
+            } else {
+                //DO NOTHING
+            }
+        }
+    });
+
+    $('#fllist_'+friend_userid).show();
+    $('#hidefriends_fl_'+friend_userid).show();
+    $('#showfriends_fl_'+friend_userid).hide();
+}
+
+function hideFriendFLs(friend_userid)  {
+    $('#fllist_'+friend_userid).hide();
+    $('#hidefriends_fl_'+friend_userid).hide();
+    $('#showfriends_fl_'+friend_userid).show();
+}
+
+function getAllActiveprojectlist1(fl_userid) {
+    $.ajax({
+        type:         "post",
+        url:         "action/get_all_active_projects.jsp",
+        data:         "fl_userid="+fl_userid,
+
+        success:    function(msg) {
+            msg = escape(msg).replace(/%0A/g, "");
+            msg = msg.replace(/%0D/g, "");
+            msg = unescape(msg);
+
+            if(msg != null) {
+                $("#project_table_ref_"+fl_userid).html(msg);
+                $("#fl_userid").val(fl_userid);
+            } else {
+                //DO NOTHING
+            }
+        }
+    });
+}
+
+</script>
+
+</head>
+
+<body onload="networks();" >
+<div class="wrapper" class="table-responsive">
+    <nav class="navbar navbar-ct-orange navbar-fixed-top" style="margin-bottom: 0px">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-default2">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" style="padding:1px 15px"><h1 style="margin-top: 1px;font-size: 70px"> <small style="color: white;margin-top: 1px" class="subtitle">netref</small> </h1></a>
+            </div>
+
+            <div style="display: none">
+                <div a data-toggle='modal' href='#addproject' id="click_to_display_fl_details_for_client">Add Project</div>
+            </div>
+
+            <div style="display: none">
+                <div a data-toggle='modal' href='#addskills_mdl' id="click_to_display_skills_form">Add skills</div>
+            </div>
+            <div style="display: none">
+                <div a data-toggle='modal' href='#editfl_mdl' id="click_to_display_fl_form">Edit Freelancer</div>
+            </div>
+            <div style="display: none">
+                <div a data-toggle='modal' href='#editcl' id="click_to_display_cl_form">Edit Client</div>
+            </div>
+            <div style="display: none">
+                <div a data-toggle='modal' href='#deletepost' id="click_to_display_deletepost_form">Delete Post</div>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navigation-default2">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <div  style="display: inline">Tools</div>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="page-scroll"><a href="tools/timesheeet.html">Time sheet</a></li>
+                            <!--<li class="divider"></li>-->
+                            <li class="page-scroll"><a href="tools/invoice.html">Invoice</a></li>
+                            <!--<li class="divider"></li>-->
+                            <li class="page-scroll"><a href="tools/payment.html">Payment</a></li>
+                            <!--<li class="divider"></li>-->
+                            <li class="page-scroll"><a href="tools/calendar.html">Calendar</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <div id="show_user_details" style="display: inline">Account</div>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:void(0);" data-toggle="modal" style="cursor: pointer" onclick="openSkillsForm(); return false;"><i class="pe-7s-close-circle"></i>&nbsp;&nbsp;My account</a></li>
+                            <li class="divider"></li>
+                            <li><a id="signout"  style="cursor: pointer"><i class="pe-7s-close-circle"></i>&nbsp;&nbsp;Logout</a></li>
+                            <li><a id="signoutAll"  style="cursor: pointer"><i class="pe-7s-close-circle"></i>&nbsp;&nbsp;Logout (All)</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+</div><br><br>
+
+<div class="container mainBody responsive" style="width: 85%;">
+<div>
+    <center> <ul class="nav nav-tabs">
+        <li id="network" onclick=networks(); class="active" style="color:orange"><a href="#">Network Feed</a></li>
+        <li id="ser" onclick=showsearchtable();><a href="#">Search</a></li>
+        <li id="ask" onclick=showask();><a href="#">Ask</a></li>
+        <li id="developer" onclick=showfls();><a href="#">My Network</a></li>
+        <!--<li id="client" onclick=showclients(); ><a href="#">My Clients</a></li>-->
+        <li id="friend" onclick=showfriends();><a href="#">Friends</a></li>
+        <!--<li id="list" onclick=sklist();><a href="#">SK’s List</a></li>-->
+    </ul> </center>
+</div>
+
+<!--<div align="center">-->
+    <!--<div class="table-responsive" style="width: 100%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;display:none" align="center" id="clients">-->
+        <!--<table class="table" style="margin-bottom:0px;">-->
+            <!--<thead><tr>-->
+                <!--<td width="80%"><h3 style="margin: 2px 0 1px;align:left" >Client</h3>-->
+
+                <!--<td width="20%" align="right"><button class="btn btn-fill btn-info" data-toggle="modal" data-target="#addclient_mdl" style="width: 100px">Add Client</button></td>-->
+            <!--</tr></thead>-->
+        <!--</table>-->
+
+        <!--<table class="table" style="margin-bottom:0px;" id="client_table_ref" >-->
+            <!--<thead>-->
+            <!--<tr >-->
+                <!--<th width="2%"></th>-->
+                <!--<th width="15%">Name</th>-->
+                <!--<th width="19%"> Email</th>-->
+                <!--<th width="14%" class="text-center">Actions</th>-->
+                <!--<th width="14%">Status</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+
+            <!--</tbody>-->
+        <!--</table>-->
+        <!--<div class="table-responsive">-->
+            <!--<table class="table table-hover" style="margin-bottom:0px;">-->
+
+                <!--<tr bgcolor="#f5f5f5" >-->
+
+                <!--</tr>-->
+            <!--</table>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div align="center">
+    <div class="table-responsive" id="dev" style="width: 100%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;" align="center">
+        <table class="table" style="margin-bottom:0px;">
+            <thead><tr>
+                <td width="80%"><h3 style="margin: 2px 0 1px;align:left" >My Network</h3>
+                <td width="20%" align="right"><button class="btn btn-fill btn-info" data-toggle="modal" data-target="#addclient_mdl" style="width: 100px">Add Client</button></td>
+                <td width="20%" align="right"><button class="btn btn-fill btn-info" data-toggle="modal" href="#addfreelancer_mdl" style="width: 130px">Add Freelancer</button></td>
+            </tr></thead>
+        </table>
+
+        <table class="table" style="margin-bottom:0px;" id="fl_table_ref" >
+            <thead>
+            <tr >
+                <th width="2%"></th>
+                <th width="15%">Name</th>
+                <th width="25%">Email</th>
+                <th width="20%" class="text-center">Connection</th>
+                <th width="10%" class="text-center">Actions</th>
+                <th width="30%" class="text-center">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="table-responsive">
+            <table class="table table-hover" style="margin-bottom:0px;">
+
+                <tr bgcolor="#f5f5f5" >
+
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive" id="search" style="width: 100%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;display: none" align="center">
+    <br>
+    <div style="height:auto;width:90%">
+
+        <h4 style="margin-top: 1%">Search Freelancer</h4>
+        <div class="row" style="margin-left:20px">
+            <div class="col-md-3"><h5>Search Freelancer by</h5></div>
+            <div class="col-md-3" style="margin-left:-5%;">
+                <select name="search_by" id="search_by" class="form-control" onchange="changePlacehoder(this);">
+                    <option value="skills">Skills</option>
+                    <option value="email">Email</option>
+                    <option value="experience">Experience</option>
+                    <option value="linkedin">LinkedIn</option>
+                </select>
+            </div>
+            <div class="col-md-5" style="margin-left:0%" align="left">
+                <input type="text" class="form-control" style="width: 300px" name="search_results" id="search_results" placeholder="E.g. Android, Networking, ...">
+            </div></div><br>
+
+        <button class="btn btn-fill btn-info"  style="width: 100px;margin-left:50px" id="get_search_results" onclick="show_search_result_table();">Search</button><br><br>
+
+        <table class="table" id="search_result" style="margin-bottom:0px;display: none">
+            <thead>
+            <tr >
+                <th width="5%"></th>
+                <th width="20%">Email</th>
+                <th width="25%">Skills</th>
+                <th width="10%">Experience</th>
+                <th width="15%" class="text-center">LinkedIn</th>
+                <th width="15%">Recommendations</th>
+                <th width="10%">Enquire</th>
+            </tr>
+            </thead>
+            <tbody id="display_search_results">
+
+            <!--Data will be loading from the Ajax response-->
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div align="center">
+    <div class="table-responsive" id="lists" style="width: 100%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;display: none" align="center">
+        <table class="table" style="margin-bottom:0px;">
+            <thead><tr>
+                <td width="80%"><h3 style="margin: 2px 0 1px;align:left" >Freelancer</h3>
+
+                    <!--<td width="20%" align="right"><button class="btn btn-fill btn-info" data-toggle="modal" href="#adddeveloper" style="width: 130px">Add Developer </button></td>-->
+            </tr></thead>
+        </table>
+
+        <table class="table" style="margin-bottom:0px;" id="developer_table_lists" >
+            <thead>
+            <tr >
+                <th width="5%"></th>
+                <th width="20%">Name</th>
+                <th width="20%">Email</th>
+                <th width="15%">Skills</th>
+                <th width="10%">Experience</th>
+                <th width="35%">LinkedIn</th>
+                <th width="10%">Recommendations</th>
+                <th width="10%">Enquire</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <div class="table-responsive">
+            <table class="table table-hover" style="margin-bottom:0px;">
+
+                <tr bgcolor="#f5f5f5" >
+
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div align="center">
+    <div class="table-responsive" id="refer" style="width: 100%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;display: none" align="center">
+        <table class="table" style="margin-bottom:0px;">
+            <thead><tr>
+                <td width="80%"><h3 style="margin: 2px 0 1px;align:left" >Freelancer</h3>
+
+                    <!--<td width="20%" align="right"><button class="btn btn-fill btn-info" data-toggle="modal" href="#adddeveloper" style="width: 130px">Add Developer </button></td>-->
+            </tr></thead>
+        </table>
+
+        <table class="table" style="margin-bottom:0px;" id="developer_table_ref_share" >
+            <thead>
+            <tr >
+                <th width="15%">Name</th>
+                <th width="19%">Email</th>
+                <th width="14%" class="text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <div class="table-responsive">
+            <table class="table table-hover" style="margin-bottom:0px;">
+
+                <tr bgcolor="#f5f5f5" >
+
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div align="center">
+    <div class="table-responsive" id="mynetwork" style="width: 100%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;display: none" align="center">
+        <table class="table" style="margin-bottom:0px;height: auto">
+            <thead>
+            <section class="content" style="height:400px; margin-bottom: 25px; overflow-y: auto;overflow-x: hidden;">
+                <div class="container" style="width:98%;height: 70%">
+                    <div class="fcllex_cafe" style="margin-bottom:-7%">
+                        <ul class="fcc_content" id="display_activity_results">
+
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div class="table-responsive" id="ask_friend" style="width: 100%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;display: none" align="center">
+    <div style="height:auto;width:90%">
+        <div class="row">
+            <div class="text-left" style="margin-top: 2%;margin-left:40px">
+                <textarea type="text" class="form-control"  style="width: 700px;height: 100px" placeholder="Ask in your network" name="ask_in_network" id="ask_in_network"></textarea>
+            </div>
+        </div>
+        <div style="margin-top: 1%; margin-left:0%; max-width: 400px;" align="right" >
+            <button class="btn btn-sm btn-fill btn-info"  style="margin-top: -1%;width: 100px;font-size: 15px" onclick="askInYourNetwork(); return false;">Post</button>
+        </div>
+    </div><br>
+        <!--<div id="ask_in_network_status"></div><br>-->
+        <div style="max-height:500px; overflow-x: hidden">
+            <div class="example">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="timeline pull-left" id="askpost_table_ref" style="width:70%;margin-bottom: 10px">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+</div>
+
+<div align="center">
+    <div class="table-responsive" id="friends" style="width: 100%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;display: none" align="center">
+        <table class="table" style="margin-bottom:0px;height: auto">
+            <thead>
+            <section class="content" style="height:400px; margin-bottom: 25px; overflow-y: auto">
+                <div class="container" style="width:98%;max-height: 90%">
+                    <div class="fcllex_cafe" style="margin-bottom:-7%">
+                        <ul class="fcc_content" id="display_sk_results">
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="container" style="width:98%;height: 70%">
+                    <div class="fcllex_cafe" style="margin-bottom:-7%">
+                        <ul class="fcc_content" id="display_friend_results">
+
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            </thead>
+        </table>
+    </div>
+</div>
+<br><br>
+
+</div>
+</div>
+
+<!--
+<div class="container mainBody responsive" style="width: 75%;margin-top:0px;display: none;" id="show_hide_tasks">
+    <div align="center">
+        <div class="table-responsive" style="width: 99%;box-shadow: 1px 0.5px 4px  0.1px rgba(128,128,128, 1);border-radius: 5px;" align="center">
+            <table class="table" style="margin-bottom:0px;">
+                <thead><tr>
+                    <td width="80%"><h3 style="margin: 2px 0 1px;align:left" >Project</h3>
+
+                    <td width="20%" align="right"><button class="btn btn-fill" id="btn_addtask" data-toggle="modal" style="width: 120px; cursor: auto">Add project </button></td>
+                </tr></thead>
+            </table>
+
+            <table class="table" id="task_table_ref" style="margin-bottom:0px;">
+                <thead>
+                <tr >
+                    <th width="20%">Project Title</th>
+                    <th width="50%" class="text-left">Project Description</th>
+                    <th width="15%" class="text-center">Actions</th>
+                    <th width="15%" class="text-center">Approve</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+            <div class="table-responsive">
+                <table class="table table-hover" style="margin-bottom:0px;">
+
+                    <tr bgcolor="#f5f5f5" >
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
+<div class="modal modal-small fade" id="changerole" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 550px">
+            <div class="modal-header" style="background-color:#2ca8ff;border-radius: 5px 5px 0px 0px" >
+                <button type="button" class="close" data-dismiss="modal" style="color: white" aria-hidden="true">&times;</button>
+                <h3 class="modal-title text-center" style="margin-bottom: 0px;height:15px;color: white" >Change Role</h3></br>
+            </div>
+            <div class="modal-body">
+                <div id="changerole_form">
+                    <center>Please wait...</center>
+                </div>
+                <br>
+                <div id="change_role_status" align="center"></div>
+            </div>
+
+            <div class='modal-footer'>
+                <center><button id="submitChangeRole" class='btn btn-primary btn-fill btn-info'  type='submit'>Submit</button>&nbsp;&nbsp;
+                    <button class='btn btn-fill btn-default' data-toggle='button' data-dismiss='modal'>Close</button></center>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="addskills_mdl" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 550px">
+            <div class="modal-header" style="background-color:#2ca8ff;border-radius: 5px 5px 0px 0px" >
+                <button type="button" class="close" data-dismiss="modal" style="color: white" aria-hidden="true">&times;</button>
+                <h3 class="modal-title text-center" style="margin-bottom: 0px;height:15px;color: white" >Add Skills</h3></br>
+            </div>
+            <div class="modal-body">
+                <div id="add_skills_form">
+                    Please wait...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="addproject" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 550px">
+            <div class="modal-header" style="background-color:#2ca8ff;border-radius: 5px 5px 0px 0px" >
+                <button type="button" class="close" data-dismiss="modal" style="color: white" aria-hidden="true">&times;</button>
+                <h3 class="modal-title text-center" style="margin-bottom: 0px;height:15px;color: white" >Add Project</h3></br>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5" style="margin-left:5%">
+                        <h5 for="name">Title: </h5></div>
+                    <div class="col-md-5" style="margin-left:-22%">
+                        <input type="text" class="form-control" id="project_title" style="width: 300px"type="text" name="project_title" >
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-5" style="margin-left:5%">
+                        <h5  for="description">Description: </h5></div>
+                    <div class="col-md-5" style="margin-left:-22%">
+                        <textarea name="project_description"  class="form-control" row="8" id="project_description" style="width: 350px" ></textarea>
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-5" style="margin-left:5%">
+                        <h5  for="description">Freelancer: </h5></div>
+                    <div class="col-md-5" style="margin-left:-22%" id="add_fl_list_to_client_project_form">
+
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div id="addproject_status" align="center"></div>
+                </div>
+
+                <div class="modal-footer">
+                    <center>
+                        <button id="submitAddProject"  class="btn btn-primary btn-fill btn-info"  type="submit">Add project</button>&nbsp;&nbsp;
+                        <button class="btn btn-fill btn-default" data-toggle="button" data-dismiss="modal">Cancel</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="addclient_mdl" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 550px">
+            <div class="modal-header" style="background-color:#2ca8ff;border-radius: 5px 5px 0px 0px" >
+                <button type="button" class="close" data-dismiss="modal" style="color: white" aria-hidden="true">&times;</button>
+                <h3 class="modal-title text-center" style="margin-bottom: 0px;height:15px;color: white" >Add Client</h3></br>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-2" style="margin-left:10%">
+                        <h5 >Name</h5></div>
+                    <div class="col-md-5" style="margin-left:-3%">
+                        <input type="text" name="client_name" placeholder="E.g. Adams" class="form-control" id="client_name" style="width: 350px" >
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-2" style="margin-left:10%">
+                        <h5 >Email</h5></div>
+                    <div class="col-md-5" style="margin-left:-3%">
+                        <input type="text" name="client_email" placeholder="E.g. adamsxxx@xxx.com" class="form-control" id="client_email" style="width: 350px" >
+                    </div>
+                </div>
+
+                <br>
+                <div id="add_client_status" align="center" class="alert alert-warning" style="display: none"></div>
+                <div class="modal-footer">
+                    <center>
+                        <button id="submitAddClient" class="btn btn-primary btn-fill btn-info" type="submit">Add client</button>&nbsp;&nbsp;
+                        <button class="btn btn-fill btn-default" data-toggle="button" data-dismiss="modal">Cancel</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="addfreelancer_mdl" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 550px">
+            <div class="modal-header" style="background-color:#2ca8ff;border-radius: 5px 5px 0px 0px">
+                <button type="button" class="close" data-dismiss="modal" style="color: white" aria-hidden="true">&times;</button>
+                <h3 class="modal-title text-center" style="margin-bottom: 0px;height:15px;color: white" >Add Freelancer</h3></br>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-2" style="margin-left:10%"> <h5 >Name</h5></div>
+                    <div class="col-md-5" style="margin-left:-3%">
+                        <input type="text" name="freelancer_name" placeholder="E.g. Adams" class="form-control" id="freelancer_name" style="width: 300px"></div></div><br>
+                <div class="row">
+                    <div class="col-md-2" style="margin-left:10%"> <h5 >Email</h5></div>
+                    <div class="col-md-5" style="margin-left:-3%">
+                        <input type="text" name="freelancer_mail" placeholder="E.g. adamsxxx@xxx.com" class="form-control" id="freelancer_mail" style="width: 300px" >
+                    </div>
+                </div><br>
+                <div id="add_fl_status" align="center" class="alert alert-warning" style="display: none"></div>
+                <div class="modal-footer">
+                    <center>
+                        <button id="submitAddFL" class="btn btn-fill btn-info" type="submit">Add freelancer</button>&nbsp;&nbsp;
+                        <button class="btn btn-fill btn-default" data-toggle="button" data-dismiss="modal">Cancel</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="editfl_mdl" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div id="add_fl_form">
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="editcl" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div id="add_cl_form">
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="adddevelopertask" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 550px">
+            <div class="modal-header" style="background-color:#2ca8ff;border-radius: 5px 5px 0px 0px" >
+                <button type="button" class="close" data-dismiss="modal" style="color: white" aria-hidden="true">&times;</button>
+                <h3 class="modal-title text-center" style="margin-bottom: 0px;height:15px;color: white" >Add Project</h3></br>
+            </div>
+            <div class="modal-body">
+                <form id="form2" action="adddevelopertaskprocess.jsp" method="get">
+                    <div class="row">
+                        <div class="col-md-5" style="margin-left:5%">
+                            <h5 >Project title :</h5></div>
+                        <div class="col-md-5" style="margin-left:-22%">
+                            <input type="text" name="devtasktitle" class="form-control" id="devtasktitle" style="width: 300px"></div></div><br>
+                    <div class="row">
+                        <div class="col-md-4" style="margin-left:5%">
+                            <h5 >Project<br> description :</h5></div>
+                        <div class="col-md-5" style="margin-left:-14%">
+                            <textarea type="text" name="devtaskdescription" class="form-control" row="8" id="devtaskdescription" style="width: 350px" ></textarea></div></div><br><!-- maxlength="8"  -->
+
+                    <div class="modal-footer">
+                        <center>  <button class="btn btn-primary btn-fill btn-info" type="submit">Add task</button>&nbsp;&nbsp;
+                            <button class="btn btn-fill btn-default" data-toggle="button" data-dismiss="modal">Cancel</button></center>
+                    </div>
+                    <input type="hidden" name="developer_id" class="form-control" id="developer_id" value="0">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="deleteCL_mdl" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class='modal-dialog'>
+        <div class='modal-content' style='max-width: 550px'>
+            <div class='modal-header' style='background-color:red;border-radius: 5px 5px 0px 0px'>
+                <button type='button' class='close' data-dismiss='modal' style='color: white' aria-hidden='true'>&times;</button>
+                <h3 class='modal-title text-center' style='margin-bottom: 0px;height:15px;color: white' >Delete Client</h3></br>
+            </div>
+            <div class='modal-body'>
+                <p align='center' style='margin-top:5%'>Are you sure you wish to delete this client?</p>
+                <div id='delete_cl_status' align='center'></div>
+                <div class='modal-footer' style='margin-top:-2%;display:inline'>
+                    <center>
+                        <button class='btn btn-fill btn-danger' data-toggle='button' type='submit' onclick='deleteClient();'>Yes</button>&nbsp;&nbsp;
+                        <button class='btn btn-fill btn-default' data-toggle='button' data-dismiss='modal'>Cancel</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="deleteFL_mdl" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class='modal-dialog'>
+        <div class='modal-content' style='max-width: 550px'>
+            <div class='modal-header' style='background-color:red;border-radius: 5px 5px 0px 0px'>
+                <button type='button' class='close' data-dismiss='modal' style='color: white' aria-hidden='true'>&times;</button>
+                <h3 class='modal-title text-center' style='margin-bottom: 0px;height:15px;color: white' >Delete Freelancer</h3></br>
+            </div>
+            <div class='modal-body'>
+                <p align='center' style='margin-top:5%'>Are you sure you wish to delete this freelancer?</p>
+                <div id='delete_fl_status' align='center' style='display:none'></div>
+                <div class='modal-footer' style='margin-top:-2%;display:inline'>
+                    <center>
+                        <button class='btn btn-fill btn-danger'   data-toggle='button' type='submit' onclick='deleteFL();'>Yes</button>&nbsp;&nbsp;
+                        <button class='btn btn-fill btn-default' data-toggle='button' data-dismiss='modal'>Cancel</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-small fade" id="deletepost" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div id="delete_post_form">
+    </div>
+</div>
+
+
+<div class="modal modal-small fade" id="deleteASKPost_mdl" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class='modal-dialog'>
+        <div class='modal-content' style='max-width: 550px'>
+            <div class='modal-header' style='background-color:red;border-radius: 5px 5px 0px 0px'>
+                <button type='button' class='close' data-dismiss='modal' style='color: white' aria-hidden='true'>&times;</button>
+                <h3 class='modal-title text-center' style='margin-bottom: 0px;height:15px;color: white' >Delete Post</h3></br>
+            </div>
+            <div class='modal-body'>
+                <p align='center' style='margin-top:5%'>Are you sure you wish to delete this post?</p>
+                <div id='delete_askpost_status' align='center' style='display:none'></div>
+                <div class='modal-footer' style='margin-top:-2%;display:inline'>
+                    <center>
+                        <button class='btn btn-fill btn-danger'   data-toggle='button' type='submit' onclick='deleteASKPost();'>Yes</button>&nbsp;&nbsp;
+                        <button class='btn btn-fill btn-default' data-toggle='button' data-dismiss='modal'>Cancel</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

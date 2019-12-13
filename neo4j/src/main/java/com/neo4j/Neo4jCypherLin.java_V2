@@ -1,0 +1,204 @@
+package com.neo4j;
+
+import org.neo4j.driver.v1.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class Neo4jCypherLin {
+//    static String dir_path = "F:\\satya_code\\neo4j\\profiles_extracted_and_parsed";
+    static String dir_path = "F:\\satya_code\\neo4j\\profiles_extracted_and_parsed\\lin_extracted_304";
+
+    public static void main(String args[]) {
+
+//        A driver is used to connect to a Neo4j server. It provides sessions that are used to execute statements and retrieve results.
+//        If no port is provided in the URL, the default port 7687 is used
+
+        Driver driver = GraphDatabase.driver("bolt://localhost", AuthTokens.basic("neo4j", "saneo4j"));
+        Session session = driver.session();
+
+//        Cleanup all existing nodes and their relationship entries
+//        cleanupDB(session);
+
+//        read from the input files and add connection
+//        readFilesFromInputDir(session);
+
+//        Specific relationship in MATCH
+        String search_for1 = "San Francisco";
+        String search_in1 = "Location";
+        searchByRelationship1(session, search_for1, search_in1);
+
+//        Generic relationship
+        String search_for2 = "CEO";
+        searchByAll(session, search_for2);
+
+//        Specific relationship in WHERE
+        String search_for3 = "Solaris";
+        String search_in3 = "Experience";
+        searchByRelationship2(session, search_for3, search_in3);
+
+        session.close();
+        driver.close();
+    }
+
+    private static void searchByRelationship1(Session session, String search_for1, String search_in1) {
+        StatementResult result = session.run("MATCH (parent)-[:"+search_in1+"]->(child) " +
+                "WHERE child.value =~ '.*(?i)"+search_for1+".*' " +
+                "RETURN ID(parent) AS parent_id, parent.value as name, child.value as value, ID(child) AS child_id");
+
+        while (result.hasNext() ) {
+            Record record = result.next();
+            int parent_id = record.get( "parent_id" ).asInt();
+            String name = record.get( "name" ).asString();
+            String value = record.get( "value" ).asString();
+            int child_id = record.get( "child_id" ).asInt();
+
+            System.out.println("----\nparent_id1: "+ parent_id+"\nchild_id: "+child_id+"\nname: "+name+"\nvalue: "+value+"\nrelationship: "+search_in1);
+        }
+    }
+
+    private static void searchByAll(Session session, String search_for2) {
+        StatementResult result = session.run("MATCH (parent)-[r]->(child) " +
+                "WHERE child.value =~ '.*(?i)"+search_for2+".*' " +
+                "RETURN ID(parent) AS parent_id, parent.value as name, child.value as value, ID(child) AS child_id, TYPE(r) as relationship");
+
+        while (result.hasNext() ) {
+            Record record = result.next();
+            int parent_id = record.get( "parent_id" ).asInt();
+            String name = record.get( "name" ).asString();
+            String value = record.get( "value" ).asString();
+            int child_id = record.get( "child_id" ).asInt();
+            String relationship = record.get( "relationship" ).asString();
+
+            System.out.println("----\nparent_id2: "+ parent_id+"\nchild_id: "+child_id+"\nname: "+name+"\nvalue: "+value+"\nrelationship: "+relationship);
+        }
+    }
+
+    private static void searchByRelationship2(Session session, String search_for1, String search_in1) {
+        StatementResult result = session.run("MATCH (parent)-[r]->(child) " +
+                "WHERE child.value =~ '.*(?i)"+search_for1+".*' AND TYPE(r) =~ '.*(?i)"+search_in1+"*.' " +
+                "RETURN ID(parent) AS parent_id, parent.value as name, child.value as value, ID(child) AS child_id, TYPE(r) as relationship");
+
+        while (result.hasNext() ) {
+            Record record = result.next();
+            int parent_id = record.get( "parent_id" ).asInt();
+            String name = record.get( "name" ).asString();
+            String value = record.get( "value" ).asString();
+            int child_id = record.get( "child_id" ).asInt();
+            String relationship = record.get( "relationship" ).asString();
+
+            System.out.println("----\nparent_id3: "+ parent_id+"\nchild_id: "+child_id+"\nname: "+name+"\nvalue: "+value+"\nrelationship: "+relationship);
+        }
+    }
+
+    private static void cleanupDB(Session session) {
+        StatementResult result = session.run("MATCH (n) " +
+                "OPTIONAL MATCH (n)-[r]-() " +
+                "DELETE n,r");
+    }
+
+    private static void readFilesFromInputDir(Session session) {
+        File folder = null;
+
+        try {
+            folder = new File(dir_path);
+
+            for (final File fileEntry : folder.listFiles()) {
+                if (fileEntry.isDirectory()) {
+                    //skip sub folder
+                } else {
+                    String file_path = fileEntry.getAbsolutePath();
+
+                    if(!file_path.endsWith(".txt")) {
+                        continue;
+                    }
+
+                    System.out.println(new java.util.Date()+"\t Read from: "+file_path);
+
+                    insertDataIntoNeo4J(session, file_path);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void insertDataIntoNeo4J(Session session, String file_input) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file_input))) {
+            String line;
+            String text = "";
+            String key = "";
+            int name_entity_id = -1;
+
+            while ((line = br.readLine()) != null) {
+                if(!line.startsWith("---")) {
+                    if(line.contains(" : ")) {
+                        key = line.split(":")[0].trim();
+                    } else {
+                        if(!line.contains("N/A")) {
+                            text += line.trim()+"===";      //adding === to represent new line
+                        }
+                    }
+                } else {
+                    if(text.length() > 0) {
+                        if(key.equalsIgnoreCase("name")) {
+                            name_entity_id = addEntity_ForName(session, "PERSON", text);
+                        } else {
+                            addEntity_ForOthers(session, key, text, name_entity_id);
+                        }
+                    }
+                    text = "";                          //reset para to empty
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    static int addEntity_ForName(Session session, String key, String para) {
+        int name_entity_id = -1;
+        key = key.replaceAll(" ","");
+
+        session.run("CREATE (" + key + ":" + key + " {value: {value}})", Values.parameters("value", para));
+
+        StatementResult result = session.run( "MATCH (a:"+key+" {value: {value}}) RETURN ID(a) AS id, a.value AS value",
+                Values.parameters( "value", para) );
+
+        while (result.hasNext() ) {
+            Record record = result.next();
+            name_entity_id = record.get( "id" ).asInt();
+//            System.out.println("Id: "+ name_entity_id+", key: "+key+", value: "+ record.get( "value" ).asString());
+        }
+
+        System.out.println(new java.util.Date()+"\t Successfully created the Entity for: "+key+", id: "+name_entity_id);
+
+        return name_entity_id;
+    }
+
+    static void addEntity_ForOthers(Session session, String key, String para, int name_entity_id) {
+        int other_entity_id = -1;
+        key = key.replaceAll(" ","");
+
+        session.run("CREATE (" + key + ":" + key + " {value: {value}})", Values.parameters("value", para));
+
+        StatementResult result = session.run( "MATCH (a:"+key+" {value: {value}}) RETURN ID(a) AS id, a.value AS value",
+                Values.parameters( "value", para) );
+
+        while (result.hasNext() ) {
+            Record record = result.next();
+            other_entity_id = record.get( "id" ).asInt();
+//            System.out.println("Id: "+ other_entity_id+", key: "+key+", value: "+ record.get( "value" ).asString());
+        }
+
+        System.out.println(new java.util.Date()+"\t Successfully created the Entity for: "+key+", parent_id: "+name_entity_id+", id: "+other_entity_id);
+
+        result = session.run( "MATCH (a), (b) " +
+                "WHERE ID(a) = "+name_entity_id+" AND ID(b) = "+other_entity_id+" " +
+                "CREATE (a)-[:"+key+"]->(b)" );
+    }
+}
