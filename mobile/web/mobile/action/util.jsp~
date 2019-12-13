@@ -1,4 +1,4 @@
-<%@ page import="java.io.*" %>
+<%@ page import="java.io.*" %> 
 <%@ page import="java.net.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
@@ -20,19 +20,18 @@
 <%@ page import="com.twilio.sdk.TwilioRestException" %>
 <%@ page import="com.sun.org.apache.xml.internal.security.utils.Base64" %>
 <%@ include file="db.jsp"%>
-<%@ include file="log.jsp"%>
-<%@ include file="dec_enc.jsp"%>
+<%@ include file="dec_enc.jsp"%> 
 
 <%!
     SimpleDateFormat DAY_MONTH_FORMATTER = new SimpleDateFormat("EEE, MMM d");
     static ArrayList<String[]> contactList_Util;
     static int SET_CONTACTS_INITIAL_LOADING_LIMIT = 10;
-    static int SK_USER_ID = 227;
-    static String CONTACT_IMAGE_PATH = "D:\\netref\\web\\mobile\\user_contact_images";
-    static String PROFILE_IMAGE_PATH = "D:\\netref\\web\\mobile\\profile_images";
-    static String server_type = "test";
+    static int SK_USER_ID = 612;
+    static String CONTACT_IMAGE_PATH = "D:\\production\\netref\\web\\mobile\\user_contact_images";
+    static String PROFILE_IMAGE_PATH = "D:\\production\\netref\\web\\mobile\\profile_images";
+    static String server_type = "prod"; 
     static String test_mobile_number = "+919901424531";
-    static String test_user_id = "163";
+    static String test_user_id = "10";
 
     static HashMap iOSContactList;
 
@@ -112,11 +111,8 @@
     final String sql_getAskResponsesList = "select u.email, u.name, u.fb_photo_path, ar.activity_id, ar.comments, ar.recommended_on from activities_responses ar, users u where ar.recommended_by = u.user_id and ar.activity_id = ? order by ar.recommended_on DESC";
 
     final String sql_checkAskResponse = "select * from activities_responses where activity_id = ? and recommended_by = ?";
-    final String sql_checkNotifications = "select * from notifications where from_user_id = ? and to_user_id = ?";
     final String sql_postAskResponse = "insert into activities_responses (activity_id, fl_userid, recommended_by, comments) values (?, ?, ?, ?)";
-    final String sql_postNotifications = "insert into notifications (from_user_id, to_user_id) values (?, ?)";
     final String sql_updateAskResponse = "update activities_responses set comments = ? where activity_id = ? and fl_userid = ? and recommended_by = ?";
-    final String sql_updateNotifications = "update notifications set to_user_id = ?  and to_user_id = ? where from_user_id = ? and to_user_id = ?";
 
     final String sql_getFLSkills = "select * from skills where user_id = ?";
     final String sql_checkFLSkills = "select * from skills where user_id = ?";
@@ -277,8 +273,6 @@
             ps.setString(1, user_id);
             ps.setString(2, user_id);
 
-            System.out.println(new Date()+"\t loadActivities -> ps: "+ps);
-
             rs = ps.executeQuery();
 
             Vector fl_list = getFLVectorList(con, user_id);
@@ -397,8 +391,6 @@
                     hm.put("friend_photo_path", friend_photo_path);
 
                     friend_list.add(hm);
-
-//                    msg += loadFBFriendsString(con, friend_userid, friend_email, friend_name, friend_photo_path);
                 } catch(Exception e) {
                     System.out.println(new Date()+"\t "+e.getMessage());
                     e.printStackTrace();
@@ -569,61 +561,7 @@
                 }
             }
 
-        return profession_list;
-    } catch (Exception e) {
-        System.out.println(new Date()+"\t "+e.getMessage());
-        e.printStackTrace();
-        return null;
-    } finally {
-        if(con != null ) {
-            closeConnection(con);
-        }
-    }
-}
-    final String sql_load_notifications = "select * from users a, notifications b where b.from_user_id = a.user_id and b.to_user_id = ?";
-    public ArrayList notifications_AL(String to_user_id) {
-        String fl_name = "";
-        String fl_phone = "";
-        String fb_photo_path = "";
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String course_list = "";
-        String friendUserIds = "";
-        int cnt = 0;
-        ArrayList notification_list = new ArrayList();
-
-        try {
-            con = getConnection();
-            ps = getPs(con, sql_load_notifications);
-            ps.setString(1, to_user_id);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                fb_photo_path = rs.getString("fb_photo_path");
-                try {
-                    byte[] fl_name_enc = rs.getBytes("name");
-                    byte[] fl_name_ba = processDecrypt(fl_name_enc);
-                    fl_name = new String(fl_name_ba);
-
-                    byte[] fl_phone_enc = rs.getBytes("mobile");
-                    byte[] fl_phone_ba = processDecrypt(fl_phone_enc);
-                    fl_phone = new String(fl_phone_ba);
-                    System.out.println(fl_name);
-                    HashMap hm = new HashMap();
-                    hm.put("fl_phone", fl_phone);
-                    hm.put("fl_name", fl_name);
-                    hm.put("fb_photo_path", fb_photo_path);
-
-
-                    notification_list.add(hm);
-                } catch(Exception e) {
-                    System.out.println(new Date()+"\t "+e.getMessage());
-                    e.printStackTrace();
-                    continue;
-                }
-            }
-
-            return notification_list;
+            return profession_list;
         } catch (Exception e) {
             System.out.println(new Date()+"\t "+e.getMessage());
             e.printStackTrace();
@@ -1578,8 +1516,7 @@
             status = ps.executeUpdate();
         } catch(Exception se) {
 //            System.err.print(se.getMessage());
-//            System.err.print(new Date()+"\t "+se.getMessage());
-            logException(se);
+            System.err.print(new Date()+"\t "+se.getMessage());
         } finally {
             if(con != null ) {
                 closeConnection(con);
@@ -1806,53 +1743,8 @@
         }
     }
 
-    public String addNotifications(String professional_id, String from_user_id) {
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            con = getConnection();
-
-            ps = getPs(con, sql_checkNotifications);
-
-            ps.setString(1, from_user_id);
-            ps.setString(2, professional_id);
-
-            rs = ps.executeQuery();
-
-            if(rs.next()) {
-                return "success";
-            } else {
-                ps = getPs(con, sql_postNotifications);
-
-                ps.setString(1, from_user_id);
-                ps.setString(2, professional_id);
-
-                int cnt = ps.executeUpdate();
-
-                if(cnt > 0) {
-                    return "success";
-                }
-            }
-            return "failed";
-        } catch (Exception e) {
-            System.out.println(new Date() + "\t " + e.getMessage());
-            e.printStackTrace();
-            return "failed";
-        } finally {
-            if(con != null ) {
-                closeConnection(con);
-            }
-        }
-    }
-
-
-    //TODO, review. added by Srikanth
     String sql_get_owner_details1 = "select u.name as from_name_enc, u.mobile as to_mobile_enc from users u where u.user_id = ?";
     String sql_get_activity_details = "select ar.comments from users u, activities_responses ar, activities a where ar.activity_id = a.activity_id and u.user_id = a.posted_by and ar.activity_id = ?";
-
-//    String sql_post_response_sms_to_professional = "select (select name from users where user_id = ?) as from_name_enc, (select u.name from users u, activities a  where activity_id = ? and u.user_id = a.posted_by) as client_name_enc, u.mobile as to_mobile_enc from users u, activities_responses ar, activities a where ar.activity_id = a.activity_id and u.user_id = ar.fl_userid and ar.activity_id = ?";
 
     String sql_get_loggedin_user_details2 = "select u.name as loggedin_username_enc from users u where u.user_id = ?";
     String sql_get_mobile_details2 = "select u.mobile as to_mobile_enc from users u where u.user_id = ?";
@@ -1890,7 +1782,6 @@
 
             if(to_mobile != null && from_name != null && comments != null) {
                 System.out.println(new Date()+"\t sendResponseSmstoOwner1 -> activity_id: "+activity_id+", recommended_by: "+user_id+", comment: "+comments);
-//                System.out.println(new Date()+"\t sendResponseSmstoOwner2 -> from_name: "+from_name+", to_mobile: "+to_mobile+", comments: "+comments);
 //               sendResponse_SMS(from_name, to_mobile, comments);
             } else {
                 System.out.println(new Date()+"\t Could not sendResponseSmstoOwner -> activity_id: "+activity_id+", recommended_by: "+user_id+", comment: "+comments);
@@ -1940,7 +1831,6 @@
 
             if(to_mobile != null && to_mobile != null && activity_ownername != null) {
                 System.out.println(new Date()+"\t sendResponseSmstoProfessional1 -> activity_id: "+activity_id+", recommended_by: "+loggedin_user_id);
-                System.out.println(new Date()+"\t sendResponseSmstoProfessional2 -> loggedin_username: "+loggedin_username+", activity_ownername: "+activity_ownername+", to_mobile: "+to_mobile);
 //                sendResponse_SMS_to_Professional(loggedin_username, activity_ownername, to_mobile);
             } else {
                 System.out.println(new Date()+"\t Could not sendResponseSmstoProfessional -> activity_id: "+activity_id+", recommended_by: "+loggedin_user_id);
@@ -2480,7 +2370,7 @@
 
             ps_select = getPs(con, sql_checkPhoneContactFromUsers);
 
-//            System.out.println("***contacts_array.size(): "+contacts_array.size());
+            System.out.println("***contacts_array.size(): "+contacts_array.size());
 
             for(int i = 0; i < contacts_array.size(); i++) {
                 org.json.simple.JSONArray contacts = (org.json.simple.JSONArray)contacts_array.get(i);
@@ -2606,6 +2496,12 @@
 
                     //replace all the characters other than + and digits
                     mobile = mobile.replaceAll("[^\\d\\+]", "");
+
+                    if(name.equalsIgnoreCase("_uuid")) {                //ignoring the entry with _uuid, which is the entry for device id
+                        continue;
+                    }
+
+//                    System.out.println(new Date()+"\t name: "+name);
 
                     byte[] name_enc = processEncrypt(name);
                     byte[] mobile_enc = processEncrypt(mobile);
@@ -4386,7 +4282,27 @@
 %>
 
 <%!
- 
+    //        Twilio Trial account:
+
+/*
+        String From_PhoneNumber = "+12018904851";
+
+        String TEST_ACCOUNT_SID = "ACb65ac37d7900daa79fdfbef15ce9b941";
+        String TEST_AUTH_TOKEN = "2486d83b0296f79cb4181de164674c9d";
+
+        String LIVE_ACCOUNT_SID = "AC8c8f430c4a486bdf942bcf0433c3b814";
+        String LIVE_AUTH_TOKEN = "81a6689acba1c99e8c0c896a63653559";
+*/
+
+//        Twilio Official account:
+
+    String From_PhoneNumber = "+14243561234";
+
+    String TEST_ACCOUNT_SID = "ACacdc3b7c8b53f23b09feb680a9dcb90b";
+    String TEST_AUTH_TOKEN = "c19a67c115782376de8bb9d094205699";
+
+    String LIVE_ACCOUNT_SID = "AC33bd2893972c16ae9d71d0049fe88550";
+    String LIVE_AUTH_TOKEN = "4b328be6fb8dfa41de7afff3af6ff9a0";
 
     HashMap<String, String> test_numbers = new HashMap<String, String>();
 
@@ -4394,13 +4310,15 @@
 
         //adding phone numbers not to send SMS to them, for development and testing
 //        test_numbers.put("+919901424531", "Satya");
-        test_numbers.put("+918105575151", "Srikanth");
+//        test_numbers.put("+918105575151", "Srikanth");
         test_numbers.put("+919844408661", "Sridhar");
-        test_numbers.put("+918951092157", "Ajay");
+//        test_numbers.put("+918951092157", "Ajay");
         test_numbers.put("+919090909090", "Test1");
         test_numbers.put("+919090909091", "Test2");
         test_numbers.put("+919090909092", "Test3");
         test_numbers.put("+919012345678", "Test3");
+        test_numbers.put("+919112345678", "Test3");
+        test_numbers.put("+919212345678", "Test3");
 
         if(test_numbers.get(mobilenum) != null) {
             return "test_queued";
@@ -4546,45 +4464,7 @@
 
         return "failed";
     }
-
-    public String remindAppInvite_SMS(String from_name, String to_mobile) {
-        String msg = "Reminder: "+(from_name != null && from_name.length() > 0 ? from_name:"Someone") +" would like you to join on Netref. You can download it from: https://goo.gl/Njkmxu";
-
-        System.out.println(new Date()+"\t remindAppInvite_SMS: "+msg);
-
-        TwilioRestClient client = new TwilioRestClient(LIVE_ACCOUNT_SID, LIVE_AUTH_TOKEN);
-
-        Account account = client.getAccount();
-
-        MessageFactory messageFactory = account.getMessageFactory();
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("To", to_mobile));
-        params.add(new BasicNameValuePair("From", From_PhoneNumber));
-        params.add(new BasicNameValuePair("Body", msg));
-//        params.add(new BasicNameValuePair("MediaUrl", "https://goo.gl/Njkmxu"));
-        Message sms = null;
-
-        try {
-            sms = messageFactory.create(params);
-
-            //TODO, just for safe
-            Thread.sleep(1000);
-
-            if(sms != null) {
-                return sms.getStatus();
-            }
-        } catch (TwilioRestException e) {
-            System.out.println(new Date()+"\t "+e.getMessage());
-            e.printStackTrace();
-            return "failed";
-        } catch (InterruptedException e) {
-            System.out.println(new Date()+"\t "+e.getMessage());
-            e.printStackTrace();
-        }
-
-        return "failed";
-    }
-
+    
     public String reminder_SMS(String from_name, String to_mobile) {
         String msg = (from_name != null && from_name.length() > 0 ? from_name:"Someone") +" wants your feedback about Netref. You can download it from: https://goo.gl/Njkmxu";
 
@@ -4730,9 +4610,6 @@
                 if(verification_code.equalsIgnoreCase(db_code)) {
                     userId = rs.getInt("user_id");
                     return userId;
-                } else if(verification_code.equalsIgnoreCase("1234")) {         //TODO, Temporary logic till we finalize the SMS gateway
-                    userId = rs.getInt("user_id");
-                    return userId;
                 }
             }
         } catch (Exception e) {
@@ -4768,10 +4645,10 @@
         int user_id = -1;
 
         //-- If mobileno already exists
-        //      -- if imei exists - do nothing
+        //      -- if deviceid exists - do nothing
         //      -- else - update imei
         //-- else
-        //      -- if imei exists - update mobile no
+        //      -- if deviceid exists - update mobile no
         //      -- else - insert new entry
 
         try {
@@ -4793,7 +4670,7 @@
                 ps.setString(2, deviceIMEI);
                 rs = ps.executeQuery();
 
-                if (rs.next()) {                                //if imei exists - do nothing
+                if (rs.next()) {                                //if deviceid exists - do nothing
                     //Do Nothing
                 } else {
                     ps = getPs(con, sql_updateDeviceIMEINumber);
@@ -5025,7 +4902,7 @@
             "            ON u.user_id = s.user_id " +
             "            where u.user_id = ?";
 
-    public String getProfessionalDetails(String professional_id, String from_user_id) {
+    public String getProfessionalDetails(String professional_id) {
         String  pros_name = "";
         String  pros_image_file_name = "";
         String  pros_profession = "";
@@ -5087,7 +4964,7 @@
                             " <h4 class='' style='margin-bottom:2px;font-family:monospace;overflow:auto; font-size-adjust: 0.58;line-height:1.1;font-size:12px;margin-left:8px'> " +
 //                            (pros_mobile != null && pros_mobile.trim().length() > 0 ? " Contact: "+pros_mobile +"<br>" : "") +
                             (pros_mobile != null && pros_mobile.trim().length() > 0 ? "" +
-                                    "<button id='contact_professional' onclick=\"contactProfessional("+professional_id+" , "+from_user_id+");\" type='button' class='btn btn-info btn-sm' style='display:inline;border-radius:5px; padding: .1rem .3rem; box-shadow: 0.09em 0.09em 0.09em 0.05em #888888; margin-bottom: 5px;'>Contact</button><br>" : "") +
+                                    "<button id='contact_professional' onclick=\"contactProfessional(event);\" type='button' class='btn btn-info btn-sm' style='display:inline;border-radius:5px; padding: .1rem .3rem; box-shadow: 0.09em 0.09em 0.09em 0.05em #888888; margin-bottom: 5px;'>Contact</button><br>" : "") +
                             (pros_linkedin != null && pros_linkedin.trim().length() > 0 ? " Linkedin: "+pros_linkedin +"<br>" : "") +
                             (pros_profession != null && pros_profession.trim().length() > 0 ? " Profession: "+pros_profession +"<br>" : "") +
                             (pros_experience != null && pros_experience.trim().length() > 0 ? " Experience: "+pros_experience +"<br>" : "") +

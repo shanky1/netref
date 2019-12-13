@@ -26,18 +26,18 @@
 <%!
     SimpleDateFormat DAY_MONTH_FORMATTER = new SimpleDateFormat("EEE, MMM d");
     static ArrayList<String[]> contactList_Util;
-    static int SET_CONTACTS_INITIAL_LOADING_LIMIT = 10;
+    static int SET_CONTACTS_INITIAL_LOADING_LIMIT = 2;
     static int SK_USER_ID = 227;
-    static String CONTACT_IMAGE_PATH = "D:\\netref\\web\\mobile\\user_contact_images";
-    static String PROFILE_IMAGE_PATH = "D:\\netref\\web\\mobile\\profile_images";
-    static String server_type = "test";
+    static String CONTACT_IMAGE_PATH = "D:\\coref\\web\\mobile\\user_contact_images";
+    static String PROFILE_IMAGE_PATH = "D:\\coref\\web\\mobile\\profile_images";
+    static String server_type = "prod";
     static String test_mobile_number = "+919901424531";
     static String test_user_id = "163";
 
     static HashMap iOSContactList;
 
     final String sql_getAllFLofFriends = "SELECT rs.to_user_id, rs.to_contact_name, profession, expertise, experience, linkedin " +
-            "    FROM relationship rs LEFT JOIN skills s " +
+            "    FROM relationship rs LEFT JOIN employee_details s " +
             "    ON rs.to_user_id = s.user_id " +
             "    where rs.from_user_id = ? and rs.advanced_relation_type = 3"; //filtered @devsqure.com id not to display real id's
 
@@ -113,15 +113,15 @@
 
     final String sql_checkAskResponse = "select * from activities_responses where activity_id = ? and recommended_by = ?";
     final String sql_checkNotifications = "select * from notifications where from_user_id = ? and to_user_id = ?";
-    final String sql_postAskResponse = "insert into activities_responses (activity_id, fl_userid, recommended_by, comments) values (?, ?, ?, ?)";
+    final String sql_postAskResponse = "insert into activities_responses (activity_id, recommended_by, comments) values (?, ?, ?)";
     final String sql_postNotifications = "insert into notifications (from_user_id, to_user_id) values (?, ?)";
-    final String sql_updateAskResponse = "update activities_responses set comments = ? where activity_id = ? and fl_userid = ? and recommended_by = ?";
+    final String sql_updateAskResponse = "update activities_responses set comments = ? where activity_id = ?  and recommended_by = ?";
     final String sql_updateNotifications = "update notifications set to_user_id = ?  and to_user_id = ? where from_user_id = ? and to_user_id = ?";
 
-    final String sql_getFLSkills = "select * from skills where user_id = ?";
-    final String sql_checkFLSkills = "select * from skills where user_id = ?";
-    final String sql_insertFLSkills = "insert into skills (profession, expertise, experience, linkedin, about, location, user_id) values (?, ?, ?, ?, ?, ?, ?)";
-    final String sql_updateFLSkills = "update skills set profession = ?, expertise = ?,experience = ?, linkedin = ?, about = ?, location=? where user_id = ?";
+    final String sql_getFLSkills = "select * from employee_details where user_id = ?";
+    final String sql_checkFLSkills = "select * from employee_details where user_id = ?";
+    final String sql_insertFLSkills = "insert into employee_details (expertise,linkedin, facebook, hr_consent, user_id) values (?, ?, ?, ?, ?)";
+    final String sql_updateFLSkills = "update employee_details set  expertise = ?, linkedin = ?, facebook = ?, hr_consent = ? where user_id = ?";
     final String sql_postCommentsInNetwork = "insert into activities (posted_by, fl_userid, category, comments) values (?, ?, ?, ?)";
 
     final String sql_checkBroadcastInNetwork = "select * from activities_broadcast where broadcasted_by = ? and activity_id = ? and owner_id = ?";
@@ -190,15 +190,15 @@
             String sql_searchFLs = "select t2.profession, t2.expertise, t2.experience, t2.linkedin, t2.from_user_id, t2.to_user_id, t2.advanced_relation_type, t2.email, t2.user_id, t2.fb_photo_path, t2.fb_user_id, t2.name from " +
                     "( "+
                     "select s.profession, s.expertise, s.experience, s.linkedin, r.from_user_id, r.to_user_id, r.advanced_relation_type, u.email, u.user_id, u.fb_photo_path, u.fb_user_id, r.to_contact_name as name "+
-                    "from users u, relationship r left join skills s " +
+                    "from users u, relationship r left join employee_details s " +
                     "on s.user_id = r.to_user_id "+(search_str.trim().length() > 0 ? "and ("+search_str+")" : " ")+" where r.advanced_relation_type = 3 and u.user_id = r.to_user_id and r.from_user_id = ? "+(search_str.trim().length() > 0 ? "and ("+search_str+")" : " ")+
                     "UNION "+
                     "select s.profession, s.expertise, s.experience, s.linkedin, r.from_user_id, r.to_user_id, r.advanced_relation_type, u.email, u.user_id, u.fb_photo_path, u.fb_user_id, r.to_contact_name as name "+
-                    "from users u, relationship r left join skills s " +
+                    "from users u, relationship r left join employee_details s " +
                     "on s.user_id = r.to_user_id "+(search_str.trim().length() > 0 ? "and ("+search_str+")" : " ")+" where r.from_user_id in ("+friendUserIds+") and u.user_id = r.to_user_id and r.advanced_relation_type = 3 "+(search_str.trim().length() > 0 ? "and ("+search_str+")" : " ")+
                     "UNION "+
                     "select s.profession, s.expertise, s.experience, s.linkedin, r.from_user_id, r.to_user_id, r.advanced_relation_type, u.email, u.user_id, u.fb_photo_path, u.fb_user_id, r.to_contact_name as name "+
-                    "from skills s, relationship r, users u  " +
+                    "from employee_details s, relationship r, users u  " +
                     "where advanced_relation_type = 3 and u.user_id = r.to_user_id and r.from_user_id = "+SK_USER_ID+" and s.user_id = r.to_user_id "+(search_str.trim().length() > 0 ? "and ("+search_str+")" : " ")+
                     ") as t2 group by t2.to_user_id ";
 
@@ -249,7 +249,9 @@
         String posted_on = "";
         String posted_by = "";
         String owner_id = "";
-
+        String post_likes = "";
+        String post_dislikes = "";
+        String post_comments = "";
         String msg = "";
 
         PreparedStatement ps = null;
@@ -257,13 +259,19 @@
         Connection con = null;
 
         String sql_loadActivities = "" +
-                "select u.user_id, u.email, u.name, u.fb_photo_path, a.activity_id, a.fl_userid, a.category, a.comments, a.posted_on, a.posted_by, a.posted_by as owner_id " +
+                "select u.user_id, u.email, u.name, u.fb_photo_path, a.activity_id, a.fl_userid, a.category, a.comments, a.posted_on, a.posted_by, a.posted_by as owner_id ," +
+                "(SELECT  COUNT(p.like_status) FROM post_likes p  WHERE  a.activity_id = p.activity_id and p.like_status='1'   GROUP BY p.activity_id) as post_likes ," +
+                "(SELECT  COUNT(p.like_status) FROM post_likes p  WHERE  a.activity_id = p.activity_id and p.like_status='0'   GROUP BY p.activity_id) as post_dislikes," +
+                "(SELECT  COUNT(q.activity_id) FROM activities_responses q WHERE  a.activity_id = q.activity_id  GROUP BY q.activity_id)  as post_comments " +
                 "from relationship rs, users u, activities a " +
                 "where rs.to_user_id = u.user_id and u.user_id = a.posted_by and rs.from_user_id = ? and a.status = 1 and rs.advanced_relation_type = 4 " +
 
                 "union " +
 
-                "select u.user_id, u.email, u.name, u.fb_photo_path, ab.activity_id, -1 as fl_userid, 'broadcast' as category, a.comments, ab.broadcasted_on, ab.broadcasted_by, ab.owner_id " +
+                "select u.user_id, u.email, u.name, u.fb_photo_path, ab.activity_id, -1 as fl_userid, 'broadcast' as category, a.comments, ab.broadcasted_on, ab.broadcasted_by, ab.owner_id," +
+                " (SELECT  COUNT(p.like_status) FROM post_likes p  WHERE  a.activity_id = p.activity_id and p.like_status='1'   GROUP BY p.activity_id) as post_likes ," +
+                "(SELECT  COUNT(p.like_status) FROM post_likes p  WHERE  a.activity_id = p.activity_id and p.like_status='0'   GROUP BY p.activity_id) as post_dislikes, " +
+                "(SELECT  COUNT(q.activity_id) FROM activities_responses q WHERE  a.activity_id = q.activity_id  GROUP BY q.activity_id)  as post_comments " +
                 "from relationship rs, users u, activities_broadcast ab, activities a " +
                 "where rs.to_user_id = u.user_id and u.user_id = ab.broadcasted_by and ab.activity_id = a.activity_id and rs.from_user_id = ? and a.status = 1 and rs.advanced_relation_type = 4 " +
 
@@ -291,6 +299,11 @@
                 posted_on = rs.getString("posted_on");
                 posted_by = rs.getString("posted_by");
                 owner_id = rs.getString("posted_by");
+                post_likes = rs.getString("post_likes");
+                post_dislikes = rs.getString("post_dislikes");
+                post_comments = rs.getString("post_comments");
+
+
 
                 byte[] fl_name_enc = rs.getBytes("name");
 
@@ -303,7 +316,7 @@
                 }
 
                 if(category.equalsIgnoreCase("asks") || category.equalsIgnoreCase("broadcast")) {
-                    msg += loadActivitiesAsksString(con, activity_id, posted_by_photo, fl_name, comments, posted_on, posted_by, owner_id, fl_list);
+                    msg += loadActivitiesAsksString(con, activity_id, posted_by_photo, fl_name, comments, posted_on, posted_by, owner_id, fl_list,post_likes,post_dislikes,post_comments);
                 }
             }
         } catch(Exception se) {
@@ -318,7 +331,7 @@
 
 //    final String sql_getFLVectorList = "select rs.to_user_id, rs.to_contact_name from users u, relationship rs where u.user_id = rs.to_user_id and rs.from_user_id = ? and rs.advanced_relation_type = 4 and active_status = 1";
 
-    final String sql_getFLVectorList = "select rs.to_user_id, rs.to_contact_name, sk.profession from users u, relationship rs, skills sk " +
+    final String sql_getFLVectorList = "select rs.to_user_id, rs.to_contact_name, sk.profession from users u, relationship rs, employee_details sk " +
             "where u.user_id = rs.to_user_id and rs.to_user_id = sk.user_id and rs.from_user_id = ? and rs.advanced_relation_type = 4 and active_status = 1";
 
     public Vector getFLVectorList(Connection con, String userid) {
@@ -359,6 +372,8 @@
             return fl_list;
         }
     }
+
+
 
     public ArrayList loadFriends_AL(String user_id) {
         String friend_userid = "";
@@ -468,6 +483,7 @@
         String fb_user_id = "";
         String fl_userid = "";
         String fl_name = "";
+        String facebook = "";
         Connection con = null;
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;
@@ -499,28 +515,19 @@
                 friendUserIds = "NULL";
             }
 
-            final String sql_loadfreelancers = "select t2.profession, t2.expertise,t2.experience, t2.linkedin, t2.from_user_id, t2.to_user_id, t2.advanced_relation_type, t2.email, t2.user_id, t2.fb_photo_path, t2.fb_user_id, t2.to_contact_name from " +
+            final String sql_loadfreelancers = "select t2.profession, t2.expertise,t2.experience, t2.linkedin, t2.from_user_id, t2.to_user_id, t2.facebook, t2.advanced_relation_type, t2.email, t2.user_id, t2.fb_photo_path, t2.fb_user_id, t2.to_contact_name from " +
                     "( " +
 
 //            My Professionals
 
-                    "SELECT s.profession, s.expertise, s.experience, s.linkedin, rs.from_user_id, rs.to_user_id, rs.advanced_relation_type, u.email, u.user_id, u.fb_photo_path, u.fb_user_id, rs.to_contact_name " +
-                    "FROM users u LEFT JOIN skills s " +
+                    "SELECT s.profession, s.expertise, s.experience, s.linkedin, s.facebook, rs.from_user_id, rs.to_user_id, rs.advanced_relation_type, u.email, u.user_id, u.fb_photo_path, u.fb_user_id, rs.to_contact_name " +
+                    "FROM users u LEFT JOIN employee_details s " +
                     "ON u.user_id = s.user_id " +
                     "JOIN relationship rs " +
                     "where u.user_id = rs.to_user_id and rs.advanced_relation_type = 4 and (rs.from_user_id = "+from_user_id+" OR rs.from_user_id = "+SK_USER_ID+") and active_status = 1 GROUP BY rs.to_user_id " +
-
-                    " UNION " +
-
-//          Plus  My friend's' Professionals
-
-                    "SELECT s.profession, s.expertise, s.experience, s.linkedin, rs.from_user_id, rs.to_user_id, rs.advanced_relation_type, u.email, u.user_id, u.fb_photo_path, u.fb_user_id, rs.to_contact_name " +
-                    "FROM users u LEFT JOIN skills s " +
-                    "ON u.user_id = s.user_id " +
-                    "JOIN relationship rs " +
-                    "where rs.from_user_id in ("+friendUserIds+") and u.user_id = rs.to_user_id and rs.advanced_relation_type = 4 and active_status = 1 GROUP BY rs.to_user_id " +
                     ") " +
                     "as t2 group by t2.to_user_id ";
+
 
             ps2 = getPs(con, sql_loadfreelancers);
 
@@ -534,6 +541,7 @@
                 fb_photo_path = rs.getString("fb_photo_path");
                 fb_user_id = rs.getString("fb_user_id");
                 fl_userid = rs.getString("user_id");
+                facebook = rs.getString("facebook");
 
                 try {
                     byte[] fl_name_enc = rs.getBytes("to_contact_name");
@@ -546,8 +554,9 @@
                     linkedin = linkedin != null ? linkedin : "";
                     fb_photo_path = fb_photo_path != null ? fb_photo_path : "";
                     fb_user_id = fb_user_id != null ? fb_user_id : "";
+                    facebook = facebook != null ? facebook : "";
 
-                    if(profession.trim().length() <= 0) {
+                    if(linkedin.trim().length() <= 0 && expertise.trim().length() <= 0) {
                         continue;
                     }
 
@@ -560,6 +569,7 @@
                     hm.put("linkedin", linkedin);
                     hm.put("fb_photo_path", fb_photo_path);
                     hm.put("fb_user_id", fb_user_id);
+                    hm.put("facebook", facebook);
 
                     profession_list.add(hm);
                 } catch(Exception e) {
@@ -569,17 +579,305 @@
                 }
             }
 
-        return profession_list;
-    } catch (Exception e) {
-        System.out.println(new Date()+"\t "+e.getMessage());
-        e.printStackTrace();
-        return null;
-    } finally {
-        if(con != null ) {
-            closeConnection(con);
+            return profession_list;
+        } catch (Exception e) {
+            System.out.println(new Date()+"\t "+e.getMessage());
+            e.printStackTrace();
+            return null;
+        } finally {
+            if(con != null ) {
+                closeConnection(con);
+            }
         }
     }
-}
+
+    public ArrayList loadReferrals_AL(String from_user_id) {
+        String expertise = "";
+        String linkedin = "";
+        String facebook = "";
+        Connection con = null;
+        PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+        ArrayList referral_list = new ArrayList();
+
+        try {
+            con = getConnection();
+
+            final String sql_getReferrals = "select contact_user_id from contact_referrals where from_user_id = ? and active_status = 1";
+
+            ps1 = getPs(con, sql_getReferrals);
+            ps1.setString(1, from_user_id);
+
+            rs = ps1.executeQuery();
+
+            while (rs.next()) {
+                int contact_user_id = rs.getInt("contact_user_id");
+
+                String sql_getReferralDetails = "select r.to_user_id, r.to_contact_name, ed.expertise, ed.linkedin, ed.facebook from employee_details ed, relationship r " +
+                        "where ed.user_id = r.to_user_id and r.active_status = 1 and r.from_user_id = ? and r.to_user_id = ?";
+
+                ps2 = getPs(con, sql_getReferralDetails);
+                ps2.setString(1, from_user_id);
+                ps2.setInt(2, contact_user_id);
+
+                rs2 = ps2.executeQuery();
+
+                HashMap hm;
+
+                if(rs2.next()) {
+                    byte[] referral_name_enc = rs2.getBytes("to_contact_name");
+                    byte[] referral_name_ba = processDecrypt(referral_name_enc);
+                    String referral_name = new String(referral_name_ba);
+
+                    int referral_user_id = rs2.getInt("to_user_id");
+                    expertise = rs2.getString("expertise");
+                    linkedin = rs2.getString("linkedin");
+                    facebook = rs2.getString("facebook");
+
+                    expertise = expertise != null ? expertise : "";
+                    linkedin = linkedin != null ? linkedin : "";
+                    facebook = facebook != null ? facebook : "";
+
+                    hm = new HashMap();
+
+                    hm.put("referral_userid", referral_user_id);
+                    hm.put("referral_name", referral_name);
+                    hm.put("expertise", expertise);
+                    hm.put("linkedin", linkedin);
+                    hm.put("facebook", facebook);
+
+                    referral_list.add(hm);
+                }
+            }
+
+            return referral_list;
+        } catch (Exception e) {
+            System.out.println(new Date()+"\t "+e.getMessage());
+            e.printStackTrace();
+            return null;
+        } finally {
+            if(con != null ) {
+                closeConnection(con);
+            }
+        }
+    }
+
+    public ArrayList loadEMPs_AL(String from_user_id) {
+        ArrayList emp_list = new ArrayList();
+
+        Connection con = null;
+        PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+
+        try {
+            con = getConnection();
+
+            String sql_getEMPs = "select uem.employee_id from users u, user_employee_mapping uem where u.user_id = uem.user_id and u.user_id = ? and uem.active_status = 1";
+
+            ps1 = getPs(con, sql_getEMPs);
+            ps1.setString(1, from_user_id);
+
+            rs = ps1.executeQuery();
+
+            while (rs.next()) {
+                int emp_id = rs.getInt("employee_id");
+
+                String sql_getEMPDetails = "select r.to_user_id, r.to_contact_name from relationship r where r.from_user_id = ? and r.to_user_id = ?";
+
+                ps2 = getPs(con, sql_getEMPDetails);
+                ps2.setString(1, from_user_id);
+                ps2.setInt(2, emp_id);
+
+                rs2 = ps2.executeQuery();
+
+                HashMap hm = new HashMap();
+
+                if(rs2.next()) {
+                    byte[] emp_name_enc = rs2.getBytes("to_contact_name");
+                    byte[] emp_name_ba = processDecrypt(emp_name_enc);
+                    String emp_name = new String(emp_name_ba);
+
+                    int to_user_id = rs2.getInt("to_user_id");
+
+                    hm = new HashMap();
+                    hm.put("emp_userid", to_user_id);
+                    hm.put("emp_name", emp_name);
+
+                    emp_list.add(hm);
+                }
+            }
+
+            return emp_list;
+        } catch (Exception e) {
+            System.out.println(new Date()+"\t "+e.getMessage());
+            e.printStackTrace();
+            return null;
+        } finally {
+            if(con != null ) {
+                closeConnection(con);
+            }
+        }
+    }
+    
+    final String sql_getGamificationdetails = "SELECT  COUNT(a.contact_user_id) AS  referals, b.name  FROM users b  LEFT JOIN   contact_referrals a ON   b.user_id   =  a.from_user_id     WHERE  b.user_id =?   GROUP BY  a.from_user_id";
+
+    public String gamification(String user_id) {
+        Connection con = null;
+        PreparedStatement getFLList = null;
+        ResultSet rs = null;
+        String course_list = "";
+
+        String referal_name = null;
+        String referals = null;
+        String tr = null;
+
+        try {
+            con = getConnection();
+
+            getFLList = getPs(con, sql_getGamificationdetails);
+            getFLList.setString(1, user_id);
+
+            rs = getFLList.executeQuery();
+
+            if(rs != null){
+                while (rs.next()) {
+                    referals = rs.getString("referals");
+
+                    try {
+                        byte[] referal_name_enc = rs.getBytes("name");
+                        byte[] referal_name_ba = processDecrypt(referal_name_enc);
+                        referal_name = new String(referal_name_ba);
+
+
+                        tr = gamigicationString(user_id, referal_name,referals);
+
+                        course_list += tr;
+                    } catch(Exception e) {
+                        System.out.println(new Date()+"\t "+e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+                return course_list;
+            } else {
+                course_list = "0";
+                return course_list;
+            }
+
+        } catch (Exception e) {
+            System.out.println(new Date()+"\t "+e.getMessage());
+            e.printStackTrace();
+            return "An error occurred while getting freelancer list. Please try again.";
+        } finally {
+            if(con != null ) {
+                closeConnection(con);
+            }
+        }
+    }
+
+    public String gamigicationString(String user_id, String referal_name,String referals) {
+
+
+        String ret = "<dl style='word-wrap: break-word;padding:0px; width: 99%'>\n" +
+                "                                        <dd class='pos-left clearfix' style='margin-bottom:0px'>\n" +
+                "                                            <div class='events' style='margin-top:3px;line-height:1.0;background-color:#ffffff;  display:inline-block;'>" +
+                "                                                   <p class='pull-left' style='margin-left:-3px;margin-bottom: 0px'> <img class='img-circle' style='main-width:35px;max-width:45px;margin-bottom:10px' src=images/profile.jpg></p>" +
+                "                                                <div class='events-body ' style='margiun-right:0px;'>" +
+                "                                                    <div align='left' class='pull-left' style='width:90%;margin-bottom:2px'>" +
+                "                                                        <h2 style='margin-top:5px;margin-bottom:3px;font-size:20px;margin-left:18px'> "+referal_name+" </h2>" +
+                "                                                        <span class=\"step pull-left\" style='font-size:20px'>"+referals+"</span><h1 style=\"margin-top: 7%;margin-right: 16%;font-size:23px;margin-bottom: 10px\">Referred</h1>" +
+                "                                                    </div>" +
+                "                                                </div>" +
+                "</div> <br><br><br><br><br>\n" +
+                "                                        </dd>\n" +
+                "                                    </dl>";
+        return ret;
+    }
+
+    final String sql_getTopreferals = "SELECT COUNT(a.contact_user_id) AS  referals, b.name  FROM contact_referrals a, users b WHERE a.from_user_id= b.user_id GROUP BY a.from_user_id ORDER BY referals desc limit 3";
+
+    public String topreferals() {
+        Connection con = null;
+        PreparedStatement getFLList = null;
+        ResultSet rs = null;
+        String course_list = "";
+
+        String referal_name = null;
+        String referals = null;
+        String tr = null;
+
+        try {
+            con = getConnection();
+            getFLList = getPs(con, sql_getTopreferals);
+
+            rs = getFLList.executeQuery();
+
+            if(rs != null){
+                while (rs.next()) {
+                    referals = rs.getString("referals");
+
+                    try {
+                        byte[] referal_name_enc = rs.getBytes("name");
+
+//                        byte[] freelancer_email_ba = processDecrypt(freelancer_email_enc);
+                        byte[] referal_name_ba = processDecrypt(referal_name_enc);
+
+//                        freelancer_email = new String(freelancer_email_ba);
+                        referal_name = new String(referal_name_ba);
+
+                        tr = topreferalsString(referal_name,referals);
+
+                        course_list += tr;
+                    } catch(Exception e) {
+                        System.out.println(new Date()+"\t "+e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+                return course_list;
+            } else {
+                course_list = "0";
+                return course_list;
+            }
+
+        } catch (Exception e) {
+            System.out.println(new Date()+"\t "+e.getMessage());
+            e.printStackTrace();
+            return "An error occurred while getting freelancer list. Please try again.";
+        } finally {
+            if(con != null ) {
+                closeConnection(con);
+            }
+        }
+    }
+
+    public String topreferalsString(String referal_name,String referals) {
+        int points = (Integer.parseInt(referals))*2;
+
+        String ret = " " +
+                "<dl style='word-wrap: break-word;padding:0px; width: 99%'>" +
+                "                                        <dd class='pos-left clearfix' style='margin-bottom:0px'>" +
+                "                                            <div class='events' style='margin-top:3px;line-height:1.0;background-color:#ffffff;  display:inline-block;'>" +
+                "                                                <p class='pull-left' style='margin-left:-3px;margin-bottom: 0px'> <img class='img-circle' style='main-width:35px;max-width:45px;margin-bottom:10px' src=images/profile.jpg></p>" +
+                "                                                <div class='events-body ' style='margiun-right:0px;'>" +
+                "                                                    <div align='left' class='pull-left' style='width:50%;margin-bottom:2px'>" +
+                "                                                        <h2 style='margin-top:12px;margin-bottom:3px;font-size:17px;margin-left:18px;'>"+referal_name+" </h2>" +
+                "                                                    </div>" +
+                "                                                    <div align='right' class='pull-left' style='width:20%;margin-bottom:2px'>" +
+                "                                                        <span class=\"pull-left\" style=\"margin-top: 15px;font-size: 15px;color: #FF6666\" ><b>"+points+"</b> pts</span>" +
+                "                                                    </div>" +
+                "                                                    <div align='left' class='pull-right' style='width:30%;margin-bottom:2px'>" +
+                "                                                        <span class=\"step pull-left\" style=\"background:#008000; margin-top: 10px; font-size: 18px;\" >"+referals+"</span>" +
+                "                                                    </div>" +
+                "                                                </div>" +
+                "                                            </div>" +
+
+                "                                    </dl>";
+        return ret;
+    }
+
     final String sql_load_notifications = "select * from users a, notifications b where b.from_user_id = a.user_id and b.to_user_id = ?";
     public ArrayList notifications_AL(String to_user_id) {
         String fl_name = "";
@@ -642,13 +940,19 @@
         String posted_by_photo = "";
         String posted_by = "";
         String name = "";
+        String post_likes = "";
+        String post_dislikes = "";
+        String post_comments = "";
         String msg = "";
 
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection con = null;
 
-        String sql_loadAskList = "select * from activities a,users u where posted_by = ? and a.posted_by= u.user_id and category = \"asks\" and status = 1 order by posted_on DESC";
+        String sql_loadAskList = "select a.*,u.* ,(SELECT  COUNT(p.like_status) FROM post_likes p  WHERE   p.activity_id =  a.activity_id and  p.like_status='1'   GROUP BY p.activity_id) as post_likes," +
+                "(SELECT  COUNT(p.like_status) FROM post_likes p  WHERE  p.activity_id =  a.activity_id and p.like_status='0'   GROUP BY p.activity_id) as post_dislikes," +
+                "(SELECT  COUNT(q.activity_id) FROM activities_responses q WHERE  a.activity_id = q.activity_id  GROUP BY q.activity_id)  as post_comments  " +
+                " from activities a,users u where posted_by = ? and a.posted_by= u.user_id and category = \"asks\" and status = 1 order by posted_on DESC";
 
         try {
             con = getConnection();
@@ -664,13 +968,118 @@
                 posted_by_photo = rs.getString("fb_photo_path");
                 byte[] name_enc = rs.getBytes("name");
                 posted_by = rs.getString("posted_by");
+                post_likes = rs.getString("post_likes");
+                post_dislikes = rs.getString("post_dislikes");
+                post_comments = rs.getString("post_comments");
 
                 try {
                     byte[] name_ba = processDecrypt(name_enc);
 
                     name = new String(name_ba);
 
-                    msg += loadAskListString(con, user_id, activity_id, comments, posted_on, posted_by_photo, name, posted_by);
+                    msg += loadAskListString(con, user_id, activity_id, comments, posted_on, posted_by_photo, name, posted_by,post_likes,post_dislikes,post_comments);
+                } catch (Exception e) {
+                    System.out.println(new Date()+"\t "+e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        } catch(Exception se) {
+//            System.err.print(se.getMessage());
+            System.err.print(new Date() + "\t " + se.getMessage());
+        } finally {
+            if(con != null ) {
+                closeConnection(con);
+            }
+        }
+        return msg;
+    }
+
+    public String loadpost(String user_id,String activity_id) {
+        String comments = "";
+        String posted_on = "";
+        String posted_by_photo = "";
+        String posted_by = "";
+        String name = "";
+        String msg = "";
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection con = null;
+
+        String sql_loadpost = "select * from activities a,users u where activity_id = ? and a.posted_by= u.user_id and category = \"asks\" and status = 1";
+
+        try {
+            con = getConnection();
+
+            ps = getPs(con, sql_loadpost);
+            ps.setString(1, user_id);
+            ps.setString(1, activity_id);
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+                comments = rs.getString("comments");
+                posted_on = rs.getString("posted_on");
+                posted_by_photo = rs.getString("fb_photo_path");
+                byte[] name_enc = rs.getBytes("name");
+                posted_by = rs.getString("posted_by");
+
+                try {
+                    byte[] name_ba = processDecrypt(name_enc);
+
+                    name = new String(name_ba);
+
+                    msg += loadpoststring(con, user_id, activity_id, comments, posted_on, posted_by_photo, name, posted_by);
+                } catch (Exception e) {
+                    System.out.println(new Date()+"\t "+e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        } catch(Exception se) {
+//            System.err.print(se.getMessage());
+            System.err.print(new Date() + "\t " + se.getMessage());
+        } finally {
+            if(con != null ) {
+                closeConnection(con);
+            }
+        }
+        return msg;
+    }
+
+    public String loadmypost(String user_id,String activity_id) {
+        String comments = "";
+        String posted_on = "";
+        String posted_by_photo = "";
+        String posted_by = "";
+        String name = "";
+        String msg = "";
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection con = null;
+
+        String sql_loadmypost = "select * from activities a,users u where activity_id = ? and a.posted_by= u.user_id and category = \"asks\" and status = 1";
+
+        try {
+            con = getConnection();
+
+            ps = getPs(con, sql_loadmypost);
+            ps.setString(1, user_id);
+            ps.setString(1, activity_id);
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+                comments = rs.getString("comments");
+                posted_on = rs.getString("posted_on");
+                posted_by_photo = rs.getString("fb_photo_path");
+                byte[] name_enc = rs.getBytes("name");
+                posted_by = rs.getString("posted_by");
+
+                try {
+                    byte[] name_ba = processDecrypt(name_enc);
+
+                    name = new String(name_ba);
+
+                    msg += loadmypoststring(con, user_id, activity_id, comments, posted_on, posted_by_photo, name, posted_by);
                 } catch (Exception e) {
                     System.out.println(new Date()+"\t "+e.getMessage());
                     e.printStackTrace();
@@ -746,12 +1155,12 @@
     }
 
     //    final String sql_getProfileDetails = "select u.name as profile_name, u.profile_image_file_name, s.* from users u, skills s where u.user_id = s.user_id and s.user_id = ?";
-    final String sql_getProfileDetails = "SELECT u.name as profile_name, u.profile_image_file_name, u.businessdetails_image_file_name, s.* " +
-            "            FROM users u LEFT JOIN skills s " +
+    final String sql_getProfileDetails = "SELECT u.name as profile_name, u.profile_image_file_name, u.businessdetails_image_file_name, u.user_type, s.* " +
+            "            FROM users u LEFT JOIN employee_details s " +
             "            ON u.user_id = s.user_id " +
             "            where u.user_id = ?";
 
-    public ArrayList getProfileDetails_AL(String from_user_id) {
+    public ArrayList getProfileDetails_AL(String from_user_id, String lin_publicProfileUrl) {
         String profile_name = "";
         String profile_image_file_name = "";
         String businessdetails_image_file_name = "";
@@ -761,6 +1170,9 @@
         String profile_linkedin = "";
         String profile_location = "";
         String profile_about = "";
+        String profile_facebook = "";
+        int user_type = 0;
+        String hr_consent = "";
 
         ArrayList profile_details = new ArrayList();
 
@@ -784,6 +1196,9 @@
                 profile_linkedin = rs.getString("linkedin");
                 profile_location = rs.getString("location");
                 profile_about = rs.getString("about");
+                profile_facebook = rs.getString("facebook");
+                user_type = rs.getInt("user_type");
+                hr_consent = rs.getString("hr_consent");
 
                 try {
                     byte[] profile_name_enc = rs.getBytes("profile_name");
@@ -801,6 +1216,8 @@
                     profile_linkedin = profile_linkedin != null ? profile_linkedin : "";
                     profile_location = profile_location != null ? profile_location : "";
                     profile_about = profile_about != null ? profile_about : "";
+                    profile_facebook = profile_facebook != null ? profile_facebook : "";
+                    lin_publicProfileUrl = lin_publicProfileUrl != null ? lin_publicProfileUrl : "";
 
                     HashMap hm = new HashMap();
                     hm.put("from_user_id", from_user_id);
@@ -815,6 +1232,10 @@
                     hm.put("profile_linkedin", profile_linkedin);
                     hm.put("profile_location", profile_location);
                     hm.put("profile_about", profile_about);
+                    hm.put("profile_facebook", profile_facebook);
+                    hm.put("user_type", user_type);
+                    hm.put("hr_consent", hr_consent);
+                    hm.put("lin_publicProfileUrl", lin_publicProfileUrl);
 
                     profile_details.add(hm);
                 } catch(Exception e) {
@@ -1288,7 +1709,7 @@
         return ret;
     }
 
-    public String loadActivitiesAsksString(Connection con, String activity_id, String posted_by_photo, String fl_name, String comments, String posted_on, String posted_by, String owner_id, Vector fl_list) {
+    public String loadActivitiesAsksString(Connection con, String activity_id, String posted_by_photo, String fl_name, String comments, String posted_on, String posted_by, String owner_id, Vector fl_list,String post_likes,String post_dislikes,String post_comments) {
         posted_by_photo = (posted_by_photo != null && posted_by_photo.trim().length() > 0 ? posted_by_photo : "images/profile.jpg");
 
         String Date_str1 = datetimeactivities(con, activity_id);
@@ -1319,32 +1740,38 @@
                 "<dl id='ask' style='margin-bottom:0px; width: 99%;'>" +
                 "   <dd class='pos-left clearfix' >" +
                 "               <div class='events' style='margin-top:0px;display:inline;background-color:#ffffff;padding-right: 7px; box-shadow: 0.09em 0.09em 0.09em 0.05em #888888;'>" +
-                "                <p class='pull-right' style='display:inline;margin-left:-6%;margin-top:-2%'> " +
-                "                   <img class='events-object img-circle' src='images/post.png' style='max-width:25px;margin-right: 8%;'> </p> " +
-                "                <p class='pull-left' style='margin-left:2%;margin-bottom: 0px'>" +
-                "               <img class='img-circle' style='max-width:45px' src='"+posted_by_photo+"' class='events-object img-rounded'>" +
-                "            </p>" +
-                "            <div class='events-body' style='margin-bottom:2%;margin-top: 1%'>" +
-                "               <div align='left' style='margin-left:9px'>" +
-                "                   <h3 class='events-heading text-left' style='display: inline;font-size: 15px'>"+fl_name+"  </h3>" +
-                "                   <span class='text-muted' style='font-size: 12px'>"+category_to_display+" </span><br>" +
-                "                   <p class='text-left text-muted' style='font-size: 11px; margin: 0 0 5px;'>"+Date_str1+"</p>" +
-                "               </div>" +
-                "            </div>" +
                 "            <div class='events-body' style='line-height:1.2'>"+
                 "            <div>    " +
-                "               <p align ='left' class='pull-left' style='font-size: 12px;line-height:1.3;display:inline;margin-bottom:2px'>" +
-                "               <button id='broadcast_ask_nf_"+activity_id+"_"+owner_id+"' style='padding: 0px;background-color:#ffffff;display:inline;' class='btn btn-social btn-default btn-simple btn-sm pull-left'   onclick=\"broadcastAskInNetwork('broadcast_ask_nf', "+activity_id+", "+owner_id+"); return false;\"> " +
-                "               <img width='18px' src='images/broadcast.png' class='pull-left' style='display:inline;margin-top:-1px;background-color:#ffffff'>&nbsp;&nbsp; </button>"+comments+"</p></div> " +
+                "               <p align ='left' class='pull-left' style='font-size: 14px;line-height:1.3;display:inline;margin-bottom:0px;margin-top:2px;margin-left:3px'>" +
+                comments+"" +
+                "               </p>" +
+                "            </div> " +
                 "            </div>" +
-                "               <div id='responsedetails_"+activity_id+"' align='center' class=' pull-center' style='margin-bottom:10px;display:inline;'>" +
-                fl_list_str +
-                "                   <button id='ask_response_btn_"+activity_id+"_"+owner_id+"' style='padding: 1px 10px 5px 10px; margin-top: 0%;background-color:#ffffff' class='btn btn-default btn-simple btn-md pull-center' rel='tooltip' title='Post Response' data-original-title='Post Response' type='button' data-toggle='modal'  onclick=\"postResponseToAsk("+activity_id+", "+owner_id+"); return false;\">" +
-                "                       <i class='fa fa-share fa-md' style='color:#ff6666'></i>" +
-                "                   </button>" +
-                "                   <button id='hide_response_btn_"+activity_id+"_"+owner_id+"' style='padding: 1px 10px 5px 10px; margin-top: 0%;background-color:#ffffff;display:none' class='btn btn-default btn-simple btn-md pull-center' rel='tooltip' title='Post Response' data-original-title='Post Response' type='button' data-toggle='modal'  onclick=\"postResponseToAsk("+activity_id+", "+owner_id+"); return false;\"> " +
-                "                        <i class='fa fa-share fa-md' style='color:#12B812'></i>" +
-                "                   </button><br>" +
+                "                <p class='pull-right' style='margin-left:2%;margin-bottom: 0px'>" +
+                "               <img class='img-circle' style='max-width:30px' src='"+posted_by_photo+"' class='events-object img-rounded'>" +
+                "            </p>" +
+                "            <div class='events-right' style='margin-bottom:0%;margin-top: 1%'>" +
+                "               <div align='right' style='margin-left:9px'>" +
+                "                   <h3 class='events-heading text-left' style='display: inline;font-size: 14px'>"+fl_name+"  </h3>" +
+        //        "                   <span class='text-muted' style='font-size: 12px'>"+category_to_display+" </span><br>" +
+                "                   <p class='text-right text-muted' style='font-size: 10px; margin: 0 0 0px;'>"+Date_str1+"</p>" +
+                "               </div>" +
+                "            </div>" +
+
+                "               <div style='margin-bottom:20px;display:inline;'>" +
+                "                        <button  style='padding:0px; margin-top: 5px;background-color:#ffffff;margin-bottom: 5px' class='btn btn-default btn-simple btn-md pull-left' rel='tooltip' title='Post Response' data-original-title='Post Response' type='button' data-toggle='modal' >" +
+                "                                <input type='text' id='like_"+activity_id+"' style ='width: 12px;border:none' value= "+(post_likes != null && post_likes.trim().length() > 0 ? post_likes  : "0")+"></input>&nbsp;<i class='fa fa-thumbs-o-up' style='color:#5bc0de;font-size: 20px' onclick=\"post_like("+activity_id+" , "+post_likes+");\"></i> &nbsp;&nbsp;&nbsp; " +
+                "                            </button> " +
+                "                           <button style='padding:0px; margin-top: 5px;background-color:#ffffff;margin-bottom: 5px;margin-right:15px' class='btn btn-default btn-simple btn-md pull-left' rel='tooltip' title='Post Response' data-original-title='Post Response' type='button' data-toggle='modal' >  " +
+                "                               <input type='text' id='dislike_"+activity_id+"' style ='width: 12px;border:none' value="+(post_dislikes != null && post_dislikes.trim().length() > 0 ? post_dislikes  : "0")+"></input><i class='fa fa-thumbs-o-down' style='color:#fa8072;font-size: 20px' onclick=\"post_dislike("+activity_id+" , "+post_dislikes+");\"></i> " +
+                "                           </button> " +
+
+                "                            <button  id='showaskresponses_"+activity_id+"'  onclick='showpost("+activity_id+");' style='padding:0px; margin-top: 5px;background-color:#ffffff;margin-bottom: 5px' class='btn btn-default btn-simple btn-md pull-right' type='button' data-toggle='modal'>" +
+                "                                &nbsp;<i class='fa fa-arrow-circle-right' style='color:#5bc0de;font-size: 20px'></i>  " +
+                "                           </button> " +
+                "                             <button  style='padding:0px; margin-top: 5px;background-color:#ffffff;margin-bottom: 5px' class='btn btn-default btn-simple btn-md pull-right' type='button' data-toggle='modal'> " +
+                "                                 <input type='text' id='like_"+activity_id+"' style ='width: 12px;border:none' value= "+(post_comments != null && post_comments.trim().length() > 0 ? post_comments  : "0")+"></input>&nbsp;<i class='fa fa-commenting-o' style='color:#F6BB42;font-size: 20px'></i> &nbsp;&nbsp; " +
+                "                           </button>  " +
                 "               </div>"+
                 "           </div>" +
                 "       </div>" +
@@ -1439,40 +1866,181 @@
         return ret;
     }
 
-    public String loadAskListString(Connection con, String user_id, String activity_id, String comments, String posted_on, String posted_by_photo, String name, String posted_by) {
+    public String loadAskListString(Connection con, String user_id, String activity_id, String comments, String posted_on, String posted_by_photo, String name, String posted_by,String post_likes,String post_dislikes,String post_comments) {
 
         posted_by_photo = (posted_by_photo != null && posted_by_photo.trim().length() > 0 ? posted_by_photo : "images/profile.jpg");
 
         String Date_str = datetime(con, activity_id);
 
-        String ret = "" +
-                " <dl style='margin-bottom:-2px;margin-top:0.5%;padding:0px; width: 99%;'>" +
-                "           <dd class='pos-left clearfix' style='margin-top:-1%'>" +
-                "               <div class='events' style='margin-top:1%;display:inline;background-color:#ffefef;padding-right: 7px;padding-top: 6px;  box-shadow: 0.09em 0.09em 0.09em 0.05em #888888;'>" +
-                "                <p class='pull-right' style='display:inline;margin-left:-6%;margin-top:-2%'> " +
-                "                   <img class='events-object img-rounded' src='images/post.png' style='max-width:25px;margin-right: 8%;'> </p> " +
-                "                <p class='pull-left' style='margin-left:2%;margin-bottom: 0px'>" +
-                "               <img class='img-circle style='max-width:45px' src='"+posted_by_photo+"' class='events-object img-rounded'>" +
-                "           </p>" +
-                "           <div class='events-body' style='margin-bottom:2%;margin-top: 1%'>" +
-                "               <div align='left' style='margin-left:8px'>" +
-                "                   <h3 class='events-heading text-left' style='display: inline;font-size: 15px'>"+name+"  </h3>" +
-                "                   <p class='text-left text-muted' style='font-size: 11px; margin: 0 0 5px;'>"+Date_str+"</p>" +
+        String ret = " <dl style='margin-bottom:-2px;margin-top:0.5%;padding:0px; width: 99%;'>" +
+                "           <dd class='pos-left clearfix' >" +
+                "               <div class='events' style='margin-top:0px;display:inline;background-color:#ffefef;padding-right: 7px; box-shadow: 0.09em 0.09em 0.09em 0.05em #888888;'>" +
+                "            <div class='events-body' style='line-height:1.2'>"+
+                "            <div>    " +
+                "               <p align ='left' class='pull-left' style='font-size: 14px;line-height:1.3;display:inline;margin-bottom:0px;margin-top:2px;margin-left:3px'>" +
+                                      comments+"" +
+                "               </p>" +
+                "            </div> " +
+                "            </div> " +
+                "                <p class='pull-right' style='margin-left:2%;margin-bottom: 0px'> " +
+                "               <img class='img-circle' style='max-width:30px' src='"+posted_by_photo+"' class='events-object img-rounded'>" +
+                "            </p>"+
+        "           <div class='events-right' style='margin-bottom:0%;margin-top: 1%'>" +
+                "               <div align='right' style='margin-left:9px'>" +
+                "                   <h3 class='events-heading text-right' style='display: inline;font-size: 14px'>"+name+"  </h3>" +
+                "                   <p class='text-right text-muted' style='font-size: 10px; margin: 0 0 5px;'>"+Date_str+"</p>" +
                 "               </div></div>" +
-                "              <span class='events' style='margin-bottom:1px;background-color:#ffefef\n;padding:0px'>" +
-                "                 <p class='text-left' style='line-height:1.3;font-size: 11px;word-wrap: break-word;margin-left: 2%;margin-bottom:0px;margin-top:0px;' align='left' >"+comments+"</p>" +
                 "                    <div  align='center' class='event-body' style='margin-bottom:1%;display:inline'>" +
-                "                      <div class='pull-right' style='display:inline'> "+
-                "                       <button  onclick=\"getpostdetailstodelete('"+activity_id+"');\" data-toggle='modal' type='button'  class='btn btn-default btn-simple btn-lg ' style='padding: 1px 10px;background-color:#ffefef' ><i class='fa fa-times' style='color:#ff6666'></i></button>" +
-                "                         <button  data-toggle='modal' type='button' id='hideaskresponses_"+activity_id+"'  class='btn btn-default btn-simple btn-lg ' style='padding: 1px 10px; display: none;background-color:#fefafa' onclick='hideAskResponses("+activity_id+");'><i class='fa fa-caret-up fa-lg' style='color:#22A7F0'></i></button>" +
-                "			              <button  data-toggle='modal' type='button' id='showaskresponses_"+activity_id+"'  class='btn btn-default btn-simple btn-lg' style='padding: 1px 10px;background-color:#ffefef' onclick='showAskResponses("+activity_id+");'><i class='fa fa-arrow-circle-right' style='color:#22A7F0'></i></button>" +
+                "                      <div style='margin-bottom:20px;display:inline;'> " +
+                "     <button  style='padding:0px; margin-top: 5px;background-color:#ffefef;margin-bottom: 5px' class='btn btn-default btn-simple btn-md pull-left' rel='tooltip' title='Post Response' data-original-title='Post Response' type='button' data-toggle='modal' >" +
+                "                                <input type='text' id='like_"+activity_id+"' style ='width: 12px;border:none;background-color:#ffefef' value= "+(post_likes != null && post_likes.trim().length() > 0 ? post_likes  : "0")+"></input>&nbsp;<i class='fa fa-thumbs-o-up' style='color:#5bc0de;font-size: 20px' onclick=\"post_like("+activity_id+" , "+post_likes+");\"></i> &nbsp;&nbsp;&nbsp; " +                "                            </button> " +
+                "                           <button style='padding:0px; margin-top: 5px;background-color:#ffefef;margin-bottom: 5px;margin-right:15px' class='btn btn-default btn-simple btn-md pull-left' rel='tooltip' title='Post Response' data-original-title='Post Response' type='button' data-toggle='modal' >  " +
+                "                               <input type='text' id='dislike_"+activity_id+"' style ='width: 12px;border:none;background-color:#ffefef' value="+(post_dislikes != null && post_dislikes.trim().length() > 0 ? post_dislikes  : "0")+"></input><i class='fa fa-thumbs-o-down' style='color:#fa8072;font-size: 20px' onclick=\"post_dislike("+activity_id+" , "+post_dislikes+");\"></i> " +
+                "                           </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " +
+                "                       <button  onclick=\"getpostdetailstodelete('"+activity_id+"');\" data-toggle='modal' type='button'  style='padding:0px; margin-top: 5px;background-color:#ffefef;margin-bottom: 5px' class='btn btn-default btn-simple btn-md pull-left' ><i class='fa fa-times' style='color:#ff6666;font-size: 20px;'></i></button>" +
 
-                "                      </div> </div><br>"+
+                "                            <button  id='showaskresponses_"+activity_id+"'  onclick='showmypost("+activity_id+");' style='padding:0px; margin-top: 5px;background-color:#ffefef;margin-bottom: 5px' class='btn btn-default btn-simple btn-md pull-right' type='button' data-toggle='modal'>" +
+                "                                &nbsp;<i class='fa fa-arrow-circle-right' style='color:#5bc0de;font-size: 20px'></i>  " +
+                "                           </button> " +
+                "                             <button  style='padding:0px; margin-top: 5px;background-color:#ffefef;margin-bottom: 5px' class='btn btn-default btn-simple btn-md pull-right' type='button' data-toggle='modal'> " +
+                "                                <input type='text'  style ='width: 12px;border:none;background-color:#ffefef' value= "+(post_comments != null && post_comments.trim().length() > 0 ? post_comments  : "0")+"></input>&nbsp;<i class='fa fa-commenting-o' style='color:#F6BB42;font-size: 20px'></i> &nbsp;&nbsp; " +
+                "                           </button>  " +
+
+                "                     </div> </div><br>"+
+
+                "               </div>" +
+                "           </dd>" +
+                //               "           <div id='show_ask_responses_"+activity_id+"' class='text-left' style='max-width: 98%;margin-bottom: 0%;max-height: 180px;overflow: auto;'></div>"+
+                "       </dl>";
+
+
+        return ret;
+    }
+
+    public String loadmypoststring(Connection con, String user_id, String activity_id, String comments, String posted_on, String posted_by_photo, String name, String posted_by) {
+
+        posted_by_photo = (posted_by_photo != null && posted_by_photo.trim().length() > 0 ? posted_by_photo : "images/profile.jpg");
+
+        String Date_str = datetime(con, activity_id);
+
+        String ret = " <dl style='margin-bottom:-2px;margin-top:0.5%;padding:0px; width: 99%;'>" +
+                "           <dd class='pos-left clearfix' >" +
+                "               <div class='events' style='margin-top:0px;display:inline;background-color:#ffefef;padding-right: 7px; box-shadow: 0.09em 0.09em 0.09em 0.05em #888888;'>" +
+                "            <div class='events-body' style='line-height:1.2'>"+
+                "            <div>    " +
+                "               <p align ='left' class='pull-left' style='font-size: 14px;line-height:1.3;display:inline;margin-bottom:0px;margin-top:2px;margin-left:3px'>" +
+                comments+"" +
+                "               </p>" +
+                "            </div> " +
+                "            </div> " +
+                "                <p class='pull-right' style='margin-left:2%;margin-bottom: 0px'> " +
+                "               <img class='img-circle' style='max-width:30px' src='"+posted_by_photo+"' class='events-object img-rounded'>" +
+                "            </p>"+
+                "           <div class='events-right' style='margin-bottom:0%;margin-top: 1%'>" +
+                "               <div align='right' style='margin-left:9px'>" +
+                "                   <h3 class='events-heading text-right' style='display: inline;font-size: 14px'>"+name+"  </h3>" +
+                "                   <p class='text-right text-muted' style='font-size: 10px; margin: 0 0 5px;'>"+Date_str+"</p>" +
+                "               </div></div>" +
+                /*"                    <div  align='center' class='event-body' style='margin-bottom:1%;display:inline'>" +
+                "                      <div style='margin-bottom:20px;display:inline;'> " +
+                "     <button  style='padding:0px; margin-top: 5px;background-color:#ffefef;margin-bottom: 5px' class='btn btn-default btn-simple btn-md pull-left' rel='tooltip' title='Post Response' data-original-title='Post Response' type='button' data-toggle='modal' >" +
+                "                                5&nbsp;<i class='fa fa-thumbs-o-up' style='color:#5bc0de;font-size: 20px'></i> &nbsp;&nbsp;&nbsp; " +
+                "                            </button> " +
+                "                           <button style='padding:0px; margin-top: 5px;background-color:#ffefef;margin-bottom: 5px;margin-right:15px' class='btn btn-default btn-simple btn-md pull-left' rel='tooltip' title='Post Response' data-original-title='Post Response' type='button' data-toggle='modal' >  " +
+                "                               2&nbsp;<i class='fa fa-thumbs-o-down' style='color:#fa8072;font-size: 20px'></i> " +
+                "                           </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " +
+                "                       <button  onclick=\"getpostdetailstodelete('"+activity_id+"');\" data-toggle='modal' type='button'  style='padding:0px; margin-top: 5px;background-color:#ffefef;margin-bottom: 5px' class='btn btn-default btn-simple btn-md pull-left' ><i class='fa fa-times' style='color:#ff6666;font-size: 20px;'></i></button>" +
+
+                "                            <button  id='showaskresponses_"+activity_id+"'  onclick='showmypost("+activity_id+");' style='padding:0px; margin-top: 5px;background-color:#ffefef;margin-bottom: 5px' class='btn btn-default btn-simple btn-md pull-right' type='button' data-toggle='modal'>" +
+                "                                &nbsp;<i class='fa fa-arrow-circle-right' style='color:#5bc0de;font-size: 20px'></i>  " +
+                "                           </button> " +
+                "                             <button  style='padding:0px; margin-top: 5px;background-color:#ffefef;margin-bottom: 5px' class='btn btn-default btn-simple btn-md pull-right' type='button' data-toggle='modal'> " +
+                "                                10&nbsp;<i class='fa fa-commenting-o' style='color:#F6BB42;font-size: 20px'></i> &nbsp;&nbsp; " +
+                "                           </button>  " +
+
+                "                     </div> </div><br>"+*/
                 "                   </span>" +
                 "               </div>" +
                 "           </dd>" +
-                "           <div id='show_ask_responses_"+activity_id+"' class='text-left' style='max-width: 98%;margin-bottom: 0%;max-height: 180px;overflow: auto;'></div>"+
-                "       </dl>";
+                //               "           <div id='show_ask_responses_"+activity_id+"' class='text-left' style='max-width: 98%;margin-bottom: 0%;max-height: 180px;overflow: auto;'></div>"+
+                "       </dl>"+
+                "           <div id='show_ask_responses_"+activity_id+"' class='text-left' style='max-width: 98%;margin-bottom: 0%;max-height: 35vh;overflow: auto;'></div>"+
+                "       </dl>"+
+                "       <p href='' class='pull-left' id='show_comment' onclick='showcommentbox();'><a>Add comment</a></p>"+
+                "<div class='row' style='display:none' id='commentbox'>" +
+                "                                    <div class='col-xs-9 text-left' style='margin-top: 1%;width:78%;padding:0px'>" +
+                "                                        <textarea type='text' class='form-control' style='height:35px;margin-left:6%;width: 95%;' placeholder='Comment' name='post_comment_in_network' id='post_comment_in_network'></textarea>" +
+                "                                    </div>" +
+                "                                <div class='col-xs-2 text-right' style='max-width:100%;margin-top:2.5%;padding:0px;width:20%'>" +
+                "                                    <button class='btn btn-sm btn-fill btn-info' style='margin-top: 1%;width:40px;margin-bottom: 5%;padding:3px' onclick=\"postResponseToAsk("+activity_id+"); return false;\">Post</button>" +
+                "                                </div>" +
+                "                                </div>";
+
+
+
+        return ret;
+    }
+
+
+    public String loadpoststring(Connection con, String user_id, String activity_id, String comments, String posted_on, String posted_by_photo, String name, String posted_by) {
+
+        posted_by_photo = (posted_by_photo != null && posted_by_photo.trim().length() > 0 ? posted_by_photo : "images/profile.jpg");
+
+        String Date_str = datetime(con, activity_id);
+
+        String ret = " <dl style='margin-bottom:-2px;margin-top:0.5%;padding:0px; width: 99%;'>" +
+                "   <dd class='pos-left clearfix' >" +
+                "               <div class='events' style='margin-top:0px;display:inline;background-color:#ffffff;padding-right: 7px; box-shadow: 0.09em 0.09em 0.09em 0.05em #888888;'>" +
+                "            <div class='events-body' style='line-height:1.2'>"+
+                "            <div>    " +
+                "               <p align ='left' class='pull-left' style='font-size: 14px;line-height:1.3;display:inline;margin-bottom:0px;margin-top:2px;margin-left:3px'>" +
+                comments+"" +
+                "               </p>" +
+                "            </div> " +
+                "            </div>" +
+                "                <p class='pull-right' style='margin-left:2%;margin-bottom: 0px'>" +
+                "               <img class='img-circle' style='max-width:30px' src='"+posted_by_photo+"' class='events-object img-rounded'>" +
+                "            </p>" +
+
+                "            <div class='events-right' style='margin-bottom:0%;margin-top: 1%'>" +
+                "               <div align='right' style='margin-left:9px'>" +
+                "                   <h3 class='events-heading text-left' style='display: inline;font-size: 14px'>"+name+"  </h3>" +
+                //        "                   <span class='text-muted' style='font-size: 12px'>"+category_to_display+" </span><br>" +
+                "                   <p class='text-right text-muted' style='font-size: 10px; margin: 0 0 0px;'>"+Date_str+"</p>" +
+                "               </div>" +
+                "            </div>" +
+
+                /*               "                      <div style='margin-bottom:20px;display:inline;'> " +
+                                "     <button  style='padding:0px; margin-top: 5px;background-color:#ffffff;margin-bottom: 5px' class='btn btn-default btn-simple btn-md pull-left' rel='tooltip' title='Post Response' data-original-title='Post Response' type='button' data-toggle='modal' >" +
+                                "                                5&nbsp;<i class='fa fa-thumbs-o-up' style='color:#5bc0de;font-size: 20px'></i> &nbsp;&nbsp;&nbsp; " +
+                                "                            </button> " +
+                                "                           <button style='padding:0px; margin-top: 5px;background-color:#ffffff;margin-bottom: 5px;margin-right:15px' class='btn btn-default btn-simple btn-md pull-left' rel='tooltip' title='Post Response' data-original-title='Post Response' type='button' data-toggle='modal' >  " +
+                                "                               2&nbsp;<i class='fa fa-thumbs-o-down' style='color:#fa8072;font-size: 20px'></i> " +
+                                "                           </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " +
+                             "                       <button  onclick=\"getpostdetailstodelete('"+activity_id+"');\" data-toggle='modal' type='button'  style='padding:0px; margin-top: 5px;background-color:#ffffff;margin-bottom: 5px' class='btn btn-default btn-simple btn-md pull-left' ><i class='fa fa-times' style='color:#ff6666;font-size: 20px;'></i></button>" +
+
+                                "                            <button  id='showaskresponses_"+activity_id+"'  onclick='showmypost("+activity_id+");' style='padding:0px; margin-top: 5px;background-color:#ffffff;margin-bottom: 5px' class='btn btn-default btn-simple btn-md pull-right' type='button' data-toggle='modal'>" +
+                                "                                &nbsp;<i class='fa fa-arrow-circle-right' style='color:#5bc0de;font-size: 20px'></i>  " +
+                                "                           </button> " +
+                                "                             <button  style='padding:0px; margin-top: 5px;background-color:#ffffff;margin-bottom: 5px' class='btn btn-default btn-simple btn-md pull-right' type='button' data-toggle='modal'> " +
+                                "                                10&nbsp;<i class='fa fa-commenting-o' style='color:#F6BB42;font-size: 20px'></i> &nbsp;&nbsp; " +
+                                "                           </button>  " +
+
+             */   "                     </div> </div><br>"+
+                "                   </span>" +
+                "               </div>" +
+                "           </dd>" +
+                "           <div id='show_ask_responses_"+activity_id+"' class='text-left' style='max-width: 98%;margin-bottom: 0%;max-height: 35vh;overflow: auto;'></div>"+
+                "       </dl>"+
+                "       <p href='' class='pull-left' id='show_comment' onclick='showcommentbox();'><a>Add comment</a></p>"+
+                "<div class='row' style='display:none' id='commentbox'>" +
+                "                                    <div class='col-xs-9 text-left' style='margin-top: 1%;width:78%;padding:0px'>" +
+                "                                        <textarea type='text' class='form-control' style='height:35px;margin-left:6%;width: 95%;' placeholder='Comment' name=''post_comment_in_network' id='post_comment_in_network'></textarea>" +
+                "                                    </div>" +
+                "                                <div class='col-xs-2 text-right' style='max-width:100%;margin-top:2.5%;padding:0px;width:20%'>" +
+                "                                    <button class='btn btn-sm btn-fill btn-info' style='margin-top: 1%;width:40px;margin-bottom: 5%;padding:3px' onclick=\"postResponseToAsk("+activity_id+"); return false;\">Post</button>" +
+                "                                </div>" +
+                "                                </div>";
 
         return ret;
     }
@@ -1542,10 +2110,10 @@
                 "                   <h4 class='text-muted' style='margin-bottom:2px;font-family:monospace;overflow:auto; font-size-adjust: 0.58;line-height:1.1;font-size:12px;margin-left:8px'>"+connection+" sent on: " +invitation_sent_time+"</h4>" +
                 "               </div>" +
                 "               <div class='pull-right'  style='width:30%;background-color:#ffffff;'>  " +
-                "                   <button id='remind_"+to_userid+"' onclick='sendAPPInvite(\""+from_userid+"\", \""+to_userid+"\");' type='button' class='btn btn-info btn-sm pull-right' style='display:inline;border-radius:15px'>\n" +
+                "                   <button id='remind_"+to_userid+"' onclick='sendAPPInvite(\""+from_userid+"\", \""+to_userid+"\");' type='button' class='btn btn-info btn-sm pull-right' style='display:inline;border-radius:15px'>" +
                 "                       Remind" +
                 "                   </button>" +
-                "                   <button id='remindsuccess_"+to_userid+"' type='button' class='btn btn-success btn-sm pull-right' style='display:inline;border-radius:15px;display:none'>\n" +
+                "                   <button id='remindsuccess_"+to_userid+"' type='button' class='btn btn-success btn-sm pull-right' style='display:inline;border-radius:15px;display:none'>" +
                 "                       Success" +
                 "                   </button>" +
                 "               </div>" +
@@ -1588,7 +2156,7 @@
         return status;
     }
 
-    public int addOrUpdateFLskills(String profession, String expertise, String experience, String linkedin, String profile_location, String profile_about, String from_user_id) {
+    public int addOrUpdateFLskills(String expertise, String linkedin, String profile_facebook, String from_user_id, String hr_consent) {
         int status = 0;
 
         PreparedStatement ps = null;
@@ -1605,25 +2173,21 @@
             if(rs.next()) {
                 ps = getPs(con, sql_updateFLSkills);
 
-                ps.setString(1, profession);
-                ps.setString(2, expertise);
-                ps.setString(3, experience);
-                ps.setString(4, linkedin);
-                ps.setString(5, profile_about);
-                ps.setString(6, profile_location);
-                ps.setString(7, from_user_id);
+                ps.setString(1, expertise);
+                ps.setString(2, linkedin);
+                ps.setString(3, profile_facebook);
+                ps.setString(4, hr_consent);
+                ps.setString(5, from_user_id);
 
                 status = ps.executeUpdate();
             } else {
                 ps = getPs(con, sql_insertFLSkills);
 
-                ps.setString(1, profession);
-                ps.setString(2, expertise);
-                ps.setString(3, experience);
-                ps.setString(4, linkedin);
-                ps.setString(5, profile_about);
-                ps.setString(6, profile_location);
-                ps.setString(7, from_user_id);
+                ps.setString(1, expertise);
+                ps.setString(2, linkedin);
+                ps.setString(3, profile_facebook);
+                ps.setString(4, hr_consent);
+                ps.setString(5, from_user_id);
 
                 status = ps.executeUpdate();
             }
@@ -1637,10 +2201,10 @@
         return status;
     }
 
-    final String sql_insertContactProfession = "insert into skills (profession, user_id) values (?, ?)";
-    final String sql_updateContactProfession = "update skills set profession = ? where user_id = ?";
+    final String sql_insertContactProfession = "insert into employee_details (linkedin,facebook,expertise, user_id) values (?, ?, ?, ?)";
+    final String sql_updateContactProfession = "update employee_details set linkedin = ?, facebook = ?, expertise = ?  where user_id = ?";
 
-    public int addOrUpdateContactProfession(String contact_user_id, String contactprofile_profession) {
+    public int addOrUpdateContactProfileDetails(String contact_user_id, String contactprofile_linkedin, String contactprofile_fb, String contactprofile_skills) {
         int status = 0;
 
         PreparedStatement ps = null;
@@ -1657,15 +2221,19 @@
             if(rs.next()) {
                 ps = getPs(con, sql_updateContactProfession);
 
-                ps.setString(1, contactprofile_profession);
-                ps.setString(2, contact_user_id);
+                ps.setString(1, contactprofile_linkedin);
+                ps.setString(2, contactprofile_fb);
+                ps.setString(3, contactprofile_skills);
+                ps.setString(4, contact_user_id);
 
                 status = ps.executeUpdate();
             } else {
                 ps = getPs(con, sql_insertContactProfession);
 
-                ps.setString(1, contactprofile_profession);
-                ps.setString(2, contact_user_id);
+                ps.setString(1, contactprofile_linkedin);
+                ps.setString(2, contactprofile_fb);
+                ps.setString(3, contactprofile_skills);
+                ps.setString(4, contact_user_id);
 
                 status = ps.executeUpdate();
             }
@@ -1679,10 +2247,194 @@
         return status;
     }
 
-    public String saveProfileDetails(String from_user_id, String profile_name, String profile_profession,
-                                     String profile_expertise, String profile_experience, String profile_linkedin, String profile_location, String profile_about) {
+    final String sql_checklikes = "select * from post_likes where activity_id = ? and user_id = ?";
+    final String sql_insertlikeststus = "insert into post_likes (activity_id,user_id, like_status) values (?, ?, ?)";
+    final String sql_updatelikestatus = "update post_likes set  like_status = ? where  activity_id = ? and  user_id = ?";
+
+    public int post_like_insert(String user_id, String activity_id,String like_status) {
+        int post_ststus = 0;
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection con = null;
+
+        try {
+            con = getConnection();
+
+            ps = getPs(con, sql_checklikes);
+            ps.setString(1, activity_id);
+            ps.setString(2, user_id);
+
+            System.out.println(new Date()+"\t sql_checklikes -> ps: "+ps);
+            rs = ps.executeQuery();
+
+            if(rs.next()) {
+                ps = getPs(con, sql_updatelikestatus);
+                ps.setString(1, like_status);
+                ps.setString(2, activity_id);
+                ps.setString(3, user_id);
+                post_ststus = ps.executeUpdate();
+            } else {
+                ps = getPs(con, sql_insertlikeststus);
+                ps.setString(1, activity_id);
+                ps.setString(2, user_id);
+                ps.setString(3, like_status);
+                post_ststus = ps.executeUpdate();
+            }
+        } catch(Exception se) {
+            System.err.print(new Date() + "\t " + se.getMessage());
+        } finally {
+            if(con != null ) {
+                closeConnection(con);
+            }
+        }
+        return post_ststus;
+    }
+
+    final String sql_checkdislikes = "select * from post_likes where activity_id = ? and user_id = ?";
+    final String sql_insertdislikeststus = "insert into post_likes (activity_id,user_id, like_status) values (?, ?, ?)";
+    final String sql_updatedislikestatus = "update post_likes set  like_status = ? where  activity_id = ? and  user_id = ?";
+
+    public int post_dislike_insert(String user_id, String activity_id,String like_status) {
+        int post_dislike_ststus = 0;
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection con = null;
+
+        try {
+            con = getConnection();
+
+            ps = getPs(con, sql_checkdislikes);
+            ps.setString(1, activity_id);
+            ps.setString(2, user_id);
+            System.out.println(new Date()+"\t sql_checkdislikes -> ps: "+ps);
+            rs = ps.executeQuery();
+
+            if(rs.next()) {
+                ps = getPs(con, sql_updatedislikestatus);
+                ps.setString(1, like_status);
+                ps.setString(2, activity_id);
+                ps.setString(3, user_id);
+                post_dislike_ststus = ps.executeUpdate();
+            } else {
+                ps = getPs(con, sql_insertdislikeststus);
+                ps.setString(1, activity_id);
+                ps.setString(2, user_id);
+                ps.setString(3, like_status);
+                post_dislike_ststus = ps.executeUpdate();
+            }
+        } catch(Exception se) {
+            System.err.print(new Date() + "\t " + se.getMessage());
+        } finally {
+            if(con != null ) {
+                closeConnection(con);
+            }
+        }
+        return post_dislike_ststus;
+    }
+
+    final String sql_postSuggestionInNetwork = "insert into activities (posted_by, fl_userid, category, comments) values (?, ?, ?, ?)";
+    final String sql_Suggestion = "select * from activities where fl_userid = ? and posted_by = ?";
+    final String sql_updateSuggestion = "update activities set  comments = ? where  posted_by = ? and  fl_userid = ?";
+
+    public int addsuggestions(String contact_user_id, String contactprofile_linkedin,String contactprofile_name,String from_user_id,String post_type,String fl_userid,String contactprofile_skills) {
+        int status = 0;
+        String linkedin_str1 = "<button class='btn btn-info btn-simple btn-fill   btn-sm' style='cursor: pointer;padding: 0px 5px' data-original-title='Linkedin profile' type='button' title='' rel='tooltip'  onclick=\"window.open('"+contactprofile_linkedin+"', '_blank')\"><i class='fa fa-linkedin'></i> </button>";
+        String linkedin_str = (contactprofile_linkedin != null && contactprofile_linkedin.trim().length() > 0 ? linkedin_str1 : "");
+
+        String post = " <a href=''>"+contactprofile_name+"</a> "+linkedin_str+" <br> Slills : "+contactprofile_skills+" ";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection con = null;
+        try {
+            con = getConnection();
+
+            ps = getPs(con, sql_Suggestion);
+            ps.setString(1, contact_user_id);
+            ps.setString(2, from_user_id);
+            System.out.println(new Date()+"\t sql_Suggestion -> ps: "+ps);
+            rs = ps.executeQuery();
+
+            if(rs.next()) {
+                ps = getPs(con, sql_updateSuggestion);
+                ps.setString(1, post);
+                ps.setString(2, from_user_id);
+                ps.setString(3, contact_user_id);
+                System.out.println(new Date()+"\t sql_updateSuggestion -> ps: "+ps);
+                 status = ps.executeUpdate();
+            } else {
+                ps = getPs(con, sql_postSuggestionInNetwork);
+                ps.setString(1, from_user_id);
+                ps.setString(2, contact_user_id);
+                ps.setString(3, post_type);
+                ps.setString(4, post);
+                System.out.println(new Date()+"\t sql_postSuggestionInNetwork -> ps: "+ps);
+                 status = ps.executeUpdate();
+            }
+        }
+         catch(Exception se) {
+            System.err.print(new Date() + "\t " + se.getMessage());
+        } finally {
+            if(con != null ) {
+                closeConnection(con);
+            }
+        }
+        return status;
+    }
+
+
+
+
+    final String sql_check_refer_contact_to_hr = "select * from contact_referrals where from_user_id = ? and contact_user_id = ?";
+    final String sql_insert_refer_contact_to_hr = "insert into contact_referrals (from_user_id, contact_user_id, active_status) values (?, ?, ?)";
+    final String sql_update_refer_contact_to_hr = "update contact_referrals set active_status = ? where from_user_id = ? and contact_user_id = ?";
+
+    public int referContactToHR(String from_user_id, String contact_user_id) {
+        int status = 0;
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection con = null;
+
+        try {
+            con = getConnection();
+
+            ps = getPs(con, sql_check_refer_contact_to_hr);
+            ps.setString(1, from_user_id);
+            ps.setString(2, contact_user_id);
+            rs = ps.executeQuery();
+
+            if(rs.next()) {
+                ps = getPs(con, sql_update_refer_contact_to_hr);
+                ps.setInt(1, 1);
+                ps.setString(2, from_user_id);
+                ps.setString(3, contact_user_id);
+
+                status = ps.executeUpdate();
+            } else {
+                ps = getPs(con, sql_insert_refer_contact_to_hr);
+                ps.setString(1, from_user_id);
+                ps.setString(2, contact_user_id);
+                ps.setInt(3, 1);
+
+                status = ps.executeUpdate();
+            }
+        } catch(Exception se) {
+            System.err.print(new Date() + "\t " + se.getMessage());
+        } finally {
+            if(con != null ) {
+                closeConnection(con);
+            }
+        }
+        return status;
+    }
+
+    public String saveProfileDetails(String from_user_id, String profile_name,
+                                     String profile_expertise, String profile_linkedin,
+                                     String profile_facebook, String hr_consent) {
         int name_status = updateProfileName(profile_name, from_user_id);
-        int skills_status = addOrUpdateFLskills(profile_profession, profile_expertise, profile_experience, profile_linkedin,profile_location, profile_about, from_user_id);
+        int skills_status = addOrUpdateFLskills(profile_expertise, profile_linkedin, profile_facebook, from_user_id, hr_consent);
 
         if(name_status > 0 && skills_status > 0) {
             return "success";
@@ -1754,7 +2506,7 @@
         return status;
     }
 
-    public String postResponseToAsk(String user_id, String pros_userid, String activity_id, String comments) {
+    public String postResponseToAsk(String user_id,String activity_id, String comments) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -1763,42 +2515,37 @@
         try {
             con = getConnection();
 
-            ps = getPs(con, sql_checkAskResponse);
+          ps = getPs(con, sql_postAskResponse);
             ps.setString(1, activity_id);
             ps.setString(2, user_id);
-            rs = ps.executeQuery();
+            ps.setString(3, comments);
+            System.out.println("sql_checkAskResponse" +ps);
+            cnt = ps.executeUpdate();
 
             if(rs.next()) {
-                ps = getPs(con, sql_updateAskResponse);
+                return "success";
+               /* ps = getPs(con, sql_updateAskResponse);
 
                 ps.setString(1, comments);
                 ps.setString(2, activity_id);
-                ps.setString(3, pros_userid);
-                ps.setString(4, user_id);
-
+                ps.setString(3, user_id);
+                System.out.println("sql_updateAskResponse" +ps);
                 cnt = ps.executeUpdate();
-            } else {
-                ps = getPs(con, sql_postAskResponse);
+            } else {*/
+               /* ps = getPs(con, sql_postAskResponse);
 
                 ps.setString(1, activity_id);
-                ps.setString(2, pros_userid);
-                ps.setString(3, user_id);
-                ps.setString(4, comments);
-
-                cnt = ps.executeUpdate();
+                ps.setString(2, user_id);
+                ps.setString(3, comments);
+                System.out.println("sql_postAskResponse" +ps);
+                cnt = ps.executeUpdate();*/
             }
 
-            if(cnt > 0) {
-                sendResponseSmstoOwner(con, activity_id, pros_userid, user_id);
-                sendResponseSmstoProfessional(con, activity_id, pros_userid, user_id);          //todo, erroneous. fix
-                return "success";
-            }
-
-            return "failed";
+            return "success";
         } catch (Exception e) {
             System.out.println(new Date()+"\t "+e.getMessage());
             e.printStackTrace();
-            return "failed";
+            return "success";
         } finally {
             if(con != null ) {
                 closeConnection(con);
@@ -2104,6 +2851,48 @@
         return ret_list;
     }
 
+    public ArrayList loadEMPReferrals_AL(String from_user_id, String emp_userid, String emp_name) {
+        ArrayList emp_referral_list = new ArrayList();
+
+        try {
+            HashMap hm = new HashMap();
+            hm.put("emp_ref_userid", 111);
+            hm.put("emp_ref_name", "Makenna");
+
+            emp_referral_list.add(hm);
+
+            hm = new HashMap();
+            hm.put("emp_ref_userid", 112);
+            hm.put("emp_ref_name", "Kelsey");
+
+            emp_referral_list.add(hm);
+
+            hm = new HashMap();
+            hm.put("emp_ref_userid", 113);
+            hm.put("emp_ref_name", "Athena");
+
+            emp_referral_list.add(hm);
+
+            hm = new HashMap();
+            hm.put("emp_ref_userid", 114);
+            hm.put("emp_ref_name", "Carmen");
+
+            emp_referral_list.add(hm);
+
+            hm = new HashMap();
+            hm.put("emp_ref_userid", 115);
+            hm.put("emp_ref_name", "Charlie");
+
+            emp_referral_list.add(hm);
+
+            return emp_referral_list;
+        } catch (Exception e) {
+            System.out.println(new Date()+"\t "+e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public String getClientsForSearchFL(String fl_userid , String user_id) {
         Connection con = null;
         PreparedStatement ps = null;
@@ -2262,22 +3051,24 @@
         recommended_by_photo = (recommended_by_photo != null && recommended_by_photo.trim().length() > 0 ? recommended_by_photo : "images/profile.jpg");
 
         String date_str_response = dateTimeActivityResponse(con, activity_id);
-        String ret =   " <div  class='text-left' style='max-width: 98%;margin-top: 0%;max-height: 200px;overflow: auto; overflow-x: hidden;overflow-y:scroll;'></div>" +
-                "<dl style='padding: 2px 2px; position: relative'>" +
-                "                        <dd class='pos-left clearfix'style='line-height:1.2'>" +
-                "                            <div class='events' id='askresponse' style='background-color:#ffffff;line-height:1.3; padding:5px 5px 5px 10px;margin-bottom:2px;  box-shadow: 0.09em 0.09em 0.09em 0.05em #888888;'>" +
-                "                               <div class='pull-left' >" +
-                "                                   <img class='img-circle' onclick='showdetails();' style='max-width:35px;margin-top:1%;margin-right:7px' src='"+recommended_by_photo+"' class='events-object img-rounded'>" +
-                "                               </div>" +
-                "                                   <div align='left' style='line-height: 1.3;margin-top:0%;margin-bottom:2px'> " +
-                "                                       <h5 class='events-heading text-left dont-break-out' style='display: inline;font-size:15px;margin-top:3%'>"+recommended_by_name+"  </h5>" +
-                "                                       <span class='text-muted' style='font-size: 12px'>suggests</span> <span class='text-muted' style='font-size: 15px;word-wrap: break-word'>" +comments+ "</span><br> " +
-                "                                       <span class='text-muted' style='font-size: 10px'>("+date_str_response+")</span>   " +
+        String ret = " <div  class='text-left' style='max-width: 98%;margin-top: 0%;max-height: 200px;overflow: auto; overflow-x: hidden;overflow-y:scroll;'></div> " +
+                "               <dl style='padding: 0px;display:inline;margin-bottom:1%;'> " +
+                "                        <dd class='pos-left clearfix'style='padding: 0px'> " +
+                "                            <div class='events' id='askresponse' style='background-color:#f1efef;'> " +
+                "                               <div class='pull-left' style='margin-top: -1%;'> " +
+                "                                   <img class='img-circle' onclick='showdetails();' style='max-width:30px;margin-top:1%;margin-right:7px' src='"+recommended_by_photo+"' class='events-object img-rounded'>" +
+                "                               </div> " +
+                "									 <div class='events-body' > "+
+                "                                   <div align='left' style='line-height: 1.3;margin-top:-1%;margin-bottom:4px'> " +
+                "                                       <h5 class='events-heading text-left dont-break-out' style='display: inline;font-size:13px;break-word;margin-left: 5px'>"+recommended_by_name+"  </h5>" +
+                "                                       <span class='text-muted' style='font-size: 10px'>("+date_str_response+")</span><br>   " +
+                "											<span style='font-size: 11px;word-wrap: break-word;margin-left: 5px'> "+comments+"  </span><br>"+
                 "                               </div>" +
                 "                               </div>" +
                 "                            </div>" +
                 "                        </dd>" +
                 "                 </dl>";
+
         return ret;
     }
 
@@ -2429,6 +3220,8 @@
             for (User user1 : friendsList) {
                 String fb_friend_user_id = user1.getId();
                 String fb_friend_user_name = user1.getName();
+
+                System.out.println(new Date()+"\t fb_friend_user_id: "+fb_friend_user_id+", fb_friend_user_name: "+fb_friend_user_name);
 
                 postFBFriendsToDB(con, userId, fb_friend_user_name, fb_friend_user_id);
             }
@@ -2607,6 +3400,9 @@
                     //replace all the characters other than + and digits
                     mobile = mobile.replaceAll("[^\\d\\+]", "");
 
+                    if(name.equalsIgnoreCase("_uuid")) {                //ignoring the entry with _uuid, which is the entry for device id
+                        continue;
+                    }
                     byte[] name_enc = processEncrypt(name);
                     byte[] mobile_enc = processEncrypt(mobile);
                     byte[] email_enc = processEncrypt(email);
@@ -4248,10 +5044,6 @@
                 byte[] to_mobile_ba = processDecrypt(to_mobile_enc);
                 to_mobile = new String(to_mobile_ba);
 
-                to_email_enc = rs.getBytes("email");
-                byte[] to_email_ba = processDecrypt(to_email_enc);
-                to_email = new String(to_email_ba);
-
                 flag2 = true;
             }
 
@@ -4264,7 +5056,7 @@
 
                     if(status) {
                         System.out.println(new Date()+"\t appInvite -> sending app invite to "+test_mobile_number+" on behalf of: "+to_mobile);
-                        inviteApp_SMS(from_name, test_mobile_number);
+//                        inviteApp_SMS(from_name, test_mobile_number);
                     } else {
                         System.out.println(new Date()+"\t appInvite -> app invite already sent for today to "+test_mobile_number);
                     }
@@ -4386,7 +5178,28 @@
 %>
 
 <%!
- 
+    //        Twilio Trial account:
+
+/*
+        String From_PhoneNumber = "+12018904851";
+
+        String TEST_ACCOUNT_SID = "ACb65ac37d7900daa79fdfbef15ce9b941";
+        String TEST_AUTH_TOKEN = "2486d83b0296f79cb4181de164674c9d";
+
+        String LIVE_ACCOUNT_SID = "AC8c8f430c4a486bdf942bcf0433c3b814";
+        String LIVE_AUTH_TOKEN = "81a6689acba1c99e8c0c896a63653559";
+*/
+
+//        Twilio Official account:
+
+    String From_PhoneNumber = "+14243561234";
+    //String From_PhoneNumber = "**********";
+
+    String TEST_ACCOUNT_SID = "ACacdc3b7c8b53f23b09feb680a9dcb90b";
+    String TEST_AUTH_TOKEN = "c19a67c115782376de8bb9d094205699";
+
+    String LIVE_ACCOUNT_SID = "AC33bd2893972c16ae9d71d0049fe88550";
+    String LIVE_AUTH_TOKEN = "4b328be6fb8dfa41de7afff3af6ff9a0";
 
     HashMap<String, String> test_numbers = new HashMap<String, String>();
 
@@ -4394,19 +5207,18 @@
 
         //adding phone numbers not to send SMS to them, for development and testing
 //        test_numbers.put("+919901424531", "Satya");
-        test_numbers.put("+918105575151", "Srikanth");
-        test_numbers.put("+919844408661", "Sridhar");
-        test_numbers.put("+918951092157", "Ajay");
+//        test_numbers.put("+918105575151", "Srikanth");
+//        test_numbers.put("+919844408661", "Sridhar");
+//        test_numbers.put("+918951092157", "Ajay");
         test_numbers.put("+919090909090", "Test1");
         test_numbers.put("+919090909091", "Test2");
         test_numbers.put("+919090909092", "Test3");
-        test_numbers.put("+919012345678", "Test3");
 
         if(test_numbers.get(mobilenum) != null) {
             return "test_queued";
         }
 
-        String msg = "Thanks for choosing Netref. Verification code for your mobile is: "+verification_code+".";
+        String msg = "Thanks for choosing Coref. Verification code for your mobile is: "+verification_code+".";
 
         TwilioRestClient client = new TwilioRestClient(LIVE_ACCOUNT_SID, LIVE_AUTH_TOKEN);
 
@@ -4443,6 +5255,8 @@
     public String sendResponse_SMS(String from_name, String to_mobile, String comments) {
         String msg = "Hi, "+(from_name != null && from_name.length() > 0 ? from_name:"Someone") +" recommended a professional "+comments+" for the post requested by you. Start here: https://goo.gl/Njkmxu";
 
+        System.out.println(new Date() + "\t sendResponse_SMS: " + msg);
+
         TwilioRestClient client = new TwilioRestClient(LIVE_ACCOUNT_SID, LIVE_AUTH_TOKEN);
 
         Account account = client.getAccount();
@@ -4477,6 +5291,8 @@
     public String sendResponse_SMS_to_Professional(String loggedin_username, String activity_ownername, String to_mobile) {
         String msg = "Hi, you have been referred by "+(loggedin_username != null && loggedin_username.length() > 0 ? loggedin_username:"Someone") +" as professioal to the client "+activity_ownername+". Start here: https://goo.gl/Njkmxu";
 
+        System.out.println(new Date()+"\t sendResponse_SMS_to_Professional: "+msg);
+
         TwilioRestClient client = new TwilioRestClient(LIVE_ACCOUNT_SID, LIVE_AUTH_TOKEN);
 
         Account account = client.getAccount();
@@ -4509,10 +5325,8 @@
     }
 
     public String inviteApp_SMS(String from_name, String to_mobile) {
-//        String msg = "Hi, "+(from_name != null && from_name.length() > 0 ? from_name:"Someone") +" wants your feedback about Netref. You can download it from: https://goo.gl/Njkmxu";
-        
-        String msg = "Hi, "+(from_name != null && from_name.length() > 0 ? from_name:"Someone") +" invites you to try Netref. " +
-                "Download the iOS link from https://goo.gl/nyeq2m or the Android link from https://goo.gl/Njkmxu";
+        String msg = "Hi, "+(from_name != null && from_name.length() > 0 ? from_name:"Someone") +" invites you to try Coref. " +
+                "Download the Android app from https://goo.gl/iHA7bG";
 
         TwilioRestClient client = new TwilioRestClient(LIVE_ACCOUNT_SID, LIVE_AUTH_TOKEN);
 
@@ -4548,7 +5362,8 @@
     }
 
     public String remindAppInvite_SMS(String from_name, String to_mobile) {
-        String msg = "Reminder: "+(from_name != null && from_name.length() > 0 ? from_name:"Someone") +" would like you to join on Netref. You can download it from: https://goo.gl/Njkmxu";
+        String msg = "Reminder: "+(from_name != null && from_name.length() > 0 ? from_name:"Someone") +" would like you to join on Coref. " +
+                "Download the Android app from https://goo.gl/iHA7bG";
 
         System.out.println(new Date()+"\t remindAppInvite_SMS: "+msg);
 
@@ -4586,7 +5401,8 @@
     }
 
     public String reminder_SMS(String from_name, String to_mobile) {
-        String msg = (from_name != null && from_name.length() > 0 ? from_name:"Someone") +" wants your feedback about Netref. You can download it from: https://goo.gl/Njkmxu";
+        String msg = (from_name != null && from_name.length() > 0 ? from_name:"Someone") +" wants your feedback about Coref. " +
+                "Download the Android app from https://goo.gl/iHA7bG";
 
         TwilioRestClient client = new TwilioRestClient(LIVE_ACCOUNT_SID, LIVE_AUTH_TOKEN);
 
@@ -4730,9 +5546,6 @@
                 if(verification_code.equalsIgnoreCase(db_code)) {
                     userId = rs.getInt("user_id");
                     return userId;
-                } else if(verification_code.equalsIgnoreCase("1234")) {         //TODO, Temporary logic till we finalize the SMS gateway
-                    userId = rs.getInt("user_id");
-                    return userId;
                 }
             }
         } catch (Exception e) {
@@ -4743,6 +5556,50 @@
             closeConnection(con);
         }
         return userId;
+    }
+
+    final static String sql_verifyMobileCodeHM = "SELECT u.user_id, vm.verification_code, u.user_type FROM verify_mobile vm, users u WHERE vm.user_id = u.user_id and u.mobile = ? order by create_time DESC";
+
+    public ArrayList<HashMap<String, Integer>> verifyMobileCodeAL(String mobilenum, String verification_code) {
+        Connection con = null;
+        PreparedStatement verifyMobileCode = null, updateStatus = null;
+        ResultSet rs = null;
+
+        int userId = -1;
+        int userType = 1;
+
+        ArrayList ar = new ArrayList();
+
+        try {
+            con = getConnection();
+
+            byte[] mobile_bytes = processEncrypt(mobilenum);
+
+            verifyMobileCode = getPs(con, sql_verifyMobileCodeHM);
+            verifyMobileCode.setBytes(1, mobile_bytes);
+
+            rs = verifyMobileCode.executeQuery();
+
+            if (rs.next()) {
+                HashMap hm = new HashMap();
+
+                String db_code = rs.getString("verification_code");
+                if(verification_code.equalsIgnoreCase(db_code)) {
+                    userId = rs.getInt("user_id");
+                    userType = rs.getInt("user_type");
+                    hm.put("user_id", userId);
+                    hm.put("user_type", userType);
+                }
+                ar.add(hm);
+            }
+        } catch (Exception e) {
+            System.out.println(new Date()+"\t "+e.getMessage());
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeConnection(con);
+        }
+        return ar;
     }
 
     String sql_checkPhoneNumber = "select * from users where mobile = ?";
@@ -4768,10 +5625,10 @@
         int user_id = -1;
 
         //-- If mobileno already exists
-        //      -- if imei exists - do nothing
+        //      -- if deviceid exists - do nothing
         //      -- else - update imei
         //-- else
-        //      -- if imei exists - update mobile no
+        //      -- if deviceid exists - update mobile no
         //      -- else - insert new entry
 
         try {
@@ -4793,7 +5650,7 @@
                 ps.setString(2, deviceIMEI);
                 rs = ps.executeQuery();
 
-                if (rs.next()) {                                //if imei exists - do nothing
+                if (rs.next()) {                                //if deviceid exists - do nothing
                     //Do Nothing
                 } else {
                     ps = getPs(con, sql_updateDeviceIMEINumber);
@@ -4933,7 +5790,7 @@
         return suggestedProfessionList;
     }
 
-    String get_suggested_keywords = "select expertise from skills";
+    String get_suggested_keywords = "select expertise from employee_details";
     public ArrayList getSuggestedKeywords() {
         Connection con = null;
         PreparedStatement getSKeyword = null;
@@ -4976,7 +5833,6 @@
         return suggestedKeywordsList;
     }
 
-    //    String get_app_invite_status_sql = " select distinct (to_userid), invitation_status from user_invitations where connection = 'AppInvite' and from_userid = ?";
     String get_app_invite_status_sql = "  select distinct (ui.to_userid), ui.invitation_status, r.rs_id from user_invitations ui, relationship r where r.to_user_id = ui.to_userid and ui.connection = 'AppInvite' and ui.from_userid = ?";
     public ArrayList getAppInviteStatus(String from_user_id) {
         Connection con = null;
@@ -5019,9 +5875,49 @@
         return app_invite_contact_list;
     }
 
+    String sql_add_employee_status = "select distinct (uem.employee_id), uem.active_status, r.rs_id from relationship r, user_employee_mapping uem where uem.employee_id = r.to_user_id and r.from_user_id = ?";
+    public ArrayList getAddEmployeeStatus(String from_user_id) {
+        Connection con = null;
+        PreparedStatement getAIC = null;
+        ResultSet rs = null;
+        ArrayList employee_contact_list = new ArrayList();
+
+        String employee_id;
+        int active_status;
+        String rs_id;
+
+        try {
+            con = getConnection();
+            getAIC = getPs(con, sql_add_employee_status);
+            getAIC.setString(1, from_user_id);
+            rs = getAIC.executeQuery();
+
+            while (rs.next()) {
+                employee_id = rs.getString("employee_id");
+                active_status = rs.getInt("active_status");
+                rs_id = rs.getString("rs_id");
+
+                HashMap hm = new HashMap();
+                hm.put("from_user_id", from_user_id);
+                hm.put("employee_id", employee_id);
+                hm.put("active_status", active_status);
+                hm.put("rs_id", rs_id);
+
+                employee_contact_list.add(hm);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }  finally {
+            if(con != null ) {
+                closeConnection(con);
+            }
+        }
+        return employee_contact_list;
+    }
+
     /*-----------------------------get Professional detail-----------------*/
     final String sql_getProfessionalDetails = "SELECT u.name as profile_name, u.profile_image_file_name, u.mobile, s.* " +
-            "            FROM users u LEFT JOIN skills s " +
+            "            FROM users u LEFT JOIN employee_details s " +
             "            ON u.user_id = s.user_id " +
             "            where u.user_id = ?";
 
@@ -5116,6 +6012,41 @@
         return pros_details;
     }
 
+    /*-----------------------------get Employee referral details-----------------*/
+
+    public String getEmpReferralDetails(String emp_userid, String emp_name) {
+        String  ref_lin = "";
+        String  ref_fb = "";
+        String  ref_skills = "";
+        String  ref_details = "";
+        String  ref_image_file_name = "";
+
+        ref_lin = "https://linkedin.com/******";
+        ref_fb = "https://facebook.com/******";
+        ref_skills = "Android, Cloud computing, Machine learning...";
+        ref_image_file_name = "profile.jpg";
+
+        ref_details = "<div id='contact_professional_info' style='display: none;'></div>" +
+                "<div class='events pull-left' style=' word-wrap: break-word; width:100%; max-height: 140px; margin-top:3px;line-height:1.0;background-color:#ffffff; display:inline-block; border-radius:4px; overflow: auto; box-shadow: 0.09em 0.09em 0.09em 0.05em #888888; padding:5px 0px 5px 0px;'>" +
+                " <p class='pull-left' style='margin-left:4px;margin-bottom: 0px'> " +
+                " <img class='img-circle' style='main-width:25px;max-width:25px;margin-bottom:10px' src='profile_images/"+ref_image_file_name+"' onError='this.onerror=null;this.src=\"profile_images/profile.jpg\"' >" +
+                " </p>" +
+                " <div class='events-body ' style='margiun-right:0px;'>" +
+                " <div align='left ' class='pull-left' style='margin-bottom:2px'>" +
+                " <h4 class='' style='margin-bottom:2px;font-family:monospace;overflow:auto; font-size-adjust: 0.58;line-height:1.1;font-size:12px;margin-left:8px'> " +
+                (emp_name != null && emp_name.trim().length() > 0 ? " Name: "+emp_name +"<br>" : "") +
+                (ref_lin != null && ref_lin.trim().length() > 0 ? " Linkedin: "+ref_lin +"<br>" : "") +
+                (ref_fb != null && ref_fb.trim().length() > 0 ? " Facebook: "+ref_fb +"<br>" : "") +
+                (ref_skills != null && ref_skills.trim().length() > 0 ? " Skills: "+ref_skills +"<br>" : "") +
+                " </h4>" +
+                " </div> " +
+                " </div>" +
+                " </div>" +
+                " <div id='showflcl_59' class='text-left' style='max-width: 100%;margin-top: %;display_none;background-color:#f5f5f5'>" +
+                " </div>";
+        return ref_details;
+    }
+
     //    String get_app_invite_status_for_sms_sql = "select count(ui.to_userid) from user_invitations ui where  ui.connection = 'AppInvite' and ui.to_userid = ? and DATE(invitation_sent_time) = CURDATE()";
     String get_app_invite_status_for_sms_sql = "select count(ui.to_userid) from user_invitations ui where  ui.connection = 'AppInvite' and DATE(invitation_sent_time) = CURDATE()";
 
@@ -5195,5 +6126,167 @@
             image_path = image_name;
         }
         return image_path;
+    }
+
+    String sql_check_user_employee_map = "Select * from user_employee_mapping uem where uem.user_id = ? and uem.employee_id = ?";
+    final String sql_insert_user_employee_map = "insert into user_employee_mapping (user_id, employee_id, active_status) values (?, ?, ?)";
+    final String sql_update_user_employee_map = "update user_employee_mapping set active_status = ? where user_id = ? and employee_id = ?";
+
+    public int addEmployeeForUser(int from_user_id, int employee_id, String rs_id, String from_country_code) {
+        int status = 0;
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = getConnection();
+
+            ps = getPs(con, sql_check_user_employee_map);
+            ps.setInt(1, from_user_id);
+            ps.setInt(2, employee_id);
+            rs = ps.executeQuery();
+
+            if(rs.next()) {
+                System.out.println("Mapping already exist");
+                //Mapping already exist
+                ps = getPs(con, sql_update_user_employee_map);
+                ps.setInt(1, 1);
+                ps.setInt(2, from_user_id);
+                ps.setInt(3, employee_id);
+
+                status = ps.executeUpdate();
+            } else {
+                System.out.println("Mapping doesn't exist");
+                //Mapping doesn't exist
+                ps = getPs(con, sql_insert_user_employee_map);
+                ps.setInt(1, from_user_id);
+                ps.setInt(2, employee_id);
+                ps.setInt(3, 1);
+
+                status = ps.executeUpdate();
+            }
+
+            addEmployeeInvite(con, from_user_id, employee_id, rs_id, from_country_code);
+
+        } catch(Exception se) {
+            System.err.print(new Date()+"\t "+se.getMessage());
+            return status;
+        } finally {
+            if(con != null ) {
+                closeConnection(con);
+            }
+        }
+
+        return status;
+    }
+
+    public int removeEmployeeForUser(String from_user_id, String employee_id) {
+        int status = 0;
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = getConnection();
+
+            ps = getPs(con, sql_update_user_employee_map);
+            ps.setInt(1, 0);
+            ps.setString(2, from_user_id);
+            ps.setString(3, employee_id);
+
+            status = ps.executeUpdate();
+        } catch(Exception se) {
+            System.err.print(new Date()+"\t "+se.getMessage());
+            return status;
+        } finally {
+            if(con != null ) {
+                closeConnection(con);
+            }
+        }
+
+        return status;
+    }
+
+    public void addEmployeeInvite(Connection con, int from_user_id, int contact_user_id, String rs_id, String from_country_code) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String from_name = "";
+        String to_contact_name = "";
+        String to_mobile = "";
+        String to_email = "";
+
+        byte[] fl_name_enc = new byte[0];
+        byte[] to_contact_name_enc = new byte[0];
+        byte[] to_mobile_enc = new byte[0];
+        byte[] to_email_enc = new byte[0];
+
+        boolean flag1 = false;
+        boolean flag2 = false;
+
+        try {
+            ps = getPs(con, sql_app_invite_user_details1);
+            ps.setInt(1, from_user_id);
+            ps.setInt(2, contact_user_id);
+
+            rs = ps.executeQuery();
+
+            if(rs.next()) {
+                fl_name_enc = rs.getBytes("profile_name");
+                byte[] fl_name_ba = processDecrypt(fl_name_enc);
+                from_name = new String(fl_name_ba);
+
+                to_contact_name_enc = rs.getBytes("to_contact_name");
+                byte[] to_contact_name_ba = processDecrypt(to_contact_name_enc);
+                to_contact_name = new String(to_contact_name_ba);
+
+                if(to_mobile.startsWith("0")) {
+                    to_mobile = to_mobile.replaceFirst("0","");
+                }
+
+                if(to_mobile.indexOf("+") != 0) {
+                    to_mobile = from_country_code+""+to_mobile;
+                }
+                flag1 = true;
+            }
+
+            ps = getPs(con, sql_app_invite_user_details2);
+            ps.setInt(1, contact_user_id);
+
+            rs = ps.executeQuery();
+
+            if(rs.next()) {
+                to_mobile_enc = rs.getBytes("to_mobile");
+                byte[] to_mobile_ba = processDecrypt(to_mobile_enc);
+                to_mobile = new String(to_mobile_ba);
+
+                flag2 = true;
+            }
+
+            if(flag1 && flag2) {
+                System.out.println(new Date()+"\t addEmployeeInvite -> from_user_id: "+from_user_id+", contact_user_id: "+contact_user_id+", from_name: "+from_name+", to_contact_name: "+to_contact_name);
+
+                if(server_type.equalsIgnoreCase("test")) {
+                    boolean status = getAppInviteStatusForMsg(con, to_mobile_enc);
+                    //true - send the message for the current day; false - do not send the message
+
+                    if(status) {
+                        System.out.println(new Date()+"\t appInvite -> sending app invite to "+test_mobile_number+" on behalf of: "+to_mobile);
+//                        inviteApp_SMS(from_name, test_mobile_number);
+                    } else {
+                        System.out.println(new Date()+"\t appInvite -> app invite already sent for today to "+test_mobile_number);
+                    }
+                } else if (server_type.equalsIgnoreCase("prod")) {
+                    System.out.println(new Date()+"\t appInvite -> sending app invite to "+to_mobile);
+                    inviteApp_SMS(from_name, to_mobile);
+                }
+
+                int inv_id = addToAppInvitationTrack(con, from_user_id, fl_name_enc, contact_user_id, to_contact_name_enc, to_email_enc, to_mobile_enc, "AddEmployeeInvite", 1, 1);
+            }
+        } catch(Exception se) {
+            System.out.println(new Date()+"\t appInvite -> could not send invitation, to_mobile: "+to_mobile+", from_user_id: "+from_user_id);
+            se.printStackTrace();
+        }
     }
 %>

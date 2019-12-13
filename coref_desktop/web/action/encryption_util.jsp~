@@ -8,7 +8,12 @@
 <%@ page import="javax.crypto.spec.PBEParameterSpec" %>
 
 <%
-
+//    String str_orig = "Microsoft-Power_Point & Presentation.ppt";
+    String str_orig = "companyid=11|email=satyam@devsquare.com";
+    String enc = encode(str_orig);
+    String dec = decode("4oe9G5_DyFw=");
+//    String dec = decode("eFi4eNTfoHBB8NG_xB7NZU8HRzEnFYnyCsEK8BonVGJMyckQ7XPdJOuzTZDbtycq");
+//    String dec = decode(enc);
 
 /*
     out.println("enc: "+enc);

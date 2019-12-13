@@ -5180,26 +5180,6 @@
 <%!
     //        Twilio Trial account:
 
-/*
-        String From_PhoneNumber = "+12018904851";
-
-        String TEST_ACCOUNT_SID = "ACb65ac37d7900daa79fdfbef15ce9b941";
-        String TEST_AUTH_TOKEN = "2486d83b0296f79cb4181de164674c9d";
-
-        String LIVE_ACCOUNT_SID = "AC8c8f430c4a486bdf942bcf0433c3b814";
-        String LIVE_AUTH_TOKEN = "81a6689acba1c99e8c0c896a63653559";
-*/
-
-//        Twilio Official account:
-
-    String From_PhoneNumber = "+14243561234";
-    //String From_PhoneNumber = "**********";
-
-    String TEST_ACCOUNT_SID = "ACacdc3b7c8b53f23b09feb680a9dcb90b";
-    String TEST_AUTH_TOKEN = "c19a67c115782376de8bb9d094205699";
-
-    String LIVE_ACCOUNT_SID = "AC33bd2893972c16ae9d71d0049fe88550";
-    String LIVE_AUTH_TOKEN = "4b328be6fb8dfa41de7afff3af6ff9a0";
 
     HashMap<String, String> test_numbers = new HashMap<String, String>();
 
