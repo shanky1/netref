@@ -1,7 +1,8 @@
 # netref
 
 1. Attempt to answer questions like: <br>
-"How many C level guys do I know in Healthcare in UK"
+"How many C level guys do I know in Healthcare in UK?"
+"Do I know anyone in ABC(company)?"
 
 2. Does scraping of LinkedIn, Facebook and Email contacts - using Jaunt API
 
